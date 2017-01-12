@@ -25,7 +25,7 @@ class HostsController extends AppController {
                             "desks" => $row->desks,
                             "desks_avail" => $row->desks, //todo
                             "imageURL" => "http://langhofer.net/yellowdesks/alex.png",
-                            "details" => "Wifi Blah Blah2", //todo
+                            "details" => $row->details,
                             "title" => $row->title,
                             "lat" => $row->lat,
                             "lng" => $row->lng,
