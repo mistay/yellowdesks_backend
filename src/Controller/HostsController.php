@@ -10,21 +10,28 @@ class HostsController extends AppController {
 
     public function index() {
         $model = TableRegistry::get('Hosts');
-        $query = $model->find('all');
+        $query = $model->find('all')->contain(['Pictures']);
         $this->set("rows", $query);
         
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
             $rows = $query->toArray();
             if (@$_REQUEST["format"] == "jsonbrowser") echo "<pre>";
-            
             $ret = [];
             foreach ($rows as $row) {
+                
+                $pictures = [];
+                foreach ($row->pictures as $picture) {
+                    array_push($pictures, "https://yellowdesks.com/pictures/get/" . $picture->id);
+                }
+                
                 array_push($ret,
                         [   "id" => $row-> id,
                             "host" => $row->nickname,
                             "desks" => $row->desks,
                             "desks_avail" => $row->desks, //todo
-                            "imageURL" => "http://langhofer.net/yellowdesks/alex.png",
+                            //"imageURL" => "http://langhofer.net/yellowdesks/alex.png",
+                            "imageURL" => "https://yellowdesks.com/pictures/get/" . "1",
+                            "images" => $pictures,
                             "details" => $row->details,
                             "title" => $row->title,
                             "lat" => $row->lat,
