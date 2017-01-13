@@ -29,14 +29,13 @@ class HostsController extends AppController {
                         [   "id" => $row-> id,
                             "host" => $row->nickname,
                             "desks" => $row->desks,
-                            "desks_avail" => $row->desks, //todo
-                            //"imageURL" => "http://langhofer.net/yellowdesks/alex.png",
+                            "desks_avail" => $row->desks,
                             "imageURL" => ($row->picture_id > 0 ? Router::url(['controller' => 'pictures', 'action' => 'get', $row->picture_id], true) : null),
                             "images" => $pictures,
                             "details" => $row->details,
                             "title" => $row->title,
-                            "lat" => $row->lat + (mt_rand(-1000,1000) / 1000.0),
-                            "lng" => $row->lng + (mt_rand(-1000,1000) / 1000.0),
+                            "lat" => $row->lat + (mt_rand(-1000,1000) / 10000.0),
+                            "lng" => $row->lng + (mt_rand(-1000,1000) / 10000.0),
                         ]);
             }
             
