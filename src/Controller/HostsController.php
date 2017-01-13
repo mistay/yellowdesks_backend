@@ -31,7 +31,7 @@ class HostsController extends AppController {
                             "desks" => $row->desks,
                             "desks_avail" => $row->desks, //todo
                             //"imageURL" => "http://langhofer.net/yellowdesks/alex.png",
-                            "imageURL" => "https://yellowdesks.com/pictures/get/" . "1",
+                            "imageURL" => ($row->picture_id > 0 ? Router::url(['controller' => 'pictures', 'action' => 'get', $row->picture_id], true) : null),
                             "images" => $pictures,
                             "details" => $row->details,
                             "title" => $row->title,
