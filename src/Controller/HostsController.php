@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 
 class HostsController extends AppController {
     
@@ -21,7 +22,7 @@ class HostsController extends AppController {
                 
                 $pictures = [];
                 foreach ($row->pictures as $picture) {
-                    array_push($pictures, "https://yellowdesks.com/pictures/get/" . $picture->id);
+                    array_push($pictures, Router::url(['controller' => 'pictures', 'action' => 'get', $picture->id], true));
                 }
                 
                 array_push($ret,
