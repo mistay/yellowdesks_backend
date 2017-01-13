@@ -35,8 +35,8 @@ class HostsController extends AppController {
                             "images" => $pictures,
                             "details" => $row->details,
                             "title" => $row->title,
-                            "lat" => $row->lat,
-                            "lng" => $row->lng,
+                            "lat" => $row->lat + (mt_rand(-1000,1000) / 1000.0),
+                            "lng" => $row->lng + (mt_rand(-1000,1000) / 1000.0),
                         ]);
             }
             
