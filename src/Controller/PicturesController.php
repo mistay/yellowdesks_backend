@@ -21,9 +21,6 @@ class PicturesController extends AppController {
         
         $model = TableRegistry::get('Pictures');
         $query = $model->get($id);
-        //$query = $model->find('all')->where(['Pictures.id >' => $id]);
-            
-        //$bla = $query->toArray();
         $bla = stream_get_contents($query->data);
         header("Content-Type: " . $query->mime);
         print_r($bla);
