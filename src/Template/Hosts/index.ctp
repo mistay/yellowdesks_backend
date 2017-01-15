@@ -3,6 +3,7 @@
 <table>
     <tr>
         <th>Name</th>
+        <th>Image</th>
         <th>address</th>
         <th>postal_code</th>
         <th>city</th>
@@ -12,6 +13,11 @@
     <?php foreach ($rows as $row): ?>
     <tr>
         <td><?php echo $row->name; ?></td>
+        <?php
+            $url = $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id]);
+            $url100cropped = $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id, "resolution" => "100x100", "crop" => "true"]);
+        ?>
+        <td><?php if ($row->picture_id > 0) { ?><a href="<?php echo $url ?>"><img alt="" src='<?php echo $url100cropped ?>'></img></a><?php }?></td>
         <td><?php echo nl2br($row->address); ?></td>
         <td><?php echo $row->postal_code; ?></td>
         <td><?php echo $row->city; ?></td>

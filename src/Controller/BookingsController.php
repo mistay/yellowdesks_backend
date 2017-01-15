@@ -47,5 +47,27 @@ class BookingsController extends AppController {
         }
         
     }
+    
+    public function invoice($id) {
+        $model = TableRegistry::get('Bookings');
+        $query = $model->get($id, [
+            'contain' => ['Hosts', 'Coworkers']
+        ]);
+
+        // todo: security: check if user is permitted to request this invoice
+        
+        $this->set("row", $query);
+    }
+    
+    public function invoicehost($id) {
+        $model = TableRegistry::get('Bookings');
+        $query = $model->find('all')->contain(['Coworkers'])->where(['host_id' => $id]);
+
+        $hosts = TableRegistry::get('Hosts');
+        $this->set("host", $hosts->get($id));
+
+        // todo: security: check if user is permitted to request this invoice
+        $this->set("rows", $query);
+    }
 }
 ?>
