@@ -60,9 +60,41 @@ class PicturesController extends AppController {
         
         $model = TableRegistry::get('Pictures');
         $query = $model->get($id);
-        $bla = stream_get_contents($query->data);
-        header("Content-Type: " . $query->mime);
-        print_r($bla);
+        $data = stream_get_contents($query->data);
+        
+        // e.g. /pictures/get?resolution=320x240
+        if (isset($_REQUEST["resolution"])) {
+            $src_img = imagecreatefromstring($data);
+            $src_w = imagesx($src_img);
+            $src_h = imagesy($src_img);
+            
+            list ($max_width, $max_height) = explode("x", $_REQUEST["resolution"]);
+            
+            // taller
+            if ($src_h > $max_height) {
+                $dst_w = ($max_height / $src_h) * $src_w;
+                $dst_h = $max_height;
+            }
+
+            // wider
+            if ($src_w > $max_width) {
+                $dst_h = ($max_width / $src_w) * $src_h;
+                $dst_w = $max_width;
+            }
+            
+            $dst_image = imagecreate($dst_w, $dst_h);
+
+            imagecopyresized ($dst_image, $src_img , 0, 0, 0, 0, $dst_w, $dst_h , $src_w, $src_h);
+            
+            header("Content-Type: image/jpeg");
+            imagejpeg ($dst_image);
+        } else {
+            header("Content-Type: " . $query->mime);
+            print_r($data);
+            
+        }
+        
+        
         exit(0);
     }
 }
