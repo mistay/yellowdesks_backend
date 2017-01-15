@@ -42,7 +42,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             $url = $this->Url->build(['favicon.jpg']);
         ?>
         
-        <link rel="icon" type="image/jpeg" href="$url" />
+        <link rel="icon" type="image/jpeg" href="<?= $url ?>" />
     
         <script src="js/jquery-1.9.1.min.js"></script>
         
