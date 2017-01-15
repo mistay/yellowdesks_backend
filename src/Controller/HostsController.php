@@ -34,6 +34,8 @@ class HostsController extends AppController {
                             "images" => $pictures,
                             "details" => $row->details,
                             "title" => $row->title,
+                         
+                            // todo: in db schreiben damit nicht immer frische werte kommen (sonst könnte man lat & lng reversen)
                             "lat" => $row->lat + (mt_rand(-1000,1000) / 1000000.0),
                             "lng" => $row->lng + (mt_rand(-1000,1000) / 1000000.0),
                         ]);
