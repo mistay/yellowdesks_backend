@@ -82,7 +82,7 @@ class PicturesController extends AppController {
                 $dst_w = $max_width;
             }
             
-            $dst_image = imagecreate($dst_w, $dst_h);
+            $dst_image = imagecreatetruecolor($dst_w, $dst_h);
 
             imagecopyresized ($dst_image, $src_img , 0, 0, 0, 0, $dst_w, $dst_h , $src_w, $src_h);
             
