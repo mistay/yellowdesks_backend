@@ -7,8 +7,6 @@ use Cake\Routing\Router;
 
 class HostsController extends AppController {
     
-    //public $uses = array("Orderbutton");
-
     public function index() {
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')->contain(['Pictures', 'Payments']);
