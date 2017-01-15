@@ -11,7 +11,7 @@ class HostsController extends AppController {
 
     public function index() {
         $model = TableRegistry::get('Hosts');
-        $query = $model->find('all')->contain(['Pictures']);
+        $query = $model->find('all')->contain(['Pictures', 'Payments']);
         $this->set("rows", $query);
         
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {

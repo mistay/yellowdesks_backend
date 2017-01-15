@@ -1,8 +1,17 @@
 <h2>Hosts</h2>
 
+<?php
+// toto: globalize me
+
+setlocale(LC_MONETARY, 'de_DE');
+
+?>
+
+
 <table>
     <tr>
         <th>Name</th>
+        <th>Total Payments</th>
         <th>Image</th>
         <th>address</th>
         <th>postal_code</th>
@@ -13,6 +22,13 @@
     <?php foreach ($rows as $row): ?>
     <tr>
         <td><?php echo $row->name; ?></td>
+        <td>
+            <?php 
+                $total = 0;
+                foreach ($row->payments as $payment) { $total += $payment->amount; } 
+                echo money_format("%i", $total);
+            ?>
+        </td>
         <?php
             $url = $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id]);
             $url100cropped = $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id, "resolution" => "100x100", "crop" => "true"]);
