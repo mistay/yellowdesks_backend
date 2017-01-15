@@ -113,7 +113,14 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     <body>
         <div class="menu">
             <a href="">Jetzt Host werden</a>
-            <a href="/yellowdesks/users/login">Login</a>
+            <?php
+            $url = $this->Url->build([
+                "controller" => "users",
+                "action" => "login",
+            ]);
+            ?>
+            
+            <a href="<?= $url ?>">Login</a>
             <a href="">Registrieren</a>
         </div>
         
