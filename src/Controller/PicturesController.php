@@ -11,12 +11,9 @@ class PicturesController extends AppController {
     public function index() {
         $model = TableRegistry::get('Pictures');
         
-        $query = $model->find('all')->contain(['Hosts']);
-        if (@$_REQUEST["host_id"] > 0) {
-            $host_id = (int) $_REQUEST["host_id"];
-            if ($host_id > 0)
-                $query = $model->find('all')->where(['Hosts.id' => $host_id])->contain(['Hosts']);
-        }
+        $where = isset($_REQUEST["host_id"]) ? ['Hosts.id' => $_REQUEST["host_id"]] : [];  
+
+        $query = $model->find('all')->where($where)->contain(['Hosts']);
         $this->set("rows", $query);
         
         
