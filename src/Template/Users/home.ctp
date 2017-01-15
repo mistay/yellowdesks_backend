@@ -39,7 +39,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         <link rel="stylesheet" href="fonts/din1451/stylesheet.css">
         
         <?php
-            $url = $this->Url->build(['favicon.jpg']);
+            $url = $this->Url->build('/favicon.jpg', true);
         ?>
         
         <link rel="icon" type="image/jpeg" href="<?= $url ?>" />
