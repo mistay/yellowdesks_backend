@@ -12,7 +12,7 @@
     <?php foreach ($rows as $row): ?>
     <tr>
         <td><?php echo $row->name; ?></td>
-        <td><?php echo $row->address; ?></td>
+        <td><?php echo nl2br($row->address); ?></td>
         <td><?php echo $row->postal_code; ?></td>
         <td><?php echo $row->city; ?></td>
         <td><a href="">Edit</a></td>
