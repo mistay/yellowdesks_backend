@@ -18,10 +18,11 @@ setlocale(LC_MONETARY, 'de_DE');
         <th>address</th>
         <th>postal_code</th>
         <th>city</th>
-        <th>price day ticket</th>
-        <th>price 10 days ticket</th>
-        <th>price 1 month ticket</th>
-        <th>price 6 moths ticket</th>
+        <th>price 2 hours</th>
+        <th>price 1 day</th>
+        <th>price 10 days</th>
+        <th>price 1 month</th>
+        <th>price 6 moths</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -45,6 +46,7 @@ setlocale(LC_MONETARY, 'de_DE');
         <td><?php echo nl2br($row->address); ?></td>
         <td><?php echo $row->postal_code; ?></td>
         <td><?php echo $row->city; ?></td>
+        <td><?php echo money_format("%i", $row->price_2hours); ?></td>
         <td><?php echo money_format("%i", $row->price_1day); ?></td>
         <td><?php echo money_format("%i", $row->price_10days); ?></td>
         <td><?php echo money_format("%i", $row->price_1month); ?></td>
