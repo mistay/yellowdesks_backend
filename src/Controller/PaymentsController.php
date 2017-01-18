@@ -27,6 +27,12 @@ class PaymentsController extends AppController {
     // https://yellowdesks.com/payments/paypalipn
     public function paypalipn() {
         $this->autoRender = false;
+        $request = print_r($_REQUEST, true);
+        $model = TableRegistry::get('Paypalipns');
+        $row = $model->newEntity();
+        $row->rawrequest = $request;
+        $model->save($row);
+
         
         $ipn = new PaypalIPN();
         $ipn->useSandbox(); // remove me for production
@@ -34,14 +40,7 @@ class PaymentsController extends AppController {
         if ($verified)
         {
         
-            $request = print_r($_REQUEST, true);
-            $model = TableRegistry::get('Paypalipns');
-            $row = $model->newEntity();
-
-            $row->rawrequest = $request;
-
             
-            $model->save($row);
         }
 
         // Reply with an empty 200 response to indicate to paypal the IPN was received correctly.
