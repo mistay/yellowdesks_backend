@@ -31,8 +31,17 @@ class PaymentsController extends AppController {
         $ipn = new PaypalIPN();
         $ipn->useSandbox(); // remove me for production
         $verified = $ipn->verifyIPN();
-        if ($verified) {
+        if ($verified)
+        {
+        
+            $request = print_r($_REQUEST, true);
+            $model = TableRegistry::get('Paypalipns');
+            $row = $model->newEntity();
+
+            $row->rawrequest = $request;
+
             
+            $model->save($row);
         }
 
         // Reply with an empty 200 response to indicate to paypal the IPN was received correctly.
@@ -41,6 +50,7 @@ class PaymentsController extends AppController {
     }
 }
 
+//todo: errors sauber zu uns loggen
 class PaypalIPN
 {
 
@@ -156,7 +166,7 @@ class PaypalIPN
 
         // This is often required if the server is missing a global cert bundle, or is using an outdated one.
         if ($this->use_local_certs) {
-            curl_setopt($ch, CURLOPT_CAINFO,APP . "/3rdparty/paypal/cacert.pem");
+            curl_setopt($ch, CURLOPT_CAINFO, APP . "/3rdparty/paypal/cacert.pem");
         }
         curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
