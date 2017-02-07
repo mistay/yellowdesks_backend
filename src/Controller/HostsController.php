@@ -13,6 +13,17 @@ class HostsController extends AppController {
         $this->set("rows", $query);
         
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
+            
+            
+            $model = TableRegistry::get('Logs');
+            $row = $model->newEntity();
+            $row->message = print_r($_REQUEST, true);
+
+            if ($model->save($row)) {
+            }
+
+
+            
             $rows = $query->toArray();
             if (@$_REQUEST["format"] == "jsonbrowser") echo "<pre>";
             $ret = [];
