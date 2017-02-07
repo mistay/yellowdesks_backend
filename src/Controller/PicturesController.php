@@ -6,15 +6,26 @@ use Cake\ORM\TableRegistry;
 
 class PicturesController extends AppController {
     
-    //public $uses = array("Orderbutton");
-
+    public $paginate = [
+        'limit' => 100,
+        'order' => [
+            'Host.id' => 'asc'
+        ]
+    ];
+    
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Paginator');
+    }
+    
     public function index() {
         $model = TableRegistry::get('Pictures');
         
         $where = isset($_REQUEST["host_id"]) ? ['Hosts.id' => $_REQUEST["host_id"]] : [];  
 
         $query = $model->find('all')->where($where)->contain(['Hosts']);
-        $this->set("rows", $query);
+        $this->set("rows", $this->paginate($query));
         
         
         // e.g. http://localhost:8888/yellowdesks/pictures?host_id=5&format=jsonbrowser
