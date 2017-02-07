@@ -12,15 +12,19 @@ class HostsController extends AppController {
         $query = $model->find('all')->contain(['Pictures', 'Payments']);
         $this->set("rows", $query);
         
+        
+        $model = TableRegistry::get('Logs');
+        $row = $model->newEntity();
+        $row->message = print_r($_REQUEST, true) .  print_r($_SERVER, true);
+
+        if ($model->save($row)) {
+        }
+        
+        
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
             
             
-            $model = TableRegistry::get('Logs');
-            $row = $model->newEntity();
-            $row->message = print_r($_REQUEST, true);
-
-            if ($model->save($row)) {
-            }
+            
 
 
             
