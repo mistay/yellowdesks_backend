@@ -7,6 +7,14 @@ use Cake\Routing\Router;
 
 class HostsController extends AppController {
     
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+
+        //todo: secure me, only needed for app
+        $this->Auth->allow(['index']);
+    }
+    
     public function index() {
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')->contain(['Pictures', 'Payments']);
