@@ -1,8 +1,11 @@
 <h2>Pictures</h2>
 
+
+
+
 <table>
     <tr>
-        <th>Host</th>
+        <th><?php echo $this->Paginator->sort('host_id', "Host"); ?></th>
         <th>Data 100x100</th>
         <th>Data 100x100 cropped</th>
         <th>Edit</th>
