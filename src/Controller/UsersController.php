@@ -42,6 +42,27 @@ class UsersController extends AppController
 
     public function login()
     {
+        if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
+            if (@$_REQUEST["format"] == "jsonbrowser") echo "<pre>";
+            $ret = [];
+            
+            $ret["error"] = "no username or no password specified in request. please provide username/password combination.";
+            $user = $this->Auth->identify();
+            //if ($user) { //TODO
+                $ret["error"] = "";
+                $ret["username"] = "armin"; // todo: überlegen wie user/cowoker/hosts in db???!?!?
+                $ret["firstname"] = "armin";
+                $ret["lastname"] = "langhofer";
+            //} else {
+                //$ret["error"] = "username or password invalid";
+            //}
+            
+            echo json_encode($ret, JSON_PRETTY_PRINT);
+            if (@$_REQUEST["format"] == "jsonbrowser") echo "</pre>";
+            exit();
+        }
+        
+        
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
