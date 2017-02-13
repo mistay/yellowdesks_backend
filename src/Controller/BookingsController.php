@@ -4,11 +4,19 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
+use Cake\Event\Event;
 
 class BookingsController extends AppController {
     
-    //public $uses = array("Orderbutton");
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        
+        // todo: required for app, resolve properly
+        $this->Auth->allow(['bookingrequest']);
+    }
 
+    
     public function index() {
         $model = TableRegistry::get('Bookings');
         $query = $model->find('all')->contain(['Hosts', 'Coworkers']);
@@ -68,6 +76,18 @@ class BookingsController extends AppController {
 
         // todo: security: check if user is permitted to request this invoice
         $this->set("rows", $query);
+    }
+    
+    public function bookingrequest() {
+        $model = TableRegistry::get('Bookings');
+        // todo: implement me
+        
+        $ret = [
+            "success" => true
+        ];
+        
+        echo json_encode($ret, JSON_PRETTY_PRINT);
+        exit();
     }
 }
 ?>

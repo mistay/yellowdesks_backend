@@ -16,6 +16,9 @@ class HostsController extends AppController {
         $this->Auth->allow(['index']);
     }
     
+    
+    // todo: request device information (display size) and send imageURL with correct resolution
+    // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311
     public function index() {
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')->contain(['Pictures', 'Payments']);
@@ -52,6 +55,7 @@ class HostsController extends AppController {
                             "host" => $row->nickname,
                             "desks" => $row->desks,
                             "desks_avail" => $row->desks,
+                            "picture_id" => $row->picture_id,
                             "imageURL" => ($row->picture_id > 0 ? Router::url(['controller' => 'pictures', 'action' => 'get', $row->picture_id], true) : null),
                             "images" => $pictures,
                             "details" => $row->details,
