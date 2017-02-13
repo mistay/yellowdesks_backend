@@ -6,6 +6,15 @@ use Cake\ORM\TableRegistry;
 
 class PicturesController extends AppController {
     
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+
+        //todo: secure me, only needed for app
+        $this->Auth->allow(['get']);
+    }
+    
+    
     public $paginate = [
         'limit' => 100,
         'order' => [
