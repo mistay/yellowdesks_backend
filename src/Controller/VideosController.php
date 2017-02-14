@@ -64,7 +64,7 @@ class VideosController extends AppController {
                         [   "id" => $row->id,
                             "name" => $row->name,
                             "mime" => $row->mime,
-                            "url" => "https://yellowdesks.com/videos/" . $row->url),
+                            "url" => "https://yellowdesks.com/videos/" . $row->url,
                         ]);
                 
             }
