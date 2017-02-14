@@ -64,7 +64,7 @@ class VideosController extends AppController {
                         [   "id" => $row->id,
                             "name" => $row->name,
                             "mime" => $row->mime,
-                            "data" => base64_encode(stream_get_contents($row->data)),
+                            "url" => "https://yellowdesks.com/videos/" . $row->url),
                         ]);
                 
             }
@@ -81,9 +81,9 @@ class VideosController extends AppController {
         
         $model = TableRegistry::get('Videos');
         $query = $model->get($id);
-        $data = stream_get_contents($query->data);
+        //$data = stream_get_contents($query->data);
         
-        header("Content-Type: image/jpeg");
+        header("Content-Type: video/mp4");
         echo $data;
 
         exit(0);

@@ -11,10 +11,11 @@
     <tr>
         <td><?php echo $row->host->name . "<br />" . $row->host->address . "<br />" . $row->host->postal_code . $row->host->city; ?></td>
         <?php
-            $url = $this->Url->build(["controller" => "videos", "action" => "get", $row->id]);
+            //$url = $row->url;
+            $url =$this->Url->build() . $row->url;
         ?>
         <td>
-            <video width="320" height="240" controls>
+            <video width="320" controls>
               <source src="<?php echo $url; ?>" type="video/mp4">
               Your browser does not support the video tag.
             </video>
