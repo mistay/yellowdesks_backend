@@ -21,7 +21,7 @@ class HostsController extends AppController {
     // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311
     public function index() {
         $model = TableRegistry::get('Hosts');
-        $query = $model->find('all')->contain(['Pictures', 'Payments']);
+        $query = $model->find('all')->contain(['Pictures', 'Payments', 'Videos']);
         $this->set("rows", $query);
         
         
@@ -60,7 +60,8 @@ class HostsController extends AppController {
                             "images" => $pictures,
                             "details" => $row->details,
                             "title" => $row->title,
-                         
+                            "videoURL" => (sizeof($row->videos) > 0 ? Router::url(['controller' => 'videos', $row->videos[0]->url], true) : null),
+                            
                             // todo: in db schreiben damit nicht immer frische werte kommen (sonst könnte man lat & lng reversen)
                             "lat" => $row->lat + (mt_rand(-1000,1000) / 1000000.0),
                             "lng" => $row->lng + (mt_rand(-1000,1000) / 1000000.0),
