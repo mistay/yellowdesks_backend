@@ -60,6 +60,8 @@ class HostsController extends AppController {
                             "images" => $pictures,
                             "details" => $row->details,
                             "extras" => $row->extras,
+                            "open_from" => $row->open_from,
+                            "open_till" => $row->open_till,
                             "title" => $row->title,
                             "videoURL" => (sizeof($row->videos) > 0 ? Router::url(['controller' => 'videos', 'action' => '', $row->videos[0]->url], true) : null),
                             
