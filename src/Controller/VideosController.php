@@ -12,7 +12,7 @@ class VideosController extends AppController {
         parent::beforeFilter($event);
 
         //todo: secure me, only needed for app
-        $this->Auth->allow(['get']);
+        $this->Auth->allow(['index']);
     }
     
     
