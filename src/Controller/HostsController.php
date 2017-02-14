@@ -59,6 +59,7 @@ class HostsController extends AppController {
                             "imageURL" => ($row->picture_id > 0 ? Router::url(['controller' => 'pictures', 'action' => 'get', $row->picture_id], true) : null),
                             "images" => $pictures,
                             "details" => $row->details,
+                            "extras" => $row->extras,
                             "title" => $row->title,
                             "videoURL" => (sizeof($row->videos) > 0 ? Router::url(['controller' => 'videos', 'action' => '', $row->videos[0]->url], true) : null),
                             
