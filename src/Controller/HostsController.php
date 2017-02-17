@@ -57,7 +57,7 @@ class HostsController extends AppController {
                             "desks_avail" => $row->desks,
                             "picture_id" => $row->picture_id,
                             "imageURL" => ($row->picture_id > 0 ? Router::url(['controller' => 'pictures', 'action' => 'get', $row->picture_id], true) : null),
-                            "images" => $pictures,
+                            "imageURLs" => $pictures,
                             "details" => $row->details,
                             "extras" => $row->extras,
                             "open_from" => $row->open_from == null ? null : date("H:i:s", strtotime($row->open_from)),
