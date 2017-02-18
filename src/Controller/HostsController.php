@@ -47,7 +47,7 @@ class HostsController extends AppController {
                 
                 $pictures = [];
                 foreach ($row->pictures as $picture) {
-                    array_push($pictures, Router::url(['controller' => 'pictures', 'action' => 'get', $picture->id], true));
+                    array_push($pictures, Router::url(['controller' => 'pictures', 'action' => 'get', $picture->id, 'resolution' => '100x'], true));
                 }
                 
                 array_push($ret,
