@@ -37,9 +37,28 @@ class UsersController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['add', 'logout', 'home']);
+        $this->Auth->allow(['add', 'logout', 'home', 'loginappfb']);
     }
 
+    public function loginappfb($input_token) {
+        // https://developers.facebook.com/tools/accesstoken/ "yellowdesk" app
+        $url = "https://graph.facebook.com/debug_token?input_token=" . $input_token . "&access_token=349857342038820|ysb4EckVxJBJGuChffSWH-VLbfA";
+        
+        $ret = [];
+        $ret["success"] = false;
+        
+        $fb_result_json = file_get_contents($url);
+        $fb_result = json_decode($fb_result_json);
+        //print_r($fb_result);
+        
+        if ($fb_result->data->is_valid === true) {
+            $ret["success"] = true;
+        }
+        
+        echo json_encode($ret);
+        exit();
+    }
+    
     public function login()
     {
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
