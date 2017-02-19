@@ -21,9 +21,12 @@ class HostsController extends AppController {
     // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311
     public function index() {
         $model = TableRegistry::get('Hosts');
-        $query = $model->find('all')->contain(['Pictures', 'Payments', 'Videos']);
+        $query = $model->find('all')->contain(['Pictures'=> function ($q) {
+                                                               return $q
+                                                                    ->select(['id', 'host_id']);
+                                                            },
+                                               'Payments', 'Videos']);
         $this->set("rows", $query);
-        
         
         $model = TableRegistry::get('Logs');
         $row = $model->newEntity();
@@ -32,14 +35,7 @@ class HostsController extends AppController {
         if ($model->save($row)) {
         }
         
-        
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
-            
-            
-            
-
-
-            
             $rows = $query->toArray();
             if (@$_REQUEST["format"] == "jsonbrowser") echo "<pre>";
             $ret = [];
