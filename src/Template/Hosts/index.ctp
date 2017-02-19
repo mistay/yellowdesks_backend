@@ -42,7 +42,12 @@ setlocale(LC_MONETARY, 'de_DE');
             $url = $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id]);
             $url100cropped = $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id, "resolution" => "100x100", "crop" => "true"]);
         ?>
-        <td><?php if ($row->picture_id > 0) { ?><a href="<?php echo $url ?>"><img alt="" src='<?php echo $url100cropped ?>'></img></a><?php }?></td>
+        <td>
+            <a href="<?php echo $url; ?>">
+            <img alt="" src="<?php echo $url100cropped; ?>" />
+            </a>
+        </td>
+        
         <td><?php echo nl2br($row->address); ?></td>
         <td><?php echo $row->postal_code; ?></td>
         <td><?php echo $row->city; ?></td>
@@ -53,6 +58,20 @@ setlocale(LC_MONETARY, 'de_DE');
         <td><?php echo money_format("%i", $row->price_6months); ?></td>
         <td><a href="">Edit</a></td>
         <td><a href="">Delete</a></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td colspan="14">
+            <?php
+            foreach ($row->pictures as $picture) { 
+                $link = $this->Url->build(["controller" => "pictures", "action" => "get", $picture->id, "resolution" => "150x150", "crop" => "true"]);
+                $url = $this->Url->build(["controller" => "pictures", "action" => "get", $picture->id, "resolution" => "150x150", "crop" => "true"]);
+                ?>
+                <a href="<?php echo $link; ?>">
+                <img alt="" src="<?php echo $url; ?>" />
+                </a>
+            <?php } ?>
+        </td>
     </tr>
     <?php endforeach; ?>
 </table>
