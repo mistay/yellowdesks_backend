@@ -41,17 +41,30 @@ class UsersController extends AppController
     }
 
     public function loginappfb($input_token) {
-        // https://developers.facebook.com/tools/accesstoken/ "yellowdesk" app
-        $url = "https://graph.facebook.com/debug_token?input_token=" . $input_token . "&access_token=349857342038820|ysb4EckVxJBJGuChffSWH-VLbfA";
-        
         $ret = [];
         $ret["success"] = false;
         
+        // https://developers.facebook.com/docs/accountkit/graphapi
+        // https://developers.facebook.com/tools/accesstoken/ "yellowdesk" app
+        
+        // e.g. curl "https://graph.facebook.com/debug_token?input_token=EAAEZBMYKYIyQBALZCq1hcvvZCsoNNCXkpx8fRpXkwms36q3u7NAA9y9a9ZB7ew3PWJLj7ZBtczlZCdwkZCUOE3BhHxfhtgPLtjLOhBM3DWyOQP4bRjXs6HrNAZBIKXi4t80bRUxG6zUnccbgrPaPIyVQczZArEZAc7pmwLkGXTBTQ1bZC0CozlEqZAMGKecyevmmuP5jE0LYNF8JDiAyWY1eSNd3&access_token=349857342038820|ysb4EckVxJBJGuChffSWH-VLbfA"
+        // {"data":{"app_id":"349857342038820","application":"yellowdesk","expires_at":1492640267,"is_valid":true,"issued_at":1487456267,"scopes":["email","public_profile"],"user_id":"673726606120086"}}
+        
+        // query e-mail address
+        //curl "https://graph.facebook.com/me?fields=email&access_token=EAAEZBMYKYIyQBALZCq1hcvvZCsoNNCXkpx8fRpXkwms36q3u7NAA9y9a9ZB7ew3PWJLj7ZBtczlZCdwkZCUOE3BhHxfhtgPLtjLOhBM3DWyOQP4bRjXs6HrNAZBIKXi4t80bRUxG6zUnccbgrPaPIyVQczZArEZAc7pmwLkGXTBTQ1bZC0CozlEqZAMGKecyevmmuP5jE0LYNF8JDiAyWY1eSNd3"
+        
+        
+        //$url = "https://graph.facebook.com/debug_token?input_token=" . $input_token . "&access_token=349857342038820|ysb4EckVxJBJGuChffSWH-VLbfA";
+        $url = "https://graph.facebook.com/me?fields=email&access_token=" . $input_token;
         $fb_result_json = file_get_contents($url);
         $fb_result = json_decode($fb_result_json);
         //print_r($fb_result);
         
-        if ($fb_result->data->is_valid === true) {
+        
+        $fb_result_json = file_get_contents($url);
+        $fb_result = json_decode($fb_result_json);
+            
+        if ($fb_result->email != "") {
             $ret["success"] = true;
         }
         
