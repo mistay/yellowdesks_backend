@@ -8,12 +8,30 @@ use Cake\Event\Event;
 
 class HolidaysController extends AppController {
     
+    
+    public function foo() {
+        $list_json = file_get_contents($_SERVER["DOCUMENT_ROOT"] . "/list.json");
+        
+        
+        $list = json_decode($list_json);
+        
+        $ret = json_encode($list, JSON_PRETTY_PRINT);
+        
+        //print_r($list);
+        echo $ret;
+        
+        
+        
+        exit();
+        
+    }
+    
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
 
         //todo: secure me, only needed for app
-        $this->Auth->allow(['index', 'getworkingdays']);
+        $this->Auth->allow(['index', 'getworkingdays', 'getprice']);
     }
     
     
@@ -23,47 +41,31 @@ class HolidaysController extends AppController {
         $this->set("rows", $query);
     }
     
-    public function getworkingdays($unsafe_begin, $unsafe_end) {
-        $ret = [];
+    public function getprice($unsafe_host_id, $unsafe_begin, $unsafe_end) {
+        $host_id = (int) $unsafe_host_id;
         
-        $count = 0;
-        $ret["count"] = $count;
-        $ret["details"] = "";
+        $model = TableRegistry::get('Hosts');
+        $query = $model->get($host_id);
+        $query->price_1day;
         
-        $model = TableRegistry::get('Holidays');
-        $query = $model->find('all');
-        $this->set("rows", $query);
+        $model2 = TableRegistry::get('Holidays');
+        $workingdays = $model2->getworkingdays($unsafe_begin, $unsafe_end);
         
+        $days = $workingdays["count"];
+        if ($days > 0)
+            $price = $query->price_1day * $days;
+        else if ($days >= 10)
+            $price = $query->price_10days * $days/10;
+        else if ($days >= 31)
+            $price = $query->price_1month * $days/31;
+        else
+            $price = $query->price_6months * $days/(31*6);
         
-        $begin = new \Datetime($unsafe_begin);
-        $end = new \Datetime($unsafe_end);
-        $end = $end->modify( '+1 day' ); 
-
-        $interval = new \DateInterval('P1D');
-        $daterange = new \DatePeriod($begin, $interval ,$end);
-
-        
-        foreach($daterange as $date){
-            $ret["details"] .= $date->format("Y-m-d: ") . $date->format("Ymd") . ": ";
-
-            if (date('N', $date->getTimestamp()) >= 6) {
-                $ret["details"] .= "weekend\n";
-                continue;
-            }
-            
-            foreach ($query as $row) {
-                if ($date->format("Ymd") == date ("Ymd", strtotime($row->date))) {
-                    // holiday
-                    $ret["details"] .= "holiday\n";
-                    continue 2;
-                }
-            }
-            $ret["count"]++;
-            $ret["details"] .= "working day\n";
-        }
-        
-        echo json_encode($ret, JSON_PRETTY_PRINT);
+        $workingdays["price"] = $price;
+        echo json_encode($workingdays, JSON_PRETTY_PRINT);
         exit();
     }
+    
+    
 }
 ?>
