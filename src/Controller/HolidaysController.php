@@ -52,13 +52,13 @@ class HolidaysController extends AppController {
         $workingdays = $model2->getworkingdays($unsafe_begin, $unsafe_end);
         
         $days = $workingdays["count"];
-        if ($days >= 6*31)
+        if ($workingdays["calendardays"] >= 6*31)
             $price = $query->price_6months * $workingdays["calendardays"]/(31*6);
-        else if ($days >= 31)
+        else if ($workingdays["calendardays"] >= 31)
             $price = $query->price_1month * $workingdays["calendardays"]/31;
-        else if ($days >= 10)
+        else if ($workingdays["calendardays"] >= 10)
             $price = $query->price_10days * $days/10;
-        else if ($days > 0)
+        else if ($workingdays["calendardays"] > 0)
             $price = $query->price_1day * $days;
         
         $workingdays["price"] = $price;
