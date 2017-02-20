@@ -13,6 +13,7 @@ class HolidaysTable extends Table {
         $count = 0;
         $ret["count"] = $count;
         $ret["details"] = "";
+        $ret["calendardays"] = 0;
         
         $query = $this->find('all');
         
@@ -26,6 +27,8 @@ class HolidaysTable extends Table {
 
         
         foreach($daterange as $date){
+            $ret["calendardays"]++;
+            
             $ret["details"] .= $date->format("Y-m-d: ") . $date->format("Ymd") . ": ";
 
             if (date('N', $date->getTimestamp()) >= 6) {
