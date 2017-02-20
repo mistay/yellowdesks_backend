@@ -52,14 +52,14 @@ class HolidaysController extends AppController {
         $workingdays = $model2->getworkingdays($unsafe_begin, $unsafe_end);
         
         $days = $workingdays["count"];
-        if ($days > 0)
-            $price = $query->price_1day * $days;
-        else if ($days >= 10)
-            $price = $query->price_10days * $days/10;
+        if ($days >= 6*31)
+            $price = $query->price_6months * $days/(31*6);
         else if ($days >= 31)
             $price = $query->price_1month * $days/31;
-        else
-            $price = $query->price_6months * $days/(31*6);
+        else if ($days >= 10)
+            $price = $query->price_10days * $days/10;
+        else if ($days > 0)
+            $price = $query->price_1day * $days;
         
         $workingdays["price"] = $price;
         echo json_encode($workingdays, JSON_PRETTY_PRINT);
