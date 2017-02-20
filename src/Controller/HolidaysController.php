@@ -53,9 +53,9 @@ class HolidaysController extends AppController {
         
         $days = $workingdays["count"];
         if ($days >= 6*31)
-            $price = $query->price_6months * $days/(31*6);
+            $price = $query->price_6months * $workingdays["calendardays"]/(31*6);
         else if ($days >= 31)
-            $price = $query->price_1month * $days/31;
+            $price = $query->price_1month * $workingdays["calendardays"]/31;
         else if ($days >= 10)
             $price = $query->price_10days * $days/10;
         else if ($days > 0)
