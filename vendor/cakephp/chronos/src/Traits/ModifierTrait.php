@@ -90,7 +90,7 @@ trait ModifierTrait
     }
 
     /**
-     * Set the first day of week
+     * Set the last day of week
      *
      * @param int $day The day the week ends with.
      * @return void
@@ -1067,7 +1067,7 @@ trait ModifierTrait
     /**
      * Modify the current instance to the average of a given instance (default now) and the current instance.
      *
-     * @param ChronosInterface|null $dt The instance to compare with.
+     * @param \Cake\Chronos\ChronosInterface|null $dt The instance to compare with.
      * @return static
      */
     public function average(ChronosInterface $dt = null)

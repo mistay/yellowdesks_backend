@@ -446,7 +446,7 @@ class Hash
      * @param string|null $groupPath A dot-separated string.
      * @return array Combined array
      * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::combine
-     * @throws \RuntimeException  When keys and values count is unequal.
+     * @throws \RuntimeException When keys and values count is unequal.
      */
     public static function combine(array $data, $keyPath, $valuePath = null, $groupPath = null)
     {
@@ -837,7 +837,7 @@ class Hash
     public static function maxDimensions(array $data)
     {
         $depth = [];
-        if (is_array($data) && reset($data) !== false) {
+        if (is_array($data) && !empty($data)) {
             foreach ($data as $value) {
                 if (is_array($value)) {
                     $depth[] = static::maxDimensions($value) + 1;
