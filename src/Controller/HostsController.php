@@ -21,20 +21,27 @@ class HostsController extends AppController {
         $id=(int)$unsafe_id;
         $row = [];
         if ($id>0) {
-            $model = TableRegistry::get('Hosts');
             $row = $model->get($id);
-        
+        } else {
+            $row = $model->newEntity();
         }
         $this->set("row", $row);
-        //print_r($this->request->getData());
-        //$model->patchEntity($row, $this->request->getData());
-        //$model->save($row);
-        
+        if (!empty($this->request->getData())) {
+            $model->patchEntity($row, $this->request->getData());
+        //else
+        //    $row = $model->newEntity();
+
+            $model->save($row);
+            return $this->redirect(['action' => 'index']);
+        }
     }
     
     public function delete($unsafe_id) {
-        //$entity = $this->Articles->get($unsafe_id);
-        //$result = $this->Articles->delete($entity);
+        $model = TableRegistry::get('Hosts');
+        $row = $model->get($unsafe_id);
+        $result = $model->delete($row);
+        
+        return $this->redirect(['action' => 'index']);
     }
     
     public function calclatlngloose() {
