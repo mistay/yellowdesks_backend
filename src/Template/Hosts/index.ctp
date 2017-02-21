@@ -43,13 +43,16 @@ setlocale(LC_MONETARY, 'de_DE');
             ?>
         </td>
         <?php
+            
             $url = $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id]);
             $url100cropped = $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id, "resolution" => "100x100", "crop" => "true"]);
         ?>
         <td>
-            <a href="<?php echo $url; ?>">
-            <img alt="" src="<?php echo $url100cropped; ?>" />
+            <?php if ($row->picture_id > 0) { ?>
+                <a href="<?php echo $url; ?>">
+                <img alt="" src="<?php echo $url100cropped; ?>" />
             </a>
+            <?php } ?>
         </td>
         
         <td><?php echo nl2br($row->address); ?></td>
