@@ -6,7 +6,7 @@
 setlocale(LC_MONETARY, 'de_DE');
 
 ?>
-
+<a href="<?php echo $this->Url->build(["action" => "cru"]); ?>">Add</a>
 
 <table>
     <tr>
@@ -67,8 +67,8 @@ setlocale(LC_MONETARY, 'de_DE');
         <td><?php echo money_format("%i", $row->price_10days); ?></td>
         <td><?php echo money_format("%i", $row->price_1month); ?></td>
         <td><?php echo money_format("%i", $row->price_6months); ?></td>
-        <td><a href="">Edit</a></td>
-        <td><a href="">Delete</a></td>
+        <td><a href="<?php echo $this->Url->build(["action" => "cru", $row->id]); ?>">Edit</a></td>
+        <td><a href="<?php echo $this->Url->build(["action" => "delete", $row->id]); ?>">Delete</a></td>
     </tr>
     <tr>
         <td></td>
