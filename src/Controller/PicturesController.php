@@ -86,8 +86,9 @@ class PicturesController extends AppController {
         
         $virtualfilename = 'data://text/plain;base64,' . base64_encode($data);
         $exif = exif_read_data ( $virtualfilename );
+
         //$ort = $exif['IFD0']['Orientation'];
-        $ort = $exif['Orientation'];
+        $ort = (isset($exif['Orientation'])) ? $exif['Orientation'] : 0;
         
         $degrees=0;
         $flip=0;
