@@ -86,49 +86,21 @@ class PicturesController extends AppController {
         
         $virtualfilename = 'data://text/plain;base64,' . base64_encode($data);
         $exif = exif_read_data ( $virtualfilename );
-        
-        
-        //print_r($exif["Orientation"]);
-        
-        //echo "<pre>";
-        
-        //var_dump($exif);
-        //echo "</pre>";
-        
-        
         //$ort = $exif['IFD0']['Orientation'];
         $ort = $exif['Orientation'];
-        //$ort=1;
         
         $degrees=0;
+        $flip=0;
         switch($ort)
         {
-            case 1: // nothing
-            break;
-
-            case 2: // horizontal flip
-                $image->flipImage($public,1);
-            break;
-
-            case 3: $degrees = 180; break;
-
-            case 4: // vertical flip
-                $image->flipImage($public,2);
-            break;
-
-            case 5: // vertical flip + 90 rotate right
-                $image->flipImage($public, 2);
-                    $image->rotateImage($public, -90);
-            break;
-
-            case 6: $degrees = -90; break;
-
-            case 7: // horizontal flip + 90 rotate right
-                $image->flipImage($public,1);    
-                $image->rotateImage($public, -90);
-            break;
-
-            case 8: $degrees = 90; break;
+            case 1: /*nothing */ break;
+            case 2: $flip = IMG_FLIP_HORIZONTAL;                    break;
+            case 3:                                 $degrees = 180; break;
+            case 4: $flip = IMG_FLIP_VERTICAL;                      break;
+            case 5: $flip = IMG_FLIP_VERTICAL;      $degrees = -90; break;
+            case 6:                                 $degrees = -90; break;
+            case 7: $flip = IMG_FLIP_HORIZONTAL;    $degrees = -90; break;
+            case 8:                                 $degrees = 90;  break;
         }
             
             
@@ -162,6 +134,9 @@ class PicturesController extends AppController {
             
             if ($degrees != 0)
                 $dst_image = imagerotate($dst_image, $degrees, 0);
+            
+            if ($flip > 0)
+                imageflip ( $image, $flip );
             
             header("Content-Type: image/jpeg");
             imagejpeg ($dst_image);
