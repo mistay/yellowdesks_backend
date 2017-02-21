@@ -83,6 +83,55 @@ class PicturesController extends AppController {
         $query = $model->get($id);
         $data = stream_get_contents($query->data);
         
+        
+        $virtualfilename = 'data://text/plain;base64,' . base64_encode($data);
+        $exif = exif_read_data ( $virtualfilename );
+        
+        
+        //print_r($exif["Orientation"]);
+        
+        //echo "<pre>";
+        
+        //var_dump($exif);
+        //echo "</pre>";
+        
+        
+        //$ort = $exif['IFD0']['Orientation'];
+        $ort = $exif['Orientation'];
+        //$ort=1;
+        
+        $degrees=0;
+        switch($ort)
+        {
+            case 1: // nothing
+            break;
+
+            case 2: // horizontal flip
+                $image->flipImage($public,1);
+            break;
+
+            case 3: $degrees = 180; break;
+
+            case 4: // vertical flip
+                $image->flipImage($public,2);
+            break;
+
+            case 5: // vertical flip + 90 rotate right
+                $image->flipImage($public, 2);
+                    $image->rotateImage($public, -90);
+            break;
+
+            case 6: $degrees = -90; break;
+
+            case 7: // horizontal flip + 90 rotate right
+                $image->flipImage($public,1);    
+                $image->rotateImage($public, -90);
+            break;
+
+            case 8: $degrees = 90; break;
+        }
+            
+            
         // e.g. /pictures/get?resolution=320x240
         if (isset($_REQUEST["resolution"])) {
             $src_img = imagecreatefromstring($data);
@@ -110,6 +159,9 @@ class PicturesController extends AppController {
 
             $dst_image = imagecreatetruecolor($dst_w, $dst_h);
             imagecopyresized ($dst_image, $src_img , 0, 0, $srcX, $srcY, $dst_w, $dst_h , $src_w, $src_h);
+            
+            if ($degrees != 0)
+                $dst_image = imagerotate($dst_image, $degrees, 0);
             
             header("Content-Type: image/jpeg");
             imagejpeg ($dst_image);
