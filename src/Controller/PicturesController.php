@@ -85,10 +85,18 @@ class PicturesController extends AppController {
         
         
         $virtualfilename = 'data://text/plain;base64,' . base64_encode($data);
-        $exif = exif_read_data ( $virtualfilename );
-
+        
+        $exif = null;
+        $ort = 0;
+        try {
+            // kann zB bei pngs exif_read_data(H+VE2DH4J30BAAAAAElFTkSuQmCC): File not supported 
+            // werfen. deshalb mit @ .. todo: sauberer lösen?
+            $exif = @exif_read_data ( $virtualfilename );
+        } catch (Exception $e) {
+        }
+        
         //$ort = $exif['IFD0']['Orientation'];
-        $ort = (isset($exif['Orientation'])) ? $exif['Orientation'] : 0;
+        $ort = ($exif != null && isset($exif['Orientation'])) ? $exif['Orientation'] : 0;
         
         $degrees=0;
         $flip=0;
