@@ -16,6 +16,27 @@ class HostsController extends AppController {
         $this->Auth->allow(['index']);
     }
     
+    public function cru($unsafe_id=null) {
+        $model = TableRegistry::get('Hosts');
+        $id=(int)$unsafe_id;
+        $row = [];
+        if ($id>0) {
+            $model = TableRegistry::get('Hosts');
+            $row = $model->get($id);
+        
+        }
+        $this->set("row", $row);
+        //print_r($this->request->getData());
+        //$model->patchEntity($row, $this->request->getData());
+        //$model->save($row);
+        
+    }
+    
+    public function delete($unsafe_id) {
+        //$entity = $this->Articles->get($unsafe_id);
+        //$result = $this->Articles->delete($entity);
+    }
+    
     public function calclatlngloose() {
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')->where(['lat_loose is' => null, 'lng_loose is' => null,]);
