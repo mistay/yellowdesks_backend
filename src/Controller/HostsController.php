@@ -16,6 +16,18 @@ class HostsController extends AppController {
         $this->Auth->allow(['index']);
     }
     
+    public function calclatlngloose() {
+        $model = TableRegistry::get('Hosts');
+        $query = $model->find('all')->where(['lat_loose is' => null, 'lng_loose is' => null,]);
+
+        foreach ($query as $row) {
+            $row->lat_loose = $row->lat + (mt_rand(-1000,1000) / 1000000.0);
+            $row->lng_loose = $row->lng + (mt_rand(-1000,1000) / 1000000.0);
+            print_r($row);
+            $model->save($row);
+        }
+        exit();
+    }
     
     // todo: request device information (display size) and send imageURL with correct resolution
     // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311
