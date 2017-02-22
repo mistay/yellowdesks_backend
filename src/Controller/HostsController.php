@@ -107,8 +107,8 @@ class HostsController extends AppController {
                             "videoURL" => (sizeof($row->videos) > 0 ? Router::url(['controller' => 'videos', 'action' => '', $row->videos[0]->url], true) : null),
                             
                             // todo: in db schreiben damit nicht immer frische werte kommen (sonst könnte man lat & lng reversen)
-                            "lat" => $row->lat + (mt_rand(-1000,1000) / 1000000.0),
-                            "lng" => $row->lng + (mt_rand(-1000,1000) / 1000000.0),
+                            "lat" => $row->lat_loose,
+                            "lng" => $row->lng_loose,
                         ]);
             }
             
