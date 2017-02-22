@@ -98,6 +98,7 @@ class HostsController extends AppController {
                             "extras" => $row->extras,
                             "open_from" => $row->open_from == null ? null : date("H:i:s", strtotime($row->open_from)),
                             "open_till" => $row->open_till == null ? null : date("H:i:s", strtotime($row->open_till)),
+                            "open_247fixworkers" => $row->open_247fixworkers,
                             "price_1day" => $row->price_1day,
                             "price_10days" => $row->price_10days,
                             "price_1month" => $row->price_1month,
