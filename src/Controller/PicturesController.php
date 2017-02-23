@@ -66,7 +66,7 @@ class PicturesController extends AppController {
     }
     
     public function get($unsafe_id) {
-        if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $this->autoRender=false;
         
         $id = (int) $unsafe_id;

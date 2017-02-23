@@ -540,8 +540,25 @@ class CrumbsController extends Controller {
         return $role["Role"]["id"];
     }
 
+    function basicauth() {
+        
+        if (isset($_SERVER["PHP_AUTH_USER"]) && isset($_SERVER["PHP_AUTH_PW"])) {
+            
+            $user = $_SERVER["PHP_AUTH_USER"];
+            $pass = $_SERVER["PHP_AUTH_PW"];
+            $this->auth($user, $pass);
+            
+            return($this -> getLoggedInUser());
+        }
+    }
     function hasAccess($requiredRoles = array()) {
         $user = $this -> getLoggedInUser();
+        
+        if ($user == null) {
+            // user nicht angemeldet
+            $user = $this -> basicauth();
+        }
+        
         if ($user != null) {
 
             // user ist angemeldet
@@ -1126,11 +1143,10 @@ class CrumbsController extends Controller {
         $query = $model->find('all')->where(['Coworkers.username' => strtolower($username)]);
         $first = $query->first();
         
-        $log =  ["user_id" => $first['User']['id'], 
-                "REMOTE_ADDR" => $_SERVER['REMOTE_ADDR'],
+        $log =  ["REMOTE_ADDR" => $_SERVER['REMOTE_ADDR'],
                 "HTTP_USER_AGENT" => $_SERVER['HTTP_USER_AGENT'],
-                "HTTP_REFERER" => $_SERVER['HTTP_REFERER']];
-
+                "HTTP_REFERER" => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ""];
+        
         if ($first != null) {                              
             if ($first -> is_pass_init) {
                 if ($password == md5($username . $first['User']['email'])) {
@@ -1152,7 +1168,6 @@ class CrumbsController extends Controller {
             $authed = $first;
             $authed->role = ROLES::COWORKER;
         }
-
         $model = TableRegistry::get('Admins');
         $query = $model->find('all')->where(['Admins.username' => strtolower($username)]);
         $first = $query->first();
@@ -1162,9 +1177,9 @@ class CrumbsController extends Controller {
             $authed = $first;
             $authed->role = ROLES::ADMIN;
         }
-
+        
         if ($authed != null) {
-            $this->Flash->success('Authentication successful.');
+            //$this->Flash->success('Authentication successful.');
             $this -> request -> session() -> write('User', $authed) ;
             //split() not found
                 
@@ -1177,13 +1192,14 @@ class CrumbsController extends Controller {
                 }
             }
 */
+        
+            //return $authed;
             //return $targetURL;
-            return "/";
+            //return true;
         } else {
             $model2 -> info("auth() not successfully auth'ed username: " . $username);
-            
             $this->Flash->success('Authentication failed. Either username or password was wrong.');
-            return false;
+            //return false;
         }
     }
 

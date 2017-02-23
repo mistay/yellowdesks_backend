@@ -58,7 +58,6 @@ class HostsController extends AppController {
     // todo: request device information (display size) and send imageURL with correct resolution
     // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311
     public function index() {
-        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')->contain(['Pictures'=> function ($q) {
@@ -66,7 +65,8 @@ class HostsController extends AppController {
                                                                     ->select(['id', 'host_id']);
                                                             },
                                                'Payments', 'Videos']);
-        $this->set("rows", $query);
+        
+        
         
         $model = TableRegistry::get('Logs');
         $row = $model->newEntity();
@@ -78,6 +78,9 @@ class HostsController extends AppController {
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
             $rows = $query->toArray();
             if (@$_REQUEST["format"] == "jsonbrowser") echo "<pre>";
+            
+            if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+            
             $ret = [];
             foreach ($rows as $row) {
                 
@@ -116,6 +119,9 @@ class HostsController extends AppController {
             if (@$_REQUEST["format"] == "jsonbrowser") echo "</pre>";
             exit();
         }
+        
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        $this->set("rows", $query);
         
     }
 }
