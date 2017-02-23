@@ -20,23 +20,26 @@ $cakeDescription = 'Yellowdesks - new work';
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
-    <div style="float:right"><?= $loggedInAs; ?></div>
+    <div style="background-color: #f9e03e; padding: 20px; font-size: 20px">Yellow Desks :: find workspace near you.</div>
+    <div style="float:right; padding-right: 15px"><?= $loggedInAs; ?></div>
+    <div style="clear:both"></div>
     <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
+    
+    
+    <div style="display: flex;">
+        <nav style="min-width: 270px">
+            <ul>
+                <li><a href="<?= $this->Url->build(["controller" => "hosts"]); ?>">Hosts</a></li>
+                <li><a href="<?= $this->Url->build(["controller" => "coworkers"]); ?>">Coworkers</a></li>
+                <li><a href="<?= $this->Url->build(["controller" => "holidays"]); ?>">Holidays</a></li>
+                <li><a href="<?= $this->Url->build(["controller" => "bookings"]); ?>">Bookings</a></li>
+                <li><a href="<?= $this->Url->build(["controller" => "payments"]); ?>">Payments</a></li>
+                <li><a href="<?= $this->Url->build(["controller" => "pictures"]); ?>">Pictures</a></li>
+            </ul>
+        </nav>
+        <div class="container clearfix">
+            <?= $this->fetch('content') ?>
+        </div>  
     </div>
     <footer>
     </footer>

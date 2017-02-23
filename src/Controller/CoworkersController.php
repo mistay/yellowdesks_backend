@@ -44,5 +44,6 @@ class CoworkersController extends AppController {
             if (@$_REQUEST["format"] == "jsonbrowser") echo "</pre>";
             exit();
         }
+    }
 }
 ?>

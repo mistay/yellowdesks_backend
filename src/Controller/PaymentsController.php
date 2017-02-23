@@ -10,13 +10,6 @@ use Cake\Event\Event;
 
 class PaymentsController extends AppController {
     
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        // paypal muss sich nicht einloggen damit wir zahlungen akztpieren
-        $this->Auth->allow(['paypalipn']);
-    }
-    
     public function index() {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
 

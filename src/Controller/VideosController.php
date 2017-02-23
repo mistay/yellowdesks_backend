@@ -6,15 +6,12 @@ use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 
 class VideosController extends AppController {
-    
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
 
-        //todo: secure me, only needed for app
-        $this->Auth->allow(['index']);
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Paginator');
     }
-    
     
     public $paginate = [
         'limit' => 100,
@@ -22,12 +19,6 @@ class VideosController extends AppController {
             'Host.id' => 'asc'
         ]
     ];
-    
-    public function initialize()
-    {
-        parent::initialize();
-        $this->loadComponent('Paginator');
-    }
     
     public function index() {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
