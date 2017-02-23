@@ -9,6 +9,8 @@ use Cake\Event\Event;
 class HostsController extends AppController {
     
     public function cru($unsafe_id=null) {
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
         $model = TableRegistry::get('Hosts');
         $id=(int)$unsafe_id;
         $row = [];
@@ -29,6 +31,8 @@ class HostsController extends AppController {
     }
     
     public function delete($unsafe_id) {
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
         $model = TableRegistry::get('Hosts');
         $row = $model->get($unsafe_id);
         $result = $model->delete($row);
@@ -37,6 +41,8 @@ class HostsController extends AppController {
     }
     
     public function calclatlngloose() {
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')->where(['lat_loose is' => null, 'lng_loose is' => null,]);
 
@@ -52,10 +58,7 @@ class HostsController extends AppController {
     // todo: request device information (display size) and send imageURL with correct resolution
     // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311
     public function index() {
-        
-        if (!$this -> requireAccess( Roles::ADMIN )) return $this->redirect(["controller" => "users", "action" => "login"]); 
-
-        
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')->contain(['Pictures'=> function ($q) {

@@ -540,7 +540,7 @@ class CrumbsController extends Controller {
         return $role["Role"]["id"];
     }
 
-    function requireAccess($requiredRoles = array()) {
+    function hasAccess($requiredRoles = array()) {
         $user = $this -> getLoggedInUser();
         if ($user != null) {
 
