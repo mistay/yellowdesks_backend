@@ -8,14 +8,6 @@ use Cake\Event\Event;
 
 class HolidaysController extends AppController {
     
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-        //todo: secure me, only needed for app
-        $this->Auth->allow(['index', 'getworkingdays', 'getprice']);
-    }
-    
     public function index() {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $model = TableRegistry::get('Holidays');
@@ -24,7 +16,7 @@ class HolidaysController extends AppController {
     }
     
     public function getprice($unsafe_host_id, $unsafe_begin, $unsafe_end) {
-        if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::COWORKER, Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         // todo: bei 11 tagen zB 1x10er block + 1x einzelticket und nicht dividieren!
         $host_id = (int) $unsafe_host_id;
         
@@ -49,7 +41,5 @@ class HolidaysController extends AppController {
         echo json_encode($workingdays, JSON_PRETTY_PRINT);
         exit();
     }
-    
-    
 }
 ?>
