@@ -8,14 +8,6 @@ use Cake\Event\Event;
 
 class HostsController extends AppController {
     
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-        //todo: secure me, only needed for app
-        $this->Auth->allow(['index']);
-    }
-    
     public function cru($unsafe_id=null) {
         $model = TableRegistry::get('Hosts');
         $id=(int)$unsafe_id;
@@ -60,6 +52,11 @@ class HostsController extends AppController {
     // todo: request device information (display size) and send imageURL with correct resolution
     // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311
     public function index() {
+        
+        if (!$this -> requireAccess( Roles::ADMIN )) return $this->redirect(["controller" => "users", "action" => "login"]); 
+
+        
+        
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')->contain(['Pictures'=> function ($q) {
                                                                return $q

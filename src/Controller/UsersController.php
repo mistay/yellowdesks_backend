@@ -6,8 +6,8 @@ use Cake\Event\Event;
 
 class UsersController extends AppController
 {
-     public function index()
-     {
+    public function index()
+    {
         $this->set('users', $this->Users->find('all'));
     }
 
@@ -37,7 +37,7 @@ class UsersController extends AppController
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['add', 'logout', 'home', 'loginappfb']);
+        //$this->Auth->allow(['add', 'logout', 'home', 'loginappfb']);
     }
 
     public function loginappfb($input_token) {
@@ -68,10 +68,14 @@ class UsersController extends AppController
             $ret["success"] = true;
         }
         
+        // todo: provide login details
+        // todo: proof login against db
+        
         echo json_encode($ret);
         exit();
     }
     
+    /*
     public function login()
     {
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
@@ -103,17 +107,36 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('Invalid username or password, try again'));
         }
-    }
+    }*/
 
-    public function logout()
-    {
-        return $this->redirect($this->Auth->logout());
+    function logout() {
+        $this -> logoutSession();
+        $this -> redirect('/');
     }
     
     public function home() {
     
     }
-
     
+    function login() {
+        if ($this -> getLoggedInUser() != null) {
+            // user logged in
+            //$target = $this -> initMenu(true);
+            //$this -> redirect($target);
+        }
+        
+        $success = null;
+        
+        if ($this->request->is('post')) {
+            $username = $this -> request -> data['username'];
+            $password = $this -> request -> data['password'];
+
+            $success = $this -> auth($username, $password);
+            if ($success !== false) {
+                //$this -> redirect($success == "" ? "/" : $success);
+            }
+        }
+        $this -> set('success', $success);
+    }
 }
 ?>

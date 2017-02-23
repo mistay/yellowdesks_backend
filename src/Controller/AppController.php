@@ -25,7 +25,7 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
+class AppController extends CrumbsController
 {
 
     /**
@@ -45,6 +45,7 @@ class AppController extends Controller
         $this->loadComponent('Flash');
         
         //y//
+        /*
         $this->loadComponent('Auth', [
             'loginRedirect' => [
                 'controller' => 'Hosts',
@@ -56,6 +57,7 @@ class AppController extends Controller
                 'home'
             ]
         ]);
+        */
         //y//
 
         /*
