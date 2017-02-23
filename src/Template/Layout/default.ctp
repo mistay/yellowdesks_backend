@@ -33,6 +33,7 @@ $cakeDescription = 'Yellowdesks - new work';
             </ul>
         </div>
     </nav>
+    <div style="float:right"><?= $loggedInAs; ?></div>
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
         <?= $this->fetch('content') ?>
