@@ -38,6 +38,8 @@ class HolidaysController extends AppController {
             $price = $query->price_1day * $days;
         
         $workingdays["price"] = $price;
+        
+        
         echo json_encode($workingdays, JSON_PRETTY_PRINT);
         exit();
     }

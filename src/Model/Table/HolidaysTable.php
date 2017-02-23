@@ -21,7 +21,9 @@ class HolidaysTable extends Table {
         $begin = new \Datetime($unsafe_begin);
         $end = new \Datetime($unsafe_end);
         $end = $end->modify( '+1 day' ); 
-
+        $ret["begin"] = $begin->format("Y-m-d");
+        $ret["end"] = $end->format("Y-m-d");
+        
         $interval = new \DateInterval('P1D');
         $daterange = new \DatePeriod($begin, $interval ,$end);
 
