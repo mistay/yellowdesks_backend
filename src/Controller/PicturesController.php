@@ -3,18 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
-use Cake\Event\Event;
 
 class PicturesController extends AppController {
-    
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-        //todo: secure me, only needed for app
-        $this->Auth->allow(['get']);
-    }
-    
     
     public $paginate = [
         'limit' => 100,
