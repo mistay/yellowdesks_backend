@@ -138,25 +138,29 @@ class UsersController extends AppController
         $this->basicauth();
         if ($this -> getLoggedInUser() != null) {
             // user logged in
+            
             //$target = $this -> initMenu(true);
             //$this -> redirect($target);
         }
-        
+        //var_dump($this -> getLoggedInUser());
         $success = null;
         
         if ($this->request->is('post')) {
             $username = $this -> request -> data['username'];
             $password = $this -> request -> data['password'];
 
-            $success = $this -> auth($username, $password);
+            $this -> auth($username, $password);
         }
+        //var_dump($this -> getLoggedInUser());
         
-        if ($this->getLoggedInUser()) {
-            $this -> set('success', $success);
-            return;
+        if ($this -> getLoggedInUser() != null) {
+            if (isset($_REQUEST["redirect_url"])) {
+                //echo "redirecting..." . $_REQUEST["redirect_url"] ... $this->redirect() does not redirect to absolute 
+                // urls and thus /yellowdesks/yellowdesks/hosts/index url is generated instead of /yellowdesks/hosts/index
+                header("Location: " . $_REQUEST["redirect_url"]);
+                exit(0);
+            }
         }
-        
-        
     }
 }
 ?>

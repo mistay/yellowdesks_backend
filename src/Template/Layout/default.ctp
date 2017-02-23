@@ -28,6 +28,7 @@ $cakeDescription = 'Yellowdesks - new work';
     
     <div style="display: flex;">
         <nav style="min-width: 270px">
+            <?php if($loggedInUser != null) { ?>
             <ul>
                 <li><a href="<?= $this->Url->build(["controller" => "hosts"]); ?>">Hosts</a></li>
                 <li><a href="<?= $this->Url->build(["controller" => "coworkers"]); ?>">Coworkers</a></li>
@@ -35,7 +36,10 @@ $cakeDescription = 'Yellowdesks - new work';
                 <li><a href="<?= $this->Url->build(["controller" => "bookings"]); ?>">Bookings</a></li>
                 <li><a href="<?= $this->Url->build(["controller" => "payments"]); ?>">Payments</a></li>
                 <li><a href="<?= $this->Url->build(["controller" => "pictures"]); ?>">Pictures</a></li>
+                <li><a href="<?= $this->Url->build(["controller" => "logs"]); ?>">Logs</a></li>
             </ul>
+            <?php } ?>
+            
         </nav>
         <div class="container clearfix">
             <?= $this->fetch('content') ?>

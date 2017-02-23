@@ -509,6 +509,8 @@ class CrumbsController extends Controller {
         }
         
         $this->set("loggedInAs", $tmp);
+        $this->set ("loggedInUser", $loggedInUser);
+        
     }
 
     // deprecated
@@ -1120,7 +1122,11 @@ class CrumbsController extends Controller {
 
     
     function logoutSession() {
-        $this->request->session()->write('User', null) ;
+        $this->request->session()->write('User', null);
+        
+        if($this->request->session()->read('User') != null)
+            echo "error logging out";
+        
     }
     /**
      *  returns: target url on success, false (bool) otherwise
