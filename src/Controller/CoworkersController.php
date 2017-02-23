@@ -6,10 +6,9 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 
 class CoworkersController extends AppController {
-    
-    //public $uses = array("Orderbutton");
-
     public function index() {
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+
         $model = TableRegistry::get('Coworkers');
         $query = $model->find('all'); //->contain(['Pictures']);
         $this->set("rows", $query);
@@ -45,7 +44,5 @@ class CoworkersController extends AppController {
             if (@$_REQUEST["format"] == "jsonbrowser") echo "</pre>";
             exit();
         }
-        
-    }
 }
 ?>

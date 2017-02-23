@@ -8,16 +8,9 @@ use Cake\Event\Event;
 
 class BookingsController extends AppController {
     
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        
-        // todo: required for app, resolve properly
-        $this->Auth->allow(['bookingrequest']);
-    }
-
-    
     public function index() {
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+
         $model = TableRegistry::get('Bookings');
         $query = $model->find('all')->contain(['Hosts', 'Coworkers']);
         $this->set("rows", $query);
@@ -57,6 +50,8 @@ class BookingsController extends AppController {
     }
     
     public function invoice($id) {
+        if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+
         $model = TableRegistry::get('Bookings');
         $query = $model->get($id, [
             'contain' => ['Hosts', 'Coworkers']
@@ -68,6 +63,8 @@ class BookingsController extends AppController {
     }
     
     public function invoicehost($id) {
+        if (!$this -> hasAccess([Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+ 
         $model = TableRegistry::get('Bookings');
         $query = $model->find('all')->contain(['Coworkers'])->where(['host_id' => $id]);
 
@@ -79,6 +76,7 @@ class BookingsController extends AppController {
     }
     
     public function bookingrequest() {
+        if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $model = TableRegistry::get('Bookings');
         // todo: implement me
         

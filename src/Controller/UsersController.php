@@ -13,12 +13,14 @@ class UsersController extends AppController
 
     public function view($id)
     {
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $user = $this->Users->get($id);
         $this->set(compact('user'));
     }
 
-    public function add()
-    {
+    public function add() {
+       if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+       
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
@@ -31,16 +33,8 @@ class UsersController extends AppController
         $this->set('user', $user);
     }
     
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-        // Allow users to register and logout.
-        // You should not add the "login" action to allow list. Doing so would
-        // cause problems with normal functioning of AuthComponent.
-        //$this->Auth->allow(['add', 'logout', 'home', 'loginappfb']);
-    }
-
     public function loginappfb($input_token) {
+        if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $ret = [];
         $ret["success"] = false;
         
