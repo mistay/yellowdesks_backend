@@ -541,23 +541,15 @@ class CrumbsController extends Controller {
     }
 
     function basicauth() {
-        
         if (isset($_SERVER["PHP_AUTH_USER"]) && isset($_SERVER["PHP_AUTH_PW"])) {
-            
             $user = $_SERVER["PHP_AUTH_USER"];
             $pass = $_SERVER["PHP_AUTH_PW"];
             $this->auth($user, $pass);
-            
-            return($this -> getLoggedInUser());
         }
     }
     function hasAccess($requiredRoles = array()) {
+        $user = $this -> basicauth();
         $user = $this -> getLoggedInUser();
-        
-        if ($user == null) {
-            // user nicht angemeldet
-            $user = $this -> basicauth();
-        }
         
         if ($user != null) {
 

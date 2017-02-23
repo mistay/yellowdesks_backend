@@ -112,7 +112,30 @@ class UsersController extends AppController
     
     }
     
+    function getdetails() {
+        
+        $this->basicauth();
+        $ret=[];
+        $ret["error"] = "unknown error";
+        
+        $loggedinuser = $this -> getLoggedInUser();
+        
+        if ($loggedinuser == null) {
+            $ret["error"] = "invalid username or password";
+        } else {
+            $ret["error"] = "";
+            $ret["username"] = $loggedinuser->username;
+            $ret["firstname"] = $loggedinuser->firstname;
+            $ret["lastname"] = $loggedinuser->lastname;
+        }
+        
+        echo json_encode($ret);
+        exit();
+        
+    }
+    
     function login() {
+        $this->basicauth();
         if ($this -> getLoggedInUser() != null) {
             // user logged in
             //$target = $this -> initMenu(true);
@@ -126,11 +149,14 @@ class UsersController extends AppController
             $password = $this -> request -> data['password'];
 
             $success = $this -> auth($username, $password);
-            if ($success !== false) {
-                //$this -> redirect($success == "" ? "/" : $success);
-            }
         }
-        $this -> set('success', $success);
+        
+        if ($this->getLoggedInUser()) {
+            $this -> set('success', $success);
+            return;
+        }
+        
+        
     }
 }
 ?>
