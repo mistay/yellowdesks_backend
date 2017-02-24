@@ -22,10 +22,18 @@ class HostsController extends AppController {
         $this->set("row", $row);
         if (!empty($this->request->getData())) {
             $model->patchEntity($row, $this->request->getData());
+            
+            $row->open_247fixworkers = $this->request->getData("open_247fixworkers") == "on";
+            $row->lat_loose = null;
+            $row->lng_loose = null;
+            
         //else
         //    $row = $model->newEntity();
 
             $model->save($row);
+            
+            $this->calclatlngloose();
+            
             return $this->redirect(['action' => 'index']);
         }
     }
@@ -49,10 +57,10 @@ class HostsController extends AppController {
         foreach ($query as $row) {
             $row->lat_loose = $row->lat + (mt_rand(-1000,1000) / 1000000.0);
             $row->lng_loose = $row->lng + (mt_rand(-1000,1000) / 1000000.0);
-            print_r($row);
+            //print_r($row);
             $model->save($row);
         }
-        exit();
+        //exit();
     }
     
     // todo: request device information (display size) and send imageURL with correct resolution
