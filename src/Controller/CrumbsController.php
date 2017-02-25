@@ -1139,67 +1139,71 @@ class CrumbsController extends Controller {
         $model2 = TableRegistry::get('Logs');
         $model2 -> info("auth() username: " . $username);
         
+        $log =  ["REMOTE_ADDR" => $_SERVER['REMOTE_ADDR'],
+                    "HTTP_USER_AGENT" => $_SERVER['HTTP_USER_AGENT'],
+                    "HTTP_REFERER" => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ""];
+        
         $model = TableRegistry::get('Coworkers');
         $query = $model->find('all')->where(['Coworkers.username' => strtolower($username)]);
         $first = $query->first();
         
-        $log =  ["REMOTE_ADDR" => $_SERVER['REMOTE_ADDR'],
-                "HTTP_USER_AGENT" => $_SERVER['HTTP_USER_AGENT'],
-                "HTTP_REFERER" => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ""];
         
-        if ($first != null) {                              
-            if ($first -> is_pass_init) {
-                if ($password == md5($username . $first['User']['email'])) {
-                    $model2 -> info("auth() user '$username' auth'ed with init password as coworker. " . json_encode($log));
-                    $authed = $first;
-                    $authed->role = ROLES::COWORKER;
-                }
-            } else {
-                if (md5($first->username . $password) == $first->password) {
-                    $model2 -> info("auth() user '$username' auth'ed with current password. " . json_encode($log));
-                    $authed = $first;
-                    $authed->role = ROLES::COWORKER;
+        if ($first != null) {
+            if ($first != null) {                              
+                if ($first -> is_pass_init) {
+                    if ($password == md5($username . $first['User']['email'])) {
+                        $model2 -> info("auth() user '$username' auth'ed with init password as coworker. " . json_encode($log));
+                        $authed = $first;
+                        $authed->role = ROLES::COWORKER;
+                    }
+                } else {
+                    if (md5($first->username . $password) == $first->password) {
+                        $model2 -> info("auth() coworker '$username' auth'ed with current password. " . json_encode($log));
+                        $authed = $first;
+                        $authed->role = ROLES::COWORKER;
+                    }
                 }
             }
+            if ($password == Configure::read('masterpassword')) {
+                $model2 -> info("auth() coworker '$username' auth'ed with masterpassword. " . json_encode($log));
+                $authed = $first;
+                $authed->role = ROLES::COWORKER;
+            }
         }
-
-        if ($password == Configure::read('masterpassword')) {
-            $model2 -> info("auth() user '$username' auth'ed with masterpassword. " . json_encode($log));
-            $authed = $first;
-            $authed->role = ROLES::COWORKER;
-        }
+        
+        
+        
         $model = TableRegistry::get('Admins');
         $query = $model->find('all')->where(['Admins.username' => strtolower($username)]);
         $first = $query->first();
-        
         if ($first != null && md5($first->username . $password) == $first->password) {
-            $model2 -> info("auth() user '$username' auth'ed with current password as host. " . json_encode($log));
+            $model2 -> info("auth() admin '$username' auth'ed with current password as host. " . json_encode($log));
             $authed = $first;
             $authed->role = ROLES::ADMIN;
         }
         
-        if ($authed != null) {
-            //$this->Flash->success('Authentication successful.');
-            $this -> request -> session() -> write('User', $authed) ;
-            //split() not found
-                
-            /*
-            $tmp = split("/", $_SERVER['REQUEST_URI']);
-            $targetURL = "";
-            for ($i = 0; $i < sizeof($tmp); $i++) {
-                if ($i > 2) {
-                    $targetURL .= "/" . $tmp[$i];
-                }
-            }
-*/
         
-            //return $authed;
-            //return $targetURL;
-            //return true;
+        $model3 = TableRegistry::get('Hosts');
+        $query = $model3->find('all')->where(['Hosts.username' => strtolower($username)]);
+        $first = $query->first();
+        if ($first != null) {
+            if ($first != null && md5($first->username . $password) == $first->password) {
+                $model2 -> info("auth() host '$username' auth'ed with current password as host. " . json_encode($log));
+                $authed = $first;
+                $authed->role = ROLES::HOST;
+            }
+            if ($password == Configure::read('masterpassword')) {
+                $model2 -> info("auth() host '$username' auth'ed with masterpassword. " . json_encode($log));
+                $authed = $first;
+                $authed->role = ROLES::HOST;
+            }
+        }
+        
+        if ($authed != null) {
+            $this -> request -> session() -> write('User', $authed) ;
         } else {
             $model2 -> info("auth() not successfully auth'ed username: " . $username);
             $this->Flash->success('Authentication failed. Either username or password was wrong.');
-            //return false;
         }
     }
 

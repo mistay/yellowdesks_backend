@@ -153,7 +153,8 @@ class UsersController extends AppController
             
             // layout.ctp wurde schon gerendert, d.h. layout hat noch kein menu.
             // nochmal redirecten damit layout.ctp neu gerendert wird (dann mit menu, im eingloggten zustand)
-            $this->redirect(["controller" => "hosts", "action" => ""]);
+            //$this->redirect(["controller" => "hosts", "action" => ""]);
+            $this->redirect(["action" => "login"]);
         }
         //var_dump($this -> getLoggedInUser());
         

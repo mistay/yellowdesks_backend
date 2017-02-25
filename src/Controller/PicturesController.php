@@ -49,13 +49,20 @@ class PicturesController extends AppController {
     }
     
     public function index() {
-        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $model = TableRegistry::get('Pictures');
         
-        $where = isset($_REQUEST["host_id"]) ? ['Hosts.id' => $_REQUEST["host_id"]] : [];  
+        
+        $user = $this->getloggedInUser();
+        if ($user->role == Roles::HOST)
+            $where = ['host_id' => $user -> id];  
+        if ($user->role == Roles::ADMIN)
+            $where = isset($_REQUEST["host_id"]) ? ['Hosts.id' => $_REQUEST["host_id"]] : [];  
 
-        $query = $model->find('all')->where($where)->contain(['Hosts']);
-        $this->set("rows", $this->paginate($query));
+        //$query = $model->find('all')->where($where)->contain(['Hosts']);
+        $rows = $model->find('all')->where($where);
+        $this->set("rows", $rows);
+        
         
         
         // e.g. http://localhost:8888/yellowdesks/pictures?host_id=5&format=jsonbrowser
@@ -95,13 +102,22 @@ class PicturesController extends AppController {
     }
     
     public function get($unsafe_id) {
-        if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $this->autoRender=false;
         
         $id = (int) $unsafe_id;
         
         $model = TableRegistry::get('Pictures');
         $query = $model->get($id);
+        
+        // nur admin u. coworker (android app logged sich als coworker ein, weird?) dürfen alle bilder sehen, hosts nur die eigenen
+        $user = $this->getLoggedinUser();
+        if ($user->role != Roles::ADMIN) {
+            if ($user->id != $query->host_id) {
+                echo "access denied";
+                exit(0);
+            }
+        }
         $data = stream_get_contents($query->data);
         
         
@@ -175,8 +191,6 @@ class PicturesController extends AppController {
             print_r($data);
             
         }
-        
-        
         exit(0);
     }
 }

@@ -61,13 +61,24 @@
         <nav class="menunav" style="min-width: 170px">
             <?php if($loggedInUser != null) { ?>
             <ul class="menu">
-                <a href="<?= $this->Url->build(["controller" => "hosts"]); ?>"><li>Hosts</li></a>
-                <a href="<?= $this->Url->build(["controller" => "coworkers"]); ?>"><li>Coworkers</li></a>
-                <a href="<?= $this->Url->build(["controller" => "holidays"]); ?>"><li>Holidays</li></a>
-                <a href="<?= $this->Url->build(["controller" => "bookings"]); ?>"><li>Bookings</li></a>
-                <a href="<?= $this->Url->build(["controller" => "payments"]); ?>"><li>Payments</li></a>
-                <a href="<?= $this->Url->build(["controller" => "pictures"]); ?>"><li>Pictures</li></a>
-                <a href="<?= $this->Url->build(["controller" => "logs"]); ?>"><li>Logs</li></a>
+                
+                <?php $loggedinuser = $this->request->session()->read('User'); ?>
+                
+                <?php if ($loggedinuser -> role == "ADMIN") { ?>
+                    <a href="<?= $this->Url->build(["controller" => "hosts"]); ?>"><li>Hosts</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "coworkers"]); ?>"><li>Coworkers</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "holidays"]); ?>"><li>Holidays</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "bookings"]); ?>"><li>Bookings</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "payments"]); ?>"><li>Payments</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "pictures"]); ?>"><li>Pictures</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "logs"]); ?>"><li>Logs</li></a>
+                <?php } ?>
+                
+                <?php if ($loggedinuser -> role == "HOST") { ?>
+                    <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "mydetails"]); ?>"><li>My Details</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "pictures", "action" => "index"]); ?>"><li>My Pictures</li></a>
+                
+                <?php } ?>
             </ul>
             
             
