@@ -9,10 +9,19 @@ use Cake\Event\Event;
 class HostsController extends AppController {
     
     public function cru($unsafe_id=null) {
-        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         
         $model = TableRegistry::get('Hosts');
-        $id=(int)$unsafe_id;
+        
+        $user = $this->getloggedInUser();
+        
+        if ($user->role==Roles::ADMIN)
+            $id=(int)$unsafe_id;
+        
+        if ($user->role==Roles::HOST)
+            $id = $user -> id;
+        
+        
         $row = [];
         if ($id>0) {
             $row = $model->get($id);

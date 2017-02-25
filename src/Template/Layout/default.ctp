@@ -75,7 +75,7 @@
                 <?php } ?>
                 
                 <?php if ($loggedinuser -> role == "HOST") { ?>
-                    <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "mydetails"]); ?>"><li>My Details</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "cru"]); ?>"><li>My Details</li></a>
                     <a href="<?= $this->Url->build(["controller" => "pictures", "action" => "index"]); ?>"><li>My Pictures</li></a>
                 
                 <?php } ?>
