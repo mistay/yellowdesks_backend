@@ -44,6 +44,10 @@
             padding-left: 20px;
             width: 100%;
         }
+        .hostname {
+            color: grey;
+            font-size: 10px;
+        }
     </style>
 </head>
 <body>
@@ -65,7 +69,10 @@
                 <a href="<?= $this->Url->build(["controller" => "pictures"]); ?>"><li>Pictures</li></a>
                 <a href="<?= $this->Url->build(["controller" => "logs"]); ?>"><li>Logs</li></a>
             </ul>
+            
+            
             <?php } ?>
+            <div class="hostname"><?= gethostname(); ?></div>
             
         </nav>
         <div class="content">
