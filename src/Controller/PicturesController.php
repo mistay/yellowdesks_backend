@@ -19,6 +19,35 @@ class PicturesController extends AppController {
         $this->loadComponent('Paginator');
     }
     
+    public function cru() {
+        $model = TableRegistry::get('Hosts');
+        $query = $model->find('all');
+        $this->set("rows", $query);
+        
+        $data = $this->request->getData();
+        if (!empty($data)) {
+            
+            //print_r($data["files"]);
+            foreach ($data["files"] as $file) {
+                $model2 = TableRegistry::get('Pictures');
+                $row = $model2->newEntity();
+                
+                $row->mime=$file["type"];
+                $row->name="helloworld";
+                $row->host_id=5;
+                //print_r($row);
+                $row->data = file_get_contents($file["tmp_name"]);
+                //print_r($row);
+                $succ = $model2->save($row);
+                //echo "succ"; var_dump($succ);
+                
+                // prevent DUPes by browser reload
+                $this->redirect(["action" => "cru"]);
+                
+            }
+        }
+    }
+    
     public function index() {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $model = TableRegistry::get('Pictures');

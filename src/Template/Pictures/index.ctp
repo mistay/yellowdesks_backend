@@ -1,7 +1,6 @@
 <h2>Pictures</h2>
 
-
-
+<a href="<?php echo $this->Url->build(["action" => "cru"]); ?>">Add</a>
 
 <table>
     <tr>
