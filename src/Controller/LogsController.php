@@ -14,6 +14,11 @@ class LogsController extends AppController {
         $query = $model->find('all', ['order' => ['ts_logged' => 'DESC']])->limit(100);
         $this->set("rows", $query);
     }
-    
+    public function clear() {
+        $model = TableRegistry::get('Logs');
+        $query = $model->deleteAll([]);
+        
+        $this->redirect(["action" => "index"]);
+    }
 }
 ?>
