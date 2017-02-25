@@ -1,12 +1,16 @@
 <h2><?php echo empty($row) ? "Add" : "Edit" ?> Pictures</h2>
 
 <form name="form1" method="post" enctype="multipart/form-data">
-    
-    <select name="host_id">
-        <?php foreach ($rows as $row): ?>
-            <option value="<?= $row->id ?>"><?= $row->name . " (id: " . $row->id . ")" ?></option>
-        <?php endforeach ?>
-    </select>
+    <?php $loggedinuser = $this->request->session()->read('User'); ?>
+         
+    <?php if ($loggedinuser -> role == "ADMIN") { ?>
+        <select name="host_id">
+            <?php foreach ($rows as $row): ?>
+                <option value="<?= $row->id ?>"><?= $row->name . " (id: " . $row->id . ")" ?></option>
+            <?php endforeach ?>
+        </select>
+    <?php } ?>
+
     <br /><br />
     <?= __("You can choose one or more pictures for upload. Resolution: the more, the better."); ?>
     <input type="file" name="files[]" multiple>
