@@ -23,6 +23,6 @@ th {
     white-space:nowrap;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
     width: 100%;
 }
