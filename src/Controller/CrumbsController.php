@@ -322,7 +322,8 @@ class CrumbsController extends Controller {
     
     
    // public function beforeRender(Event $event) {
-        
+        setlocale(LC_MONETARY, 'de_DE');
+
         session_start();
         
         //echo "session started";

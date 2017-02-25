@@ -7,14 +7,6 @@
 
 <h2>Invoice</h2>
 
-<?php
-// toto: globalize me
-
-setlocale(LC_MONETARY, 'de_DE');
-
-?>
-
-
 <table>
     <tr>
         <th>Date</th>

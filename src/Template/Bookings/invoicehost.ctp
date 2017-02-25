@@ -11,8 +11,6 @@
 
 
 <?php
-// toto: globalize me
-setlocale(LC_MONETARY, 'de_DE');
 $total=0;
 ?>
 

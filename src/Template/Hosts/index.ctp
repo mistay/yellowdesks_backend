@@ -1,11 +1,5 @@
 <h2>Hosts</h2>
 
-<?php
-// toto: globalize me
-
-setlocale(LC_MONETARY, 'de_DE');
-
-?>
 <a href="<?php echo $this->Url->build(["action" => "cru"]); ?>">Add</a>
 
 <table>
