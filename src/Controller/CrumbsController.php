@@ -500,9 +500,10 @@ class CrumbsController extends Controller {
         $ret = array();
 
         $loggedInUser = $this -> getLoggedInUser();
-        if ($loggedInUser == null)
+        if ($loggedInUser == null) {
             $tmp = __("not logged in.");
-        else {
+            $tmp .= "<a href='" . Router::url(['controller' => 'users', 'action' => 'login']) . "'>".__("login")."</a>";
+        } else {
             $tmp = __("logged in as {0} with username {1}. ", $loggedInUser -> role, $loggedInUser -> username);
             $tmp .= "<a href='" . Router::url(['controller' => 'users', 'action' => 'logout']) . "'>".__("logout")."</a>";
              
