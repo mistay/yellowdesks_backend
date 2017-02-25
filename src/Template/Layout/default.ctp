@@ -48,10 +48,18 @@
             color: grey;
             font-size: 10px;
         }
+        .header {
+            background-color: #f9e03e; 
+            padding: 20px; 
+            font-size: 20px;
+        }
+        .header a {
+            color: black;
+        }
     </style>
 </head>
 <body>
-    <div style="background-color: #f9e03e; padding: 20px; font-size: 20px">Yellow Desks :: find workspace near you.</div>
+    <div class="header"><a href="<?= $this->Url->build("/"); ?>">Yellow Desks :: find workspace near you.</a></div>
     <div style="float:right; padding-right: 15px"><?= $loggedInAs; ?></div>
     <div style="clear:both"></div>
     <?= $this->Flash->render() ?>
