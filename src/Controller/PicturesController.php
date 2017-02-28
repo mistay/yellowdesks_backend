@@ -111,8 +111,9 @@ class PicturesController extends AppController {
         $query = $model->get($id);
         
         // nur admin u. coworker (android app logged sich als coworker ein, weird?) dürfen alle bilder sehen, hosts nur die eigenen
+        // macht das sinn? host könnte mit 2. coworker konto anmelden & bild holen
         $user = $this->getLoggedinUser();
-        if ($user->role != Roles::ADMIN) {
+        if ($user->role == Roles::HOST ) {
             if ($user->id != $query->host_id) {
                 echo "access denied";
                 exit(0);
