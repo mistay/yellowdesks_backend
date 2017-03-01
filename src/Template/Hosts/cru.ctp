@@ -11,6 +11,10 @@
             <td><input type="text" name="nickname" placeholder="John" value='<?php echo @$row["nickname"] ?>' /></td>
         </tr>
         <tr>
+            <th>Username</th>
+            <td><input type="text" name="username" placeholder="John" value='<?php echo @$row["username"] ?>' /></td>
+        </tr>
+        <tr>
             <th>Title</th>
             <td><input type="text" name="title" placeholder="Creative agency downtown Salzburg" value='<?php echo @$row["title"] ?>' /></td>
         </tr>
