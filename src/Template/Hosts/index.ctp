@@ -7,7 +7,7 @@
         <th>Name</th>
         <th>Sales (calc'ed)</th>
         <th>Title</th>
-        <th>Details<br />Extras<br />Opening instructions</th>
+        <th>Included<br />Excluded<br />Opening instructions</th>
         <th>Address</th>
         <th>GPS</th>
         <th>Price</th>
@@ -36,7 +36,7 @@
         <?php echo money_format("%i", $row->price_10days); ?>
         <?php echo money_format("%i", $row->price_1month); ?>
         <?php echo money_format("%i", $row->price_6months); ?></td>
-        <td><?php echo $row->open_from == null ? "" : date("H:i", strtotime($row->open_from)); ?> - <?php echo $row->open_till == null ? "" : date("H:i", strtotime($row->open_till)); ?></td>
+        <td><?php echo $row->open_from == null ? "" : date("H:i", strtotime($row->open_from)); ?> - <?php echo $row->open_till == null ? "" : date("H:i", strtotime($row->open_till)); ?><?php echo $row->open_247fixworkers ? "<br />open 24/7" : "" ?></td>
         <td><a href="<?php echo $this->Url->build(["action" => "cru", $row->id]); ?>">Edit</a></td>
         <td><a onclick="return confirm('are you sure?')" href="<?php echo $this->Url->build(["action" => "delete", $row->id]); ?>">Delete</a></td>
     </tr>

@@ -15,11 +15,11 @@
             <td><input type="text" name="title" placeholder="Creative agency downtown Salzburg" value='<?php echo @$row["title"] ?>' /></td>
         </tr>
         <tr>
-            <th>Details</th>
+            <th>Included</th>
             <td><input type="text" name="details" placeholder="high speed wifi, business printer both a4 and a3, coffee" value='<?php echo @$row["details"] ?>' /></td>
         </tr>
         <tr>
-            <th>Extras</th>
+            <th>Excluded</th>
             <td><input type="text" name="extras" placeholder="parking lot, photo studio equipment, plotter" value='<?php echo @$row["extras"] ?>' /></td>
         </tr>
         <tr>
