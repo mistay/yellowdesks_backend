@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <th>Username</th>
-            <td><input type="text" name="title" placeholder="johndoe" value='<?php echo @$row["username"] ?>' /></td>
+            <td><input type="text" name="username" placeholder="johndoe" value='<?php echo @$row["username"] ?>' /></td>
         </tr>
         <tr>
             <th>Address</th>
