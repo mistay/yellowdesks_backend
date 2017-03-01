@@ -87,6 +87,12 @@
                     <a href="<?= $this->Url->build(["controller" => "pictures", "action" => "index"]); ?>"><li>My Pictures</li></a>
                 
                 <?php } ?>
+                
+                
+                <?php if ($loggedinuser -> role == "COWORKER") { ?>
+                    <a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "cru"]); ?>"><li>My Details</li></a>
+                
+                <?php } ?>
             </ul>
             
             

@@ -74,7 +74,7 @@ class CoworkersController extends AppController {
             
             $model->save($row);
             
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['action' => 'cru']);
         }
     }
     
