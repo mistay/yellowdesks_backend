@@ -35,6 +35,10 @@
             <td><input type="text" name="address" placeholder="Jakob-Haringer-Str. 3" value='<?php echo @$row["address"] ?>' /></td>
         </tr>
         <tr>
+            <th>Address</th>
+            <td><input type="text" name="email" placeholder="johndoe@example.com" value='<?php echo @$row["email"] ?>' /></td>
+        </tr>
+        <tr>
             <th>Postal Code</th>
             <td><input type="text" name="postal_code" placeholder="5020" value='<?php echo @$row["postal_code"] ?>' /></td>
         </tr>
