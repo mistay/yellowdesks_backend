@@ -1,11 +1,15 @@
 <h2>Coworkers</h2>
 
+<a href="<?php echo $this->Url->build(["action" => "cru"]); ?>">Add</a>
+
 <table>
     <tr>
         <th>Firstname</th>
         <th>Lastname</th>
         <th>Username</th>
-        <th>Companyname<br />VAT ID</th>
+        <th>Companyname</th>
+        <th>Address</th>
+        <th>VATID</th>
         <th>E-Mail</th>
         <th>Edit</th>
         <th>Delete</th>
@@ -13,13 +17,14 @@
     <?php foreach ($rows as $row): ?>
     <tr>
         <td><?php echo $row->firstname ?></td>
-        <td><?php echo $row->lastname; ?></td>
-        <td><?php echo $row->username; ?></td>
-        <td><?php echo $row->companyname; ?><br /><?php echo $row->vatid; ?></td>
-        <td><a href="mailto:<?= $row->email; ?>"><?= $row->email; ?></a></td>
-        
-        <td><a href="">Edit</a></td>
-        <td><a href="">Delete</a></td>
+        <td><?php echo $row->lastname ?></td>
+        <td><?php echo $row->username ?></td>
+        <td><?php echo $row->companyname ?><br />
+        <td><?= $row->address; ?><br /><?= $row->postal_code; ?> <?= $row->city ?><br />
+        <td><?php echo $row->vatid; ?><br />
+        <td><a href="mailto:<?= $row->email; ?>"><?= $row->email ?><br />
+        <td><a href="<?php echo $this->Url->build(["action" => "cru", $row->id]); ?>">Edit</a></td>
+        <td><a onclick="return confirm('are you sure?')" href="<?php echo $this->Url->build(["action" => "delete", $row->id]); ?>">Delete</a></td>
     </tr>
     <?php endforeach; ?>
 </table>

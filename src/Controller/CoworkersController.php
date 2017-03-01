@@ -45,5 +45,47 @@ class CoworkersController extends AppController {
             exit();
         }
     }
+    
+    public function cru($unsafe_id=null) {
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        $model = TableRegistry::get('Coworkers');
+        
+        $user = $this->getloggedInUser();
+        
+        if ($user->role==Roles::ADMIN)
+            $id=(int)$unsafe_id;
+        
+        if ($user->role==Roles::COWORKER)
+            $id = $user -> id;
+        
+        
+        $row = [];
+        if ($id>0) {
+            $row = $model->get($id);
+        } else {
+            $row = $model->newEntity();
+        }
+        $this->set("row", $row);
+        if (!empty($this->request->getData())) {
+            $model->patchEntity($row, $this->request->getData());
+            
+            //$row->password = md5($row->username . $this->request->getData()->password);
+            
+            $model->save($row);
+            
+            return $this->redirect(['action' => 'index']);
+        }
+    }
+    
+    public function delete($unsafe_id) {
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        $model = TableRegistry::get('Coworkers');
+        $row = $model->get($unsafe_id);
+        $result = $model->delete($row);
+        
+        return $this->redirect(['action' => 'index']);
+    }
 }
 ?>
