@@ -1203,7 +1203,7 @@ class CrumbsController extends Controller {
             $this -> request -> session() -> write('User', $authed) ;
         } else {
             $model2 -> info("auth() not successfully auth'ed username: " . $username);
-            $this->Flash->success('Authentication failed. Either username or password was wrong.');
+            $this->Flash->success('Unable to login. Either username or password is incorrect.');
         }
     }
 
