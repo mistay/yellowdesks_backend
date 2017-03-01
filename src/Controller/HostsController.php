@@ -47,6 +47,43 @@ class HostsController extends AppController {
         }
     }
     
+    public function changepass($unsafe_id) {
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]);
+        
+        $user = $this->getloggedInUser();
+        
+        if ($user->role==Roles::ADMIN)
+            $id=(int)$unsafe_id;
+        
+        if ($user->role==Roles::HOST)
+            $id = $user -> id;
+        
+        $model = TableRegistry::get('Hosts');
+        $row = $model->get($unsafe_id);
+        $this->set("row", $row);
+        
+        if (!empty($this->request->getData())) {
+            $model->patchEntity($row, $this->request->getData());
+            
+            $pass1 = $this->request->getData()["password1"];
+            $pass2 = $this->request->getData()["password2"];
+            
+            if ($pass1 == $pass2) {
+                
+                $row->password = md5($row->username . $pass1);
+                
+                if ($model->save($row)) {
+                    $this->Flash->set('Password successfully set.');
+                    return $this->redirect(['action' => 'cru', $id]);
+                } else {
+                    $this->Flash->error(__('Database Error: Could not save data.'));
+                }
+            } else {
+                $this->Flash->error(__('Passwords do not match, please correct.'));
+            }
+        }
+    }
+    
     public function delete($unsafe_id) {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         

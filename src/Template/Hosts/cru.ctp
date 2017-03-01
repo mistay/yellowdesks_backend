@@ -80,6 +80,10 @@
         </tr>
         <tr>
             <th></th>
+            <td><a href="<?php echo $this->Url->build(["action" => "changepass", $row->id]); ?>">Change Password</a></td>
+        </tr>
+        <tr>
+            <th></th>
             <td><input type="submit" value="Save" /></td>
         </tr>
     </table>
