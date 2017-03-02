@@ -1130,9 +1130,42 @@ class CrumbsController extends Controller {
             echo "error logging out";
         
     }
-    /**
-     *  returns: target url on success, false (bool) otherwise
-     */
+
+
+    public function authfacebook($input_token) {
+        $ret = [];
+        $ret["success"] = false;
+        
+        // https://developers.facebook.com/docs/accountkit/graphapi
+        // https://developers.facebook.com/tools/accesstoken/ "yellowdesk" app
+        
+        // e.g. curl "https://graph.facebook.com/debug_token?input_token=EAAEZBMYKYIyQBALZCq1hcvvZCsoNNCXkpx8fRpXkwms36q3u7NAA9y9a9ZB7ew3PWJLj7ZBtczlZCdwkZCUOE3BhHxfhtgPLtjLOhBM3DWyOQP4bRjXs6HrNAZBIKXi4t80bRUxG6zUnccbgrPaPIyVQczZArEZAc7pmwLkGXTBTQ1bZC0CozlEqZAMGKecyevmmuP5jE0LYNF8JDiAyWY1eSNd3&access_token=349857342038820|ysb4EckVxJBJGuChffSWH-VLbfA"
+        // {"data":{"app_id":"349857342038820","application":"yellowdesk","expires_at":1492640267,"is_valid":true,"issued_at":1487456267,"scopes":["email","public_profile"],"user_id":"673726606120086"}}
+        
+        // query e-mail address
+        //curl "https://graph.facebook.com/me?fields=email&access_token=EAAEZBMYKYIyQBALZCq1hcvvZCsoNNCXkpx8fRpXkwms36q3u7NAA9y9a9ZB7ew3PWJLj7ZBtczlZCdwkZCUOE3BhHxfhtgPLtjLOhBM3DWyOQP4bRjXs6HrNAZBIKXi4t80bRUxG6zUnccbgrPaPIyVQczZArEZAc7pmwLkGXTBTQ1bZC0CozlEqZAMGKecyevmmuP5jE0LYNF8JDiAyWY1eSNd3"
+        
+        
+        //$url = "https://graph.facebook.com/debug_token?input_token=" . $input_token . "&access_token=349857342038820|ysb4EckVxJBJGuChffSWH-VLbfA";
+        $url = "https://graph.facebook.com/me?fields=email&access_token=" . $input_token;
+        $fb_result_json = file_get_contents($url);
+        $fb_result = json_decode($fb_result_json);
+        //print_r($fb_result);
+        
+        $fb_result_json = file_get_contents($url);
+        $fb_result = json_decode($fb_result_json);
+            
+        $model = TableRegistry::get('Coworkers');
+        $query = $model->find('all')->where(['Coworkers.email' => strtolower($fb_result->email)]);
+        $first = $query->first();
+        if ($first != null) {
+            $authed = $first;
+            $authed->role = ROLES::COWORKER;
+            $this -> request -> session() -> write('User', $authed) ;
+        }
+    }
+
+
     function auth($username, $password) {
         $authed = null;
         
@@ -1141,8 +1174,15 @@ class CrumbsController extends Controller {
         
         $log =  ["REMOTE_ADDR" => $_SERVER['REMOTE_ADDR'],
                     "HTTP_USER_AGENT" => $_SERVER['HTTP_USER_AGENT'],
-                    "HTTP_REFERER" => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ""];
+                    "HTTP_REFERER" => isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "",
+                    "HTTP_LOGINTARGET" => isset($_SERVER['HTTP_LOGINTARGET']) ? $_SERVER['HTTP_LOGINTARGET'] : "",
+                ];
         
+        if (isset($_SERVER['HTTP_LOGINTARGET']) && $_SERVER['HTTP_LOGINTARGET'] == "FACEBOOK") {
+            $this->authfacebook($_SERVER["PHP_AUTH_PW"]);
+            return;
+        }
+
         $model = TableRegistry::get('Coworkers');
         $query = $model->find('all')->where(['Coworkers.username' => strtolower($username)]);
         $first = $query->first();
