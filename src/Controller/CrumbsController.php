@@ -545,14 +545,18 @@ class CrumbsController extends Controller {
     }
 
     function basicauth() {
-        if (isset($_SERVER["PHP_AUTH_USER"]) && isset($_SERVER["PHP_AUTH_PW"])) {
-            $user = $_SERVER["PHP_AUTH_USER"];
-            $pass = $_SERVER["PHP_AUTH_PW"];
-            $this->auth($user, $pass);
+        if (isset($_SERVER['HTTP_LOGINTARGET']) && $_SERVER['HTTP_LOGINTARGET'] == "FACEBOOK") {
+            if (isset($_SERVER["PHP_AUTH_PW"])) {
+                $this->authfacebook($_SERVER["PHP_AUTH_PW"]);
+            }
+        } else {
+            if (isset($_SERVER["PHP_AUTH_USER"]) && isset($_SERVER["PHP_AUTH_PW"])) {
+                $this->auth($_SERVER["PHP_AUTH_USER"], $_SERVER["PHP_AUTH_PW"]);
+            }
         }
     }
     function hasAccess($requiredRoles = array()) {
-        $user = $this -> basicauth();
+        $this -> basicauth();
         $user = $this -> getLoggedInUser();
         
         if ($user != null) {
@@ -1178,11 +1182,7 @@ class CrumbsController extends Controller {
                     "HTTP_LOGINTARGET" => isset($_SERVER['HTTP_LOGINTARGET']) ? $_SERVER['HTTP_LOGINTARGET'] : "",
                 ];
         
-        if (isset($_SERVER['HTTP_LOGINTARGET']) && $_SERVER['HTTP_LOGINTARGET'] == "FACEBOOK") {
-            $this->authfacebook($_SERVER["PHP_AUTH_PW"]);
-            return;
-        }
-
+        
         $model = TableRegistry::get('Coworkers');
         $query = $model->find('all')->where(['Coworkers.username' => strtolower($username)]);
         $first = $query->first();
