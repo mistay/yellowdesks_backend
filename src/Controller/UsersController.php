@@ -36,6 +36,10 @@ class UsersController extends AppController
     public function loginappfb() {
         $ret = [];
         $ret["success"] = $this -> hasAccess([Roles::COWORKER]);
+        if ( $ret["success"] ) {
+            $loggedinuser = $this->getloggedInUser();
+            $ret["loggedinuser"] = $loggedinuser;
+        }
         echo json_encode($ret);
         exit();
     }
