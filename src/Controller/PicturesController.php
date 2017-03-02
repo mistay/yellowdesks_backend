@@ -102,7 +102,10 @@ class PicturesController extends AppController {
     }
     
     public function get($unsafe_id) {
-        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        // kein hasAccess() weil coworker sowieso alle pictures sehen darf
+        // todo: überlegn ob viell doch hasAccess() damit kein anyonmer (weder cowoker noch host noch admin) lesen darf?
+        // aber dann is auth() nötig und bei fb-login wäre für jedes bild ein request zu fb nötig; oder ein fb-login cache?
+
         $this->autoRender=false;
         
         $id = (int) $unsafe_id;
@@ -110,18 +113,8 @@ class PicturesController extends AppController {
         $model = TableRegistry::get('Pictures');
         $query = $model->get($id);
         
-        // nur admin u. coworker (android app logged sich als coworker ein, weird?) dürfen alle bilder sehen, hosts nur die eigenen
-        // macht das sinn? host könnte mit 2. coworker konto anmelden & bild holen
-        $user = $this->getLoggedinUser();
-        if ($user->role == Roles::HOST ) {
-            if ($user->id != $query->host_id) {
-                echo "access denied";
-                exit(0);
-            }
-        }
         $data = stream_get_contents($query->data);
-        
-        
+
         $virtualfilename = 'data://text/plain;base64,' . base64_encode($data);
         
         $exif = null;
