@@ -35,8 +35,12 @@
             <td><input type="text" name="address" placeholder="Jakob-Haringer-Str. 3" value='<?php echo @$row["address"] ?>' /></td>
         </tr>
         <tr>
-            <th>Address</th>
+            <th>E-Mail</th>
             <td><input type="text" name="email" placeholder="johndoe@example.com" value='<?php echo @$row["email"] ?>' /></td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td><input type="text" name="phone" placeholder="+43 664 123456789" value='<?php echo @$row["phone"] ?>' /></td>
         </tr>
         <tr>
             <th>Postal Code</th>
