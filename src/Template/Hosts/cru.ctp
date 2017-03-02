@@ -79,6 +79,10 @@
             <td><input type="text" name="price_6moths" placeholder="120.50" value='<?php echo @$row["price_6moths"] ?>' /></td>
         </tr>
         <tr>
+            <th>Desks</th>
+            <td><input type="text" name="desks" placeholder="3" value='<?php echo @$row["desks"] ?>' /></td>
+        </tr>
+        <tr>
             <th>Open From</th>
             <td><input type="text" name="open_from" placeholder="08:30:00" value='<?php echo $row->open_from == null ? "" : date("H:i:s", strtotime($row["open_from"])) ?>' /></td>
         </tr>
