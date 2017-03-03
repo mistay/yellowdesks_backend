@@ -74,7 +74,7 @@ class CoworkersController extends AppController {
             
             $model->save($row);
             $this->Flash->set('Successfully saved.');
-            return $this->redirect(['action' => 'cru']);
+            //return $this->redirect(['action' => 'cru']);
         }
     }
     
