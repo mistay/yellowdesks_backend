@@ -99,14 +99,17 @@ class BookingsController extends AppController {
             [   "type" => "10er block",
                 "begin" => "2010-03-03",     //including
                 "end" => "2010-03-15",       //including
+                "price" => 12.32,
             ],
             [   "type" => "einzelticket",
                 "begin" => "2010-03-15",     //including
                 "end" => "2010-03-15",       //including
+                "price" => 142.32;
             ],
             [   "type" => "einzelticket",
                 "begin" => "2010-03-16",     //including
                 "end" => "2010-03-16",       //including
+                "price" => 112.35;
             ],
 
         ];
@@ -121,7 +124,7 @@ class BookingsController extends AppController {
             $row -> payment_id = 1;
             $row -> host_id = $hostid;
             $row -> description = $booking[ "type" ];
-            $row -> price = 0;
+            $row -> price = $booking[ "type" ];
             $row -> servicefee_host = 0;
             $row -> servicefee_coworker = 0;
             $row -> vat = 0;
@@ -134,9 +137,9 @@ class BookingsController extends AppController {
                     "host_id" => $row -> host_id,
                     "price" => $row -> price,
                     "vat" => $row -> vat,
-                    "description" =>  $booking[ "type" ],
-                    "begin" =>  date("Y-m-d", strtotime($booking[ "begin" ])),
-                    "end" =>  date("Y-m-d", strtotime($booking[ "end" ])),
+                    "description" => $booking[ "type" ],
+                    "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
+                    "end" => date("Y-m-d", strtotime($booking[ "end" ])),
                 ];
 
                 $rets[$row->id] = $ret;
