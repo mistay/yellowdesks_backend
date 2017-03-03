@@ -121,7 +121,7 @@ class BookingsController extends AppController {
        
 
         // todo: collision check
-        $rets = [];
+        $rets = [ "total" => "1234.45" ];
         foreach ($bookings as $booking) {
             $row = $this -> Bookings -> newEntity();
             $row -> coworker_id = $user -> id;
@@ -138,10 +138,9 @@ class BookingsController extends AppController {
 
             if ($this -> Bookings -> save($row)) {
                 
-
+                // find host
                 foreach ($hosts as $host) {
                     if ($host -> id == $row -> host_id) {
-
                         break;
                     }
                 }
