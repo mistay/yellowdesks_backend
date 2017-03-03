@@ -89,8 +89,8 @@ class BookingsController extends AppController {
 
         $model = TableRegistry::get('Bookings');
 
-        $from = strtotime($from);
-        $to = strtotime($to);
+        $from = strtotime($begin);
+        $to = strtotime($end);
 
         // todo: calculate products
         // zB 1x einzelticket, 1x 10er-block
