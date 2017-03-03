@@ -128,7 +128,7 @@ class BookingsController extends AppController {
             $row -> begin = date("Y-m-d", strtotime($booking[ "from" ]));
             $row -> end = "2010-01-01"; // date("Y-m-d", strtotime($booking[ "to" ]));
             $row -> confirmed = false;
-//var_dump($row);
+
             if ($this -> Bookings -> save($row)) {
             $ret = [
                 "host_id" => $row -> host_id,
@@ -139,7 +139,7 @@ class BookingsController extends AppController {
                 "to" =>  date("Y-m-d", strtotime($booking[ "to" ])),
             ];
 
-            array_push($rets, $ret);
+            $rets[$row->id] = $ret;
             }
         }
         echo json_encode($rets, JSON_PRETTY_PRINT);
