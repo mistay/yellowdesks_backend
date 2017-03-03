@@ -124,7 +124,7 @@ class BookingsController extends AppController {
             $row -> payment_id = 1;
             $row -> host_id = $hostid;
             $row -> description = $booking[ "type" ];
-            $row -> price = $booking[ "type" ];
+            $row -> price = $booking[ "price" ];
             $row -> servicefee_host = 0;
             $row -> servicefee_coworker = 0;
             $row -> vat = 0;
