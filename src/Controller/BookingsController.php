@@ -117,7 +117,6 @@ class BookingsController extends AppController {
         $rets = [ "success" => false ];
         foreach ($bookings as $booking) {
             $row = $this -> Bookings -> newEntity();
-            $row -> dt_inserted = "CURRENT_TIMESTAMP";
             $row -> coworker_id = $user -> id;
             $row -> payment_id = 1;
             $row -> host_id = $hostid;
