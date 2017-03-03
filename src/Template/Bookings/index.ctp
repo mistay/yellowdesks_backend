@@ -2,6 +2,7 @@
 
 <table>
     <tr>
+        <th>Confirmed</th>
         <th>Date Time</th>
         <th>Invoice Host</th>
         <th>Invoice Coworker</th>
@@ -14,6 +15,7 @@
     </tr>
     <?php foreach ($rows as $row): ?>
     <tr>
+        <td><?= $row -> confirmed ?></td>
         <td><?php echo date("d.m.Y H:i", strtotime($row->dt_inserted)); ?></td>
         
         <?php

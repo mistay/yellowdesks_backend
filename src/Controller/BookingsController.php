@@ -75,15 +75,67 @@ class BookingsController extends AppController {
         $this->set("rows", $query);
     }
     
-    public function bookingrequest() {
+    public function preparebookingrequest() {
         if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        
+        
+    }
+    
+    public function prepare($hostid, $from, $to) {
+        if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        $user = $this->getloggedinUser();
+
         $model = TableRegistry::get('Bookings');
-        // todo: implement me
-        
-        $ret = [
-            "success" => true
+
+        $from = strtotime($from);
+        $to = strtotime($to);
+
+        // todo: calculate products
+        // zB 1x einzelticket, 1x 10er-block
+
+        $bookings = [
+            [   "type" => "10er block",
+                "from" => "2010-03-03",     //including
+                "to" => "2010-03-15",       //including
+            ],
+            [   "type" => "einzelticket",
+                "from" => "2010-03-15",     //including
+                "to" => "2010-03-15",       //including
+            ]
+
         ];
-        
+
+        // todo: collision check
+        $ret = [ "success" => false ];
+
+        if ($this -> request -> is('post')) {
+            foreach ($bookings as $booking) {
+                $row = $this -> Bookings -> newEntity();
+                $row -> dt_inserted = "NOW()";
+                $row -> coworker_id = $user -> id;
+                $row -> payment_id = 1;
+                $row -> host_id = $this -> request -> getData() ["host_id"] ;
+                $row -> description = $booking[ "type" ];
+                $row -> price = 0;
+                $row -> servicefee_host = 0;
+                $row -> servicefee_coworker = 0;
+                $row -> vat = 0;
+                $row -> from = date("Y-m-d", strtotime($booking[ "from" ]));
+                $row -> to = date("Y-m-d", strtotime($booking[ "to" ]));
+                $row -> confirmed = false;
+
+                if ($this -> Bookings -> save($row)) {
+                $ret = [
+                    "success" => true,
+                    "host_id" => $row -> host_id,
+                    "price" => $row -> price,
+                    "vat" => $row -> vat,
+                ];
+                }
+            }
+        }
         echo json_encode($ret, JSON_PRETTY_PRINT);
         exit();
     }
