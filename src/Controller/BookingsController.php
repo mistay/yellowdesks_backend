@@ -130,17 +130,19 @@ class BookingsController extends AppController {
             $row -> confirmed = false;
 
             if ($this -> Bookings -> save($row)) {
-            $ret = [
-                "host_id" => $row -> host_id,
-                "price" => $row -> price,
-                "vat" => $row -> vat,
-                "description" =>  $booking[ "type" ],
-                "from" =>  date("Y-m-d", strtotime($booking[ "from" ])),
-                "to" =>  date("Y-m-d", strtotime($booking[ "to" ])),
-            ];
+                $ret = [
+                    "host_id" => $row -> host_id,
+                    "price" => $row -> price,
+                    "vat" => $row -> vat,
+                    "description" =>  $booking[ "type" ],
+                    "from" =>  date("Y-m-d", strtotime($booking[ "from" ])),
+                    "to" =>  date("Y-m-d", strtotime($booking[ "to" ])),
+                ];
 
-            $rets[$row->id] = $ret;
+                $rets[$row->id] = $ret;
             }
+
+            $rets = [ "success" => true ];
         }
         echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
