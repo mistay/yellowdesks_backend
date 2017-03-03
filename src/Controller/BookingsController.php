@@ -103,40 +103,47 @@ class BookingsController extends AppController {
             [   "type" => "einzelticket",
                 "from" => "2010-03-15",     //including
                 "to" => "2010-03-15",       //including
-            ]
+            ],
+            [   "type" => "einzelticket",
+                "from" => "2010-03-16",     //including
+                "to" => "2010-03-16",       //including
+            ],
 
         ];
 
+       
+
         // todo: collision check
-        $ret = [ "success" => false ];
+        $rets = [ "success" => false ];
+        foreach ($bookings as $booking) {
+            $row = $this -> Bookings -> newEntity();
+            $row -> dt_inserted = "CURRENT_TIMESTAMP";
+            $row -> coworker_id = $user -> id;
+            $row -> payment_id = 1;
+            $row -> host_id = $hostid;
+            $row -> description = $booking[ "type" ];
+            $row -> price = 0;
+            $row -> servicefee_host = 0;
+            $row -> servicefee_coworker = 0;
+            $row -> vat = 0;
+            $row -> begin = date("Y-m-d", strtotime($booking[ "from" ]));
+            $row -> end = "2010-01-01"; // date("Y-m-d", strtotime($booking[ "to" ]));
+            $row -> confirmed = false;
+//var_dump($row);
+            if ($this -> Bookings -> save($row)) {
+            $ret = [
+                "host_id" => $row -> host_id,
+                "price" => $row -> price,
+                "vat" => $row -> vat,
+                "description" =>  $booking[ "type" ],
+                "from" =>  date("Y-m-d", strtotime($booking[ "from" ])),
+                "to" =>  date("Y-m-d", strtotime($booking[ "to" ])),
+            ];
 
-        if ($this -> request -> is('post')) {
-            foreach ($bookings as $booking) {
-                $row = $this -> Bookings -> newEntity();
-                $row -> dt_inserted = "NOW()";
-                $row -> coworker_id = $user -> id;
-                $row -> payment_id = 1;
-                $row -> host_id = $this -> request -> getData() ["host_id"] ;
-                $row -> description = $booking[ "type" ];
-                $row -> price = 0;
-                $row -> servicefee_host = 0;
-                $row -> servicefee_coworker = 0;
-                $row -> vat = 0;
-                $row -> from = date("Y-m-d", strtotime($booking[ "from" ]));
-                $row -> to = date("Y-m-d", strtotime($booking[ "to" ]));
-                $row -> confirmed = false;
-
-                if ($this -> Bookings -> save($row)) {
-                $ret = [
-                    "success" => true,
-                    "host_id" => $row -> host_id,
-                    "price" => $row -> price,
-                    "vat" => $row -> vat,
-                ];
-                }
+            array_push($rets, $ret);
             }
         }
-        echo json_encode($ret, JSON_PRETTY_PRINT);
+        echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
     }
 }
