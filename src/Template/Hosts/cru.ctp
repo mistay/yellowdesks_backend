@@ -12,7 +12,7 @@
         </tr>
         <tr>
             <th>Username</th>
-            <td><input type="text" name="username" placeholder="John" value='<?php echo @$row["username"] ?>' /></td>
+            <td><input type="text" readonly="readonly" name="username" placeholder="John" value='<?php echo @$row["username"] ?>' /></td>
         </tr>
         <tr>
             <th>Title</th>
