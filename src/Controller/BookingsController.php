@@ -114,7 +114,6 @@ class BookingsController extends AppController {
        
 
         // todo: collision check
-        $rets = [ "success" => false ];
         foreach ($bookings as $booking) {
             $row = $this -> Bookings -> newEntity();
             $row -> coworker_id = $user -> id;
@@ -142,7 +141,6 @@ class BookingsController extends AppController {
                 $rets[$row->id] = $ret;
             }
 
-            $rets["success"] = true;
         }
         echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
