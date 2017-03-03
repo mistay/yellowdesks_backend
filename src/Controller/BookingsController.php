@@ -131,7 +131,7 @@ class BookingsController extends AppController {
             $row -> price = $booking[ "price" ];
             $row -> servicefee_host = 0;
             $row -> servicefee_coworker = 0;
-            $row -> vat = 0;
+            $row -> vat = ($booking[ "price" ] / 100 * 20);
             $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
             $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
             $row -> confirmed = false;
