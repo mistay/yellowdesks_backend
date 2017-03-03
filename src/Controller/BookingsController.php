@@ -82,7 +82,7 @@ class BookingsController extends AppController {
         
     }
     
-    public function prepare($hostid, $from, $to) {
+    public function prepare($hostid, $begin, $end) {
         if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         
         $user = $this->getloggedinUser();
@@ -125,8 +125,8 @@ class BookingsController extends AppController {
             $row -> servicefee_host = 0;
             $row -> servicefee_coworker = 0;
             $row -> vat = 0;
-            $row -> begin = date("Y-m-d", strtotime($booking[ "from" ]));
-            $row -> end = "2010-01-01"; // date("Y-m-d", strtotime($booking[ "to" ]));
+            $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
+            $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
             $row -> confirmed = false;
 
             if ($this -> Bookings -> save($row)) {
@@ -135,8 +135,8 @@ class BookingsController extends AppController {
                     "price" => $row -> price,
                     "vat" => $row -> vat,
                     "description" =>  $booking[ "type" ],
-                    "from" =>  date("Y-m-d", strtotime($booking[ "from" ])),
-                    "to" =>  date("Y-m-d", strtotime($booking[ "to" ])),
+                    "begin" =>  date("Y-m-d", strtotime($booking[ "begin" ])),
+                    "end" =>  date("Y-m-d", strtotime($booking[ "end" ])),
                 ];
 
                 $rets[$row->id] = $ret;
