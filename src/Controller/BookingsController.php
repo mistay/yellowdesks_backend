@@ -100,19 +100,39 @@ class BookingsController extends AppController {
         // zB 1x einzelticket, 1x 10er-block
 
         $bookings = [
-            [   "type" => "10er block",
-                "begin" => "2010-03-03",     //including
-                "end" => "2010-03-15",       //including
+            [   "type" => "10 Entries Ticket",
+                "begin" => "2010-03-03",
+                "end" => "2010-03-15",  
                 "price" => 12.32,
             ],
-            [   "type" => "einzelticket",
-                "begin" => "2010-03-15",     //including
-                "end" => "2010-03-15",       //including
+            [   "type" => "Single Entry Ticket",
+                "begin" => "2010-03-15",
+                "end" => "2010-03-15",  
                 "price" => 142.32,
             ],
-            [   "type" => "einzelticket",
-                "begin" => "2010-03-16",     //including
-                "end" => "2010-03-16",       //including
+            [   "type" => "Single Entry Ticket",
+                "begin" => "2010-03-16",
+                "end" => "2010-03-16",  
+                "price" => 112.35,
+            ],
+            [   "type" => "Single Entry Ticket",
+                "begin" => "2010-03-15",
+                "end" => "2010-03-15",  
+                "price" => 142.32,
+            ],
+            [   "type" => "Single Entry Ticket",
+                "begin" => "2010-03-16",
+                "end" => "2010-03-16",  
+                "price" => 112.35,
+            ],
+            [   "type" => "Single Entry Ticket",
+                "begin" => "2010-03-15",
+                "end" => "2010-03-15",  
+                "price" => 142.32,
+            ],
+            [   "type" => "Single Entry Ticket",
+                "begin" => "2010-03-16",
+                "end" => "2010-03-16",  
                 "price" => 112.35,
             ],
 
