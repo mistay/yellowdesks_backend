@@ -15,7 +15,7 @@
     </tr>
     <?php foreach ($rows as $row): ?>
     <tr>
-        <td><?= $row -> confirmed ? "no" : "yes" ?></td>
+        <td><?php var_dump($row); ?><?= $row -> confirmed ? "no" : "yes" ?></td>
         <td><?php echo date("d.m.Y H:i", strtotime($row->dt_inserted)); ?></td>
         
         <?php
