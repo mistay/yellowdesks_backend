@@ -90,7 +90,7 @@ class BookingsController extends AppController {
         $model = TableRegistry::get('Bookings');
 
         $model_hosts = TableRegistry::get('Hosts');
-        $hosts = $query = $model->find('all');
+        $hosts = $query = $model_hosts->find('all');
 
 
         $from = strtotime($begin);
