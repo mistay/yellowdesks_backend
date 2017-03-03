@@ -104,12 +104,12 @@ class BookingsController extends AppController {
             [   "type" => "einzelticket",
                 "begin" => "2010-03-15",     //including
                 "end" => "2010-03-15",       //including
-                "price" => 142.32;
+                "price" => 142.32,
             ],
             [   "type" => "einzelticket",
                 "begin" => "2010-03-16",     //including
                 "end" => "2010-03-16",       //including
-                "price" => 112.35;
+                "price" => 112.35,
             ],
 
         ];
