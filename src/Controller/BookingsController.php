@@ -149,7 +149,7 @@ class BookingsController extends AppController {
                 $ret = [
                     "nickname" => $host -> nickname,
                     "host_id" => $host -> id,
-                    "host_description" => $host -> description,
+                    "title" => $host -> title,
                     "price" => $row -> price,
                     "vat" => $row -> vat,
                     "description" => $booking[ "type" ],
