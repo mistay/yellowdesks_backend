@@ -142,7 +142,7 @@ class BookingsController extends AppController {
                 $rets[$row->id] = $ret;
             }
 
-            $rets = [ "success" => true ];
+            $rets["success"] = true;
         }
         echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
