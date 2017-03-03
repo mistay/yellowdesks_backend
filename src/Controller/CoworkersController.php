@@ -73,7 +73,7 @@ class CoworkersController extends AppController {
             //$row->password = md5($row->username . $this->request->getData()->password);
             
             $model->save($row);
-            
+            $this->Flash->set('Successfully saved.');
             return $this->redirect(['action' => 'cru']);
         }
     }
