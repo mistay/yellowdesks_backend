@@ -89,6 +89,10 @@ class BookingsController extends AppController {
 
         $model = TableRegistry::get('Bookings');
 
+        $model_hosts = TableRegistry::get('Hosts');
+        $hosts = $query = $model->find('all');
+
+
         $from = strtotime($begin);
         $to = strtotime($end);
 
@@ -133,8 +137,17 @@ class BookingsController extends AppController {
             $row -> confirmed = false;
 
             if ($this -> Bookings -> save($row)) {
+                
+
+                foreach ($hosts as $host) {
+                    if ($host -> id == $row -> host_id) {
+
+                        break;
+                    }
+                }
+
                 $ret = [
-                    "host_id" => $row -> host_id,
+                    "host_id" => $host -> nickname,
                     "price" => $row -> price,
                     "vat" => $row -> vat,
                     "description" => $booking[ "type" ],
