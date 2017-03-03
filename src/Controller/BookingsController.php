@@ -97,16 +97,16 @@ class BookingsController extends AppController {
 
         $bookings = [
             [   "type" => "10er block",
-                "from" => "2010-03-03",     //including
-                "to" => "2010-03-15",       //including
+                "begin" => "2010-03-03",     //including
+                "end" => "2010-03-15",       //including
             ],
             [   "type" => "einzelticket",
-                "from" => "2010-03-15",     //including
-                "to" => "2010-03-15",       //including
+                "begin" => "2010-03-15",     //including
+                "end" => "2010-03-15",       //including
             ],
             [   "type" => "einzelticket",
-                "from" => "2010-03-16",     //including
-                "to" => "2010-03-16",       //including
+                "begin" => "2010-03-16",     //including
+                "end" => "2010-03-16",       //including
             ],
 
         ];
