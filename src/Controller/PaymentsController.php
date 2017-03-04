@@ -18,14 +18,22 @@ class PaymentsController extends AppController {
         $this->set("rows", $query);
     }
     
+
+    // this url is registered at paypal sandbox https://www.sandbox.paypal.com
+    // https://yellowdesks.com/payments/paypalipnsandbox
+    public function paypalipnsandbox() {
+        $this->paypalipn(true);
+    }
+
     // this url is registered at paypal
     // https://yellowdesks.com/payments/paypalipn
-    public function paypalipn() {
+    public function paypalipn($sandbox = false) {
         $this->autoRender = false;
         $request = print_r($_REQUEST, true);
         $model = TableRegistry::get('Paypalipns');
         $row = $model->newEntity();
         $row->rawrequest = $request;
+        $row->sandbox = $sandbox;
         $model->save($row);
 
         
