@@ -141,7 +141,7 @@ class BookingsController extends AppController {
        
 
         // todo: collision check
-        $rets = [ "total" => "1234.45" ];
+        $rets = [ "total" => "0.01" ];
         foreach ($bookings as $booking) {
             $row = $this -> Bookings -> newEntity();
             $row -> coworker_id = $user -> id;
