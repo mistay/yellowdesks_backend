@@ -9,10 +9,17 @@ use Cake\Event\Event;
 class BookingsController extends AppController {
     
     public function index() {
-        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::COWORKER, Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
 
         $model = TableRegistry::get('Bookings');
-        $query = $model->find('all')->contain(['Hosts', 'Coworkers']);
+
+        $where = [];
+        $user = $this -> getLoggedinUser();
+        if ($user -> role == Roles::COWORKER)
+            $where = ["coworker_id" => $user -> id];
+
+
+        $query = $model->find('all')->where($where)->contain(['Hosts', 'Coworkers']);
         $this->set("rows", $query);
         
         if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
@@ -103,45 +110,23 @@ class BookingsController extends AppController {
             [   "type" => "10 Entries Ticket",
                 "begin" => "2010-03-03",
                 "end" => "2010-03-15",  
-                "price" => 250.00,
+                "price" => .10,
             ],
             [   "type" => "Single Entry Ticket",
                 "begin" => "2010-03-16",
                 "end" => "2010-03-16",  
-                "price" => 25.90,
+                "price" => .05,
             ],
             [   "type" => "Single Entry Ticket",
                 "begin" => "2010-03-17",
                 "end" => "2010-03-17",  
-                "price" => 25.90,
+                "price" => .05,
             ],
-            [   "type" => "Single Entry Ticket",
-                "begin" => "2010-03-18",
-                "end" => "2010-03-18",  
-                "price" => 25.90,
-            ],
-            [   "type" => "Single Entry Ticket",
-                "begin" => "2010-03-19",
-                "end" => "2010-03-19",  
-                "price" => 25.90,
-            ],
-            [   "type" => "Single Entry Ticket",
-                "begin" => "2010-03-20",
-                "end" => "2010-03-20",  
-                "price" => 25.90,
-            ],
-            [   "type" => "Single Entry Ticket",
-                "begin" => "2010-03-21",
-                "end" => "2010-03-21",  
-                "price" => 25.90,
-            ],
-
         ];
 
-       
+        $total = 0;
 
         // todo: collision check
-        $rets = [ "total" => "0.01" ];
         foreach ($bookings as $booking) {
             $row = $this -> Bookings -> newEntity();
             $row -> coworker_id = $user -> id;
@@ -154,7 +139,6 @@ class BookingsController extends AppController {
             $row -> vat = ($booking[ "price" ] / 100 * 20);
             $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
             $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
-            $row -> confirmed = false;
 
             if ($this -> Bookings -> save($row)) {
                 
@@ -177,9 +161,12 @@ class BookingsController extends AppController {
                 ];
 
                 $rets[$row->id] = $ret;
+                $total += $row -> price + $row -> vat;
             }
 
         }
+        $rets = [ "total" => $total ];
+
         echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
     }
