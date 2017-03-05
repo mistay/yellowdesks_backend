@@ -23,7 +23,7 @@ class BookingsController extends AppController {
 
         $user = $this->getLoggedinUser();
 
-        $query = $model->find('all')->where(["coworker_id" => $user -> id])->contain(['Hosts', 'Coworkers']);
+        $query = $model->find('all')->order(["dt_inserted DESC"])->where(["coworker_id" => $user -> id])->contain(['Hosts', 'Coworkers']);
         $this->set("rows", $query);
     }
     
