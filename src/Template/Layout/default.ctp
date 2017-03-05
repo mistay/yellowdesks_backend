@@ -92,7 +92,7 @@
                 
                 <?php if ($loggedinuser -> role == "COWORKER") { ?>
                     <a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "cru"]); ?>"><li>My Details</li></a>
-                    <a href="<?= $this->Url->build(["controller" => "bookings", "action" => "index"]); ?>"><li>My Bookings</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "bookings", "action" => "mybookings"]); ?>"><li>My Bookings</li></a>
                 
                 <?php } ?>
             </ul>
