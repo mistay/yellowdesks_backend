@@ -8,7 +8,7 @@
         <th>Begin Date</th>
         <th>End Date</th>
         <th>Price</th>
-        <th>Invoice</th>
+        <th>Status</th>
         
     </tr>
     <?php foreach ($rows as $row): ?>
@@ -23,7 +23,15 @@
             $urlhost = $this->Url->build(["controller" => "bookings", "action" => "invoicehost", $row->host->id]);
         ?>
         <td><?php echo $row->price . "EUR (VAT: " . $row->vat . ")"; ?></td>
-        <td><a href="<?= $url ?>">Invoice</a></td>
+        <td>
+            <?php if ($row->paypalipn_id > 0) { ?> 
+                <a href="<?= $url ?>">Invoice</a>
+            <?php } elseif (time() - strtotime($row->dt_inserted) > 10 * 60) { ?>
+                Reservation expired.
+            <?php } else { ?>
+                not payed yet.
+            <?php } ?>
+        </td>
         
     </tr>
     <?php endforeach; ?>
