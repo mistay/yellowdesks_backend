@@ -33,22 +33,59 @@ class PaymentsController extends AppController {
         $model = TableRegistry::get('Paypalipns');
         $row = $model->newEntity();
         $row->rawrequest = $request;
+        $row->mc_gross = $request->mc_gross;
+        $row->custom = $request->custom;
         $row->sandbox = $sandbox;
+
         $model->save($row);
 
-        
         $ipn = new PaypalIPN();
         $ipn->useSandbox(); // remove me for production
         $verified = $ipn->verifyIPN();
         if ($verified)
         {
-        
-            
+            $this->updatebookings($row->id, $request->custom);
         }
 
         // Reply with an empty 200 response to indicate to paypal the IPN was received correctly.
         // header("HTTP/1.1 200 OK");
         // armin: this is done by cake per default
+    }
+
+
+    public function updatebookings($paypalipn_id, $customfield) {
+
+        // e.g. $customfield = '{"17":3.05,"19":17.05,"23":4.07}'
+        $custom = json_decode($customfield, true);
+        /*
+        $custom = [   
+            "17" => 3.05,
+            "19" => 17.05,
+            "23" => 4.07,
+        ];
+        */
+
+        $booking_ids = array_keys($custom);
+
+        $model2 = TableRegistry::get('Bookings');
+        $rows = $model2->find('all')->where(['Bookings.id IN' => $booking_ids]);
+        $sum = 0;
+        foreach ($rows as $booking) {
+            var_dump($booking->price);
+            $sum += $booking->price + $booking->vat;
+        }
+        
+        $model_paypalipns = TableRegistry::get('Paypalipns');
+        $paypalipn = $model_paypalipns->get($paypalipn_id);
+
+        // compare floats, accept tolerance of 0.01 and of course more money than requested :)
+        if ($paypalipn -> mc_gross - $sum > - 0.01) {
+            // überweisungsbetrag is i.O., alle bookings ueberwiesen, yehaa!
+            foreach ($rows as $booking) {
+                $booking -> paypalipn_id = $paypalipn_id;
+                $model2 -> save($booking);
+            }
+        }
     }
 }
 
