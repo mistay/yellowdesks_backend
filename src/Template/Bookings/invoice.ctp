@@ -31,7 +31,7 @@
         <td>1</td>
         <td><?php echo $row->description; ?></td>
         <td><?php echo money_format('%i', $row->price); ?></td>
-        <td><?php echo $row->vat; ?>%</td>
+        <td><?php echo money_format('%i', $row->vat); ?></td>
         <td><?php echo money_format('%i', $row->servicefee_coworker) ?></td>
         <?php $total = $row->price * (1 + ($row->vat/100)) + $row->servicefee_coworker; ?>
         <td><?php echo money_format('%i', $total); ?></td>
