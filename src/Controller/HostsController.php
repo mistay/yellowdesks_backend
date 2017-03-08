@@ -8,6 +8,17 @@ use Cake\Event\Event;
 
 class HostsController extends AppController {
     
+    public function map() {
+        if (!$this -> hasAccess([Roles::COWORKER, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        $model = TableRegistry::get('Hosts');
+        $query = $model->find('all');
+
+        $this->set("rows", $query);
+        
+
+
+    }
+
     public function cru($unsafe_id=null) {
         if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         
