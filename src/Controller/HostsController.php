@@ -144,8 +144,6 @@ class HostsController extends AppController {
             $rows = $query->toArray();
             if (@$_REQUEST["format"] == "jsonbrowser") echo "<pre>";
             
-            if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
-            
             $ret = [];
             foreach ($rows as $row) {
                 
