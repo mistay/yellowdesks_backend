@@ -166,13 +166,13 @@ class PicturesController extends AppController {
                     $h_point = (($src_h - $height_new) / 2);
                     //copy image
 
-                    $dst_image = imagecreatetruecolor($dst_w, $dst_h);
+                    $dst_img = imagecreatetruecolor($dst_w, $dst_h);
                     imagecopyresampled($dst_img, $src_img, 0, 0, 0, $h_point, $dst_w, $dst_h, $src_w, $height_new);
                 }else{
                     //cut point by width
                     $w_point = (($src_w - $width_new) / 2);
-                    
-                    $dst_image = imagecreatetruecolor($dst_w, $dst_h);
+
+                    $dst_img = imagecreatetruecolor($dst_w, $dst_h);
                     imagecopyresampled($dst_img, $src_img, 0, 0, $w_point, 0, $dst_w, $dst_h, $width_new, $src_h);
                 }
             } else {
