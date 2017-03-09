@@ -153,24 +153,33 @@ class PicturesController extends AppController {
             
             list($dst_w, $dst_h) = explode("x", $_REQUEST["resolution"]);
             
+            $dst_image = imagecreatetruecolor($dst_w, $dst_h);
+            
             // http://stackoverflow.com/questions/6594089/calculating-image-size-ratio-for-resizing
             $srcX = $srcY = 0;
             if (isset($_REQUEST["crop"])) {
-                if ($ratio < 1) {
-                    $srcY = ($src_h / 2) - ($src_w / 2);
-                    $src_h = $src_w;
-                } else {
-                    $srcX = ($src_w / 2) - ($src_h / 2);
-                    $src_w = $src_h;
+                // http://polyetilen.lt/en/resize-and-crop-image-from-center-with-php
+                $width_new = $src_h * $dst_w / $dst_h;
+                $height_new = $src_w * $dst_h / $dst_w;
+                //if the new width is greater than the actual width of the image, then the height is too large and the rest cut off, or vice versa
+                if($width_new > $src_w){
+                    //cut point by height
+                    $h_point = (($src_h - $height_new) / 2);
+                    //copy image
+                    imagecopyresampled($dst_img, $src_img, 0, 0, 0, $h_point, $dst_w, $dst_h, $src_w, $height_new);
+                }else{
+                    //cut point by width
+                    $w_point = (($src_w - $width_new) / 2);
+                    imagecopyresampled($dst_img, $src_img, 0, 0, $w_point, 0, $dst_w, $dst_h, $width_new, $src_h);
                 }
             } else {
                 $dst_w = $dst_h = min(max($dst_w, $dst_h), max($src_w, $src_h));
                 if ($ratio < 1)     $dst_w = $dst_h * $ratio;
                 else                $dst_h = $dst_w / $ratio;
+            
+                imagecopyresampled($dst_image, $src_img , 0, 0, $srcX, $srcY, $dst_w, $dst_h , $src_w, $src_h);
             }
 
-            $dst_image = imagecreatetruecolor($dst_w, $dst_h);
-            imagecopyresized ($dst_image, $src_img , 0, 0, $srcX, $srcY, $dst_w, $dst_h , $src_w, $src_h);
             
             if ($degrees != 0)
                 $dst_image = imagerotate($dst_image, $degrees, 0);
