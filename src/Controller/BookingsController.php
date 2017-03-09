@@ -136,7 +136,7 @@ class BookingsController extends AppController {
             }
 
         }
-        $rets = [ "total" => $total ];
+        $rets["total"] = $total;
 
         echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
