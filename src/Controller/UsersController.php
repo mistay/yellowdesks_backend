@@ -37,6 +37,8 @@ class UsersController extends AppController
         $ret = [];
         $ret["success"] = $this -> hasAccess([Roles::COWORKER]);
         if ( $ret["success"] ) {
+
+            // todo: remove password field from result!!
             $loggedinuser = $this->getloggedInUser();
             $ret["loggedinuser"] = $loggedinuser;
         }
