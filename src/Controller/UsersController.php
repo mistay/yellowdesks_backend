@@ -60,7 +60,24 @@ class UsersController extends AppController
         $jsondata = $_REQUEST["data"];
         $data = json_decode($jsondata);
 
-        var_dump($data);
+        $model = TableRegistry::get('Coworkers');
+
+        $ret=[];
+        $ret["success"] = false;
+
+        $row = $model->newEntity();
+        $this->set("row", $row);
+        if (is_array($data)) {
+
+            $row -> emailconfirmed = false;
+            $model->patchEntity($row, $data);
+            $model->save($row);
+
+            $ret["success"] = true;
+            $ret["coworker"]["id"] = $ret->id;
+        }
+
+        echo json_encode($ret);
         exit();
     }
     
