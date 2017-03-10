@@ -79,6 +79,10 @@
             <td><input type="text" name="price_6moths" placeholder="120.50" value='<?php echo @$row["price_6moths"] ?>' /></td>
         </tr>
         <tr>
+            <th>Dogs welcome</th>
+            <td><input type="text" name="dogswelcome" placeholder="1" value='<?php echo @$row["dogswelcome"] ?>' /></td>
+        </tr>
+        <tr>
             <th>Desks</th>
             <td><input type="text" name="desks" placeholder="3" value='<?php echo @$row["desks"] ?>' /></td>
         </tr>
