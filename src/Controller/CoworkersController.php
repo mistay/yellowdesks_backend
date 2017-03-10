@@ -143,6 +143,8 @@ class CoworkersController extends AppController {
             $model->patchEntity($row, $data);
             $model->save($row);
 
+            print_r($row);
+
             $ret["success"] = true;
             $ret["coworker"]["id"] = $ret->id;
         }
