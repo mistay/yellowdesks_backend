@@ -136,6 +136,9 @@ class CoworkersController extends AppController {
         $ret["success"] = false;
 
         $row = $model->newEntity();
+
+        print_r($row);
+
         $this->set("row", $row);
         if (is_array($data)) {
 
@@ -144,6 +147,7 @@ class CoworkersController extends AppController {
             $model->save($row);
 
             print_r($row);
+    
 
             $ret["success"] = true;
             $ret["coworker"]["id"] = $ret->id;
