@@ -128,7 +128,7 @@ class CoworkersController extends AppController {
     public function register() {
         $this -> autoRender = false;
         $jsondata = $_REQUEST["data"];
-        $data = json_decode($jsondata);
+        $data = json_decode($jsondata, true);
 
         $model = TableRegistry::get('Coworkers');
 
@@ -142,7 +142,7 @@ class CoworkersController extends AppController {
 
 
         $this->set("row", $row);
-        if (is_object($data)) {
+        if (is_array($data)) {
 
             $row -> emailconfirmed = false;
             $model->patchEntity($row, $data);
