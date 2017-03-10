@@ -84,13 +84,61 @@
         </tr>
         <tr>
             <th>Open From</th>
-            <td><input type="text" name="open_from" placeholder="08:30:00" value='<?php echo $row->open_from == null ? "" : date("H:i:s", strtotime($row["open_from"])) ?>' /></td>
+            <td><input type="text" name="open_monday_from" placeholder="08:30:00" value='<?php echo $row->open_monday_from == null ? "" : date("H:i:s", strtotime($row["open_monday_from"])) ?>' /></td>
         </tr>
         <tr>
             <th>Open Till</th>
-            <td><input type="text" name="open_till" placeholder="18:30:00" value='<?php echo $row->open_till == null ? "" : date("H:i:s", strtotime($row["open_till"])) ?>' /></td>
+            <td><input type="text" name="open_monday_till" placeholder="18:30:00" value='<?php echo $row->open_monday_till == null ? "" : date("H:i:s", strtotime($row["open_monday_till"])) ?>' /></td>
         </tr>
-            <tr>
+        <tr>
+            <th>Open From</th>
+            <td><input type="text" name="open_tuesday_from" placeholder="08:30:00" value='<?php echo $row->open_tuesday_from == null ? "" : date("H:i:s", strtotime($row["open_tuesday_from"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open Till</th>
+            <td><input type="text" name="open_tuesday_till" placeholder="18:30:00" value='<?php echo $row->open_tuesday_till == null ? "" : date("H:i:s", strtotime($row["open_tuesday_till"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open From</th>
+            <td><input type="text" name="open_wednesday_from" placeholder="08:30:00" value='<?php echo $row->open_wednesday_from == null ? "" : date("H:i:s", strtotime($row["open_wednesday_from"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open Till</th>
+            <td><input type="text" name="open_wednesday_till" placeholder="18:30:00" value='<?php echo $row->open_wednesday_till == null ? "" : date("H:i:s", strtotime($row["open_wednesday_till"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open From</th>
+            <td><input type="text" name="open_thursday_from" placeholder="08:30:00" value='<?php echo $row->open_thursday_from == null ? "" : date("H:i:s", strtotime($row["open_thursday_from"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open Till</th>
+            <td><input type="text" name="open_thursday_till" placeholder="18:30:00" value='<?php echo $row->open_thursday_till == null ? "" : date("H:i:s", strtotime($row["open_thursday_till"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open From</th>
+            <td><input type="text" name="open_friday_from" placeholder="08:30:00" value='<?php echo $row->open_friday_from == null ? "" : date("H:i:s", strtotime($row["open_friday_from"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open Till</th>
+            <td><input type="text" name="open_friday_till" placeholder="18:30:00" value='<?php echo $row->open_friday_till == null ? "" : date("H:i:s", strtotime($row["open_friday_till"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open From</th>
+            <td><input type="text" name="open_saturday_from" placeholder="08:30:00" value='<?php echo $row->open_saturday_from == null ? "" : date("H:i:s", strtotime($row["open_saturday_from"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open Till</th>
+            <td><input type="text" name="open_saturday_till" placeholder="18:30:00" value='<?php echo $row->open_saturday_till == null ? "" : date("H:i:s", strtotime($row["open_saturday_till"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open From</th>
+            <td><input type="text" name="open_sunday_from" placeholder="08:30:00" value='<?php echo $row->open_sunday_from == null ? "" : date("H:i:s", strtotime($row["open_sunday_from"])) ?>' /></td>
+        </tr>
+        <tr>
+            <th>Open Till</th>
+            <td><input type="text" name="open_sunday_till" placeholder="18:30:00" value='<?php echo $row->open_sunday_till == null ? "" : date("H:i:s", strtotime($row["open_sunday_till"])) ?>' /></td>
+        </tr>
+        <tr>
             <th>Open 24/7 For Fixworkers</th>
             <td><input type="checkbox" name="open_247fixworkers" <?php echo $row["open_247fixworkers"]? "checked='checked'" : "" ?> /></td>
         </tr>
