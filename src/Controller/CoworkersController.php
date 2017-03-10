@@ -152,6 +152,7 @@ class CoworkersController extends AppController {
     
 
             $ret["success"] = true;
+            $ret["coworker"] = [];
             $ret["coworker"]["id"] = $ret->id;
         }
 
