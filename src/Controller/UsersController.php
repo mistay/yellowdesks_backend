@@ -55,32 +55,6 @@ class UsersController extends AppController
     
     }
 
-    public function register() {
-        $this -> autoRender = false;
-        $jsondata = $_REQUEST["data"];
-        $data = json_decode($jsondata);
-
-        $model = TableRegistry::get('Coworkers');
-
-        $ret=[];
-        $ret["success"] = false;
-
-        $row = $model->newEntity();
-        $this->set("row", $row);
-        if (is_array($data)) {
-
-            $row -> emailconfirmed = false;
-            $model->patchEntity($row, $data);
-            $model->save($row);
-
-            $ret["success"] = true;
-            $ret["coworker"]["id"] = $ret->id;
-        }
-
-        echo json_encode($ret);
-        exit();
-    }
-    
     function getdetails() {
         
         $this->basicauth();
