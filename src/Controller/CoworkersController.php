@@ -137,15 +137,17 @@ class CoworkersController extends AppController {
 
         $row = $model->newEntity();
 
+        echo "new entity";  
         print_r($row);
 
+
         $this->set("row", $row);
-        if (is_array($data)) {
+        if (is_object($data)) {
 
             $row -> emailconfirmed = false;
             $model->patchEntity($row, $data);
             $model->save($row);
-
+            echo "done saving";
             print_r($row);
     
 
