@@ -46,40 +46,6 @@ class UsersController extends AppController
         exit();
     }
     
-    /*
-    public function login()
-    {
-        if (stripos(@$_REQUEST["format"], "json") !== false || stripos(strtolower($_SERVER['HTTP_USER_AGENT']),'android') !== false) {
-            if (@$_REQUEST["format"] == "jsonbrowser") echo "<pre>";
-            $ret = [];
-            
-            $ret["error"] = "no username or no password specified in request. please provide username/password combination.";
-            $user = $this->Auth->identify();
-            //if ($user) { //TODO
-                $ret["error"] = "";
-                $ret["username"] = "armin"; // todo: überlegen wie user/cowoker/hosts in db???!?!?
-                $ret["firstname"] = "armin";
-                $ret["lastname"] = "langhofer";
-            //} else {
-                //$ret["error"] = "username or password invalid";
-            //}
-            
-            echo json_encode($ret, JSON_PRETTY_PRINT);
-            if (@$_REQUEST["format"] == "jsonbrowser") echo "</pre>";
-            exit();
-        }
-        
-        
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
-            }
-            $this->Flash->error(__('Invalid username or password, try again'));
-        }
-    }*/
-
     function logout() {
         $this -> logoutSession();
         $this -> redirect('/');
@@ -87,6 +53,15 @@ class UsersController extends AppController
     
     public function home() {
     
+    }
+
+    public function register() {
+        $this -> autoRender = false;
+        $jsondata = $_REQUEST["data"];
+        $data = json_decode($jsondata);
+
+        var_dump($data);
+        exit();
     }
     
     function getdetails() {
