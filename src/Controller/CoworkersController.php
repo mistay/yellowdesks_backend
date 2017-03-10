@@ -127,27 +127,21 @@ class CoworkersController extends AppController {
 
     public function register() {
         $this -> autoRender = false;
-        $jsondata = $_REQUEST["data"];
-        $data = json_decode($jsondata, true);
-
-        $model = TableRegistry::get('Coworkers');
 
         $ret=[];
         $ret["success"] = false;
 
-        $row = $model->newEntity();
+        $jsondata = $_REQUEST["data"];
+        $data = json_decode($jsondata, true);
 
-        echo "new entity";  
-        print_r($row);
+        $model = TableRegistry::get('Coworkers');
+        $row = $model->newEntity();
 
         if (is_array($data)) {
 
             $row -> emailconfirmed = false;
             $model->patchEntity($row, $data);
             $model->save($row);
-            echo "done saving";
-            print_r($row);
-    
 
             $ret["success"] = true;
             $ret["coworker"] = [];
