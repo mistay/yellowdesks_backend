@@ -142,19 +142,13 @@ class CoworkersController extends AppController {
             $model->patchEntity($row, $data);
 
             try {
-                if($model->save($row)) {
-                    if ($row->id > 0) {
-                        $ret["success"] = true;
-                        $ret["coworker"] = [];
-                        $ret["coworker"]["id"] = $row -> id;
-                        $ret["coworker"]["username"] = $row -> username;
-                    } else
-                        $ret["error"] = "could create coworker id.";
-                } else
-                    $ret["error"] = "could not save data. database error?";
-            
+                $model->save($row);
+                $ret["success"] = true;
+                $ret["coworker"] = [];
+                $ret["coworker"]["id"] = $row -> id;
+                $ret["coworker"]["username"] = $row -> username;
             } catch (\Exception $e) {
-                $ret["error"] = "could not save data. username duplicate?";
+                $ret["error"] = "could not save data. duplicate username?";
             }
         } else 
             $ret["error"] = "could not read data from request. this api method requires data in http request body.";
