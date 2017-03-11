@@ -3,7 +3,7 @@
 <table>
     <tr>
         <th>Confirmed</th>
-        <th>Date Time</th>
+        <th>Booking Date (GMT)</th>
         <th>Invoice Host</th>
         <th>Invoice Coworker</th>
         <th>Price</th>
