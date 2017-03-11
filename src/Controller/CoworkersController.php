@@ -153,7 +153,7 @@ class CoworkersController extends AppController {
                 } else
                     $ret["error"] = "could not save data. database error?";
             
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $ret["error"] = "could not save data. username duplicate?";
             }
         } else 
