@@ -24,20 +24,18 @@ class CoworkersController extends AppController {
                     array_push($pictures, Router::url(['controller' => 'pictures', 'action' => 'get', $picture->id], true));
                 }
                 
-                array_push($ret,
-                        [   "id" => $row-> id,
-                            "host" => $row->nickname,
-                            "desks" => $row->desks,
-                            "desks_avail" => $row->desks,
-                            "imageURL" => ($row->picture_id > 0 ? Router::url(['controller' => 'pictures', 'action' => 'get', $row->picture_id], true) : null),
-                            "images" => $pictures,
-                            "details" => $row->details,
-                            "title" => $row->title,
-                         
-                            // todo: in db schreiben damit nicht immer frische werte kommen (sonst könnte man lat & lng reversen)
-                            "lat" => $row->lat + (mt_rand(-1000,1000) / 1000000.0),
-                            "lng" => $row->lng + (mt_rand(-1000,1000) / 1000000.0),
-                        ]);
+                array_push($ret, [
+                        "id" => $row-> id,
+                        "host" => $row->nickname,
+                        "desks" => $row->desks,
+                        "desks_avail" => $row->desks,
+                        "imageURL" => ($row->picture_id > 0 ? Router::url(['controller' => 'pictures', 'action' => 'get', $row->picture_id], true) : null),
+                        "images" => $pictures,
+                        "details" => $row->details,
+                        "title" => $row->title,
+                        "lat" => $row->lat + (mt_rand(-1000,1000) / 1000000.0),
+                        "lng" => $row->lng + (mt_rand(-1000,1000) / 1000000.0),
+                ]);
             }
             
             echo json_encode($ret, JSON_PRETTY_PRINT);
@@ -70,10 +68,10 @@ class CoworkersController extends AppController {
         if (!empty($this->request->getData())) {
             $model->patchEntity($row, $this->request->getData());
             
-            //$row->password = md5($row->username . $this->request->getData()->password);
-            
             $model->save($row);
             $this->Flash->set('Successfully saved.');
+
+            // redirect auf index funktioniert für coworkers nicht, die haben keinen zugriff auf ['action' => 'index']
             //return $this->redirect(['action' => 'cru']);
         }
     }
@@ -101,7 +99,7 @@ class CoworkersController extends AppController {
             
             if ($pass1 == $pass2) {
                 
-                $row->password = md5($row->username . $pass1);
+                $row->password = password_hash($pass1, PASSWORD_BCRYPT);
                 
                 if ($model->save($row)) {
                     $this->Flash->set('Password successfully set.');
