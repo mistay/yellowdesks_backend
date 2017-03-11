@@ -1,4 +1,4 @@
-<h2><pre><?php echo $row->isNew() ? "Add" : "Edit" ?> Coworker</h2>
+<h2><?php echo $row->isNew() ? "Add" : "Edit" ?> Coworker</h2>
 
 <form name="form1" method="post">
     <table>
