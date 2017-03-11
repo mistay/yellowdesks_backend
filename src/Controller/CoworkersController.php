@@ -150,7 +150,7 @@ class CoworkersController extends AppController {
                 $ret["coworker"]["id"] = $row -> id;
                 $ret["coworker"]["username"] = $row -> username;
             } catch (\Exception $e) {
-                $ret["error"] = "could not save data. duplicate username?";
+                $ret["error"] = "could not save data. duplicate username? e: " . $e;
             }
         } else 
             $ret["error"] = "could not read data from request. this api method requires data in http request body.";
