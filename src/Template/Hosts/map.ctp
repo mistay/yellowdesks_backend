@@ -39,7 +39,7 @@
             '<b>Open Price 1day:</b>host.price_1day<br />'+
             '<b>Open Price 10days:</b>host.price_10days<br />'+
             '<b>Open Price 1 month:</b>host.price_1month<br />'+
-            '<b>Open Price 6 months:</b>host.price_6monts<br />'+
+            '<b>Open Price 6 months:</b>host.price_6months<br />'+
             '</div>';
 
         str = str.replace("host.nickname", host.nickname);
