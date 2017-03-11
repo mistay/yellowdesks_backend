@@ -1191,13 +1191,9 @@ class CrumbsController extends Controller {
         if ($first != null) {
             if ($first != null) {                              
                 if ($first -> is_pass_init) {
-                    if ($password == md5($username . $first['User']['email'])) {
-                        $model2 -> info("auth() user '$username' auth'ed with init password as coworker. " . json_encode($log));
-                        $authed = $first;
-                        $authed->role = ROLES::COWORKER;
-                    }
+                    //TODO
                 } else {
-                    if (md5($first->username . $password) == $first->password) {
+                    if (password_verify($password, $first->password)) {
                         $model2 -> info("auth() coworker '$username' auth'ed with current password. " . json_encode($log));
                         $authed = $first;
                         $authed->role = ROLES::COWORKER;
@@ -1211,12 +1207,10 @@ class CrumbsController extends Controller {
             }
         }
         
-        
-        
         $model = TableRegistry::get('Admins');
         $query = $model->find('all')->where(['Admins.username' => strtolower($username)]);
         $first = $query->first();
-        if ($first != null && md5($first->username . $password) == $first->password) {
+        if ($first != null && password_verify($password, $first->password)) {
             $model2 -> info("auth() admin '$username' auth'ed with current password as host. " . json_encode($log));
             $authed = $first;
             $authed->role = ROLES::ADMIN;
@@ -1227,7 +1221,7 @@ class CrumbsController extends Controller {
         $query = $model3->find('all')->where(['Hosts.username' => strtolower($username)]);
         $first = $query->first();
         if ($first != null) {
-            if ($first != null && md5($first->username . $password) == $first->password) {
+            if ($first != null && password_verify($password, $first->password)) {
                 $model2 -> info("auth() host '$username' auth'ed with current password as host. " . json_encode($log));
                 $authed = $first;
                 $authed->role = ROLES::HOST;
