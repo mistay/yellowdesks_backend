@@ -129,7 +129,7 @@ class CoworkersController extends AppController {
         $this -> autoRender = false;
 
         $ret=[];
-        $ret["error"] = "";
+        $ret["error"] = "unknown error";
 
         $jsondata = $_REQUEST["data"];
         $data = json_decode($jsondata, true);
@@ -143,7 +143,7 @@ class CoworkersController extends AppController {
 
             try {
                 $model->save($row);
-                $ret["success"] = true;
+                $ret["error"] = "";
                 $ret["coworker"] = [];
                 $ret["coworker"]["id"] = $row -> id;
                 $ret["coworker"]["username"] = $row -> username;
