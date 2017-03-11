@@ -42,10 +42,11 @@
             <th></th>
             <td
             <?php if (isset($row["id"])) { ?>
-                <a href="<?php echo $this->Url->build(["action" => "changepass", $row["id"]]); ?>">Change Password</a></td>
+                <a href="<?php echo $this->Url->build(["action" => "changepass", $row["id"]]); ?>">Change Password</a>
             <?php } else { ?>
                 Password can be changed after coworker is registered.
             <?php } ?>
+            </td>
         </tr>
         <tr>
             <th></th>
