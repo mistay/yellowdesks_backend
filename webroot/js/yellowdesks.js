@@ -13,7 +13,7 @@ $(window).resize(resizemenu) ;
 var lastwidth = null;
 
 function gomobile() {
-    console.log("go mobile");
+    // console.log("go mobile");
     $(".menunav").hide();
     $(".menunav").addClass("menu-mobile");
 
@@ -22,7 +22,7 @@ function gomobile() {
 }
 
 function godesktop() {
-    console.log("go desktop");
+    // console.log("go desktop");
     $(".menunav").show();
     $(".menunav").show();
     $(".menunav").removeClass("menu-mobile");
