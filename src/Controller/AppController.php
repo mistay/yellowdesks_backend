@@ -88,10 +88,14 @@ class AppController extends CrumbsController
         
     }
 
+    public function timegmt() {
+        return time() - (int)substr(date('O'),0,3)*60*60;
+    }
+
     public function cleanupbookings() {
         // delete all reserverations that are 15minutes old
         $model = TableRegistry::get('Bookings');
-        $time = date("Y-m-d H:i:s",  time() - (15 * 60));
+        $time = date("Y-m-d H:i:s",  $this->timegmt() - (15 * 60));
         $query = $model->deleteAll(["dt_inserted < " => $time]);
     }
 }
