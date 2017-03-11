@@ -19,6 +19,8 @@ class BookingsController extends AppController {
     public function mybookings() {
         if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
 
+        $this->cleanupBookings();
+        
         $model = TableRegistry::get('Bookings');
 
         $user = $this->getLoggedinUser();
