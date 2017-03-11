@@ -12,7 +12,7 @@
 
     <?= $this->Html->css('../fonts/eraser/stylesheet.css') ?>
     <?= $this->Html->css('../fonts/din1451/stylesheet.css') ?>
-        <?= $this->Html->css('menu.css') ?>
+    <?= $this->Html->css('menu.css') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
