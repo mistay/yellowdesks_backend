@@ -17,6 +17,8 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
+use Cake\ORM\TableRegistry;
+
 /**
  * Application Controller
  *
@@ -43,6 +45,7 @@ class AppController extends CrumbsController
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
+        
         
         //y//
         /*
@@ -76,10 +79,21 @@ class AppController extends CrumbsController
      */
     public function beforeRender(Event $event)
     {
+        
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
+        
+    }
+
+    public function cleanupbookings() {
+        $model = TableRegistry::get('Bookings');
+        $time = "2017-03-08 11:00:00";
+        echo $time;
+        $query = $model->deleteAll(["dt_inserted < " => $time]);
+        echo "<pre>";
+        foreach ($query as $row) var_dump($row->dt_inserted);
     }
 }

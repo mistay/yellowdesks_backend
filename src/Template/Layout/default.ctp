@@ -10,62 +10,43 @@
     
     <?= $this->Html->css('yellowdesks.css') ?>
 
+    <?= $this->Html->css('../fonts/eraser/stylesheet.css') ?>
+    <?= $this->Html->css('../fonts/din1451/stylesheet.css') ?>
+        <?= $this->Html->css('menu.css') ?>
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <?= $this->Html->script('yellowdesks.js'); ?>
     <style>
-        .menu {
-            padding: 10px;
-            margin: 0px;
-            
+        <?php if ($_SERVER['SERVER_NAME'] == "localhost") { ?>
+        .devheader {
+            background-color: red;
+            font-size: 50px;
+            text-align: center;
+
         }
-        
-        .menu li {
-            list-style: none;
-            padding: 5px;
-        }
-        .menunav li:hover {
-            background: #f9e03e;
-            
-        }
-        .menu > a {
-            color: black;
-        }
-        
-        .menu a:hover {
-            text-decoration: none;
-        }
-        .menunav {
-            border-right: 1px solid lightgrey;
-        }
-        
-        .content {
-            padding-left: 20px;
-            width: 100%;
-        }
-        .hostname {
-            color: grey;
-            font-size: 10px;
-        }
-        .header {
-            background-color: #f9e03e; 
-            padding: 20px; 
-            font-size: 20px;
-        }
-        .header a {
-            color: black;
-        }
+        <?php } ?>
     </style>
 </head>
 <body>
-    <div class="header"><a href="<?= $this->Url->build("/"); ?>">Yellow Desks :: find workspace near you.</a></div>
+    <?php if ($_SERVER['SERVER_NAME'] == "localhost") { ?>
+        <div class="devheader" >this is the development system!!</div>
+    <?php } ?>
+    <div class="burger"><img src="<?= $this->Url->build("/img/burger.png"); ?>" /></div>
+    <div class="header"><a href="<?= $this->Url->build("/"); ?>">YELLOW DESKS</a></div>
+    <div class="subheader"><a href="<?= $this->Url->build("/"); ?>">find workspace near you</a></div>
+    <div class="subsubheader">a <a href="http://coworkingsalzburg.com">coworkingsalzburg.com</a> startup</div>
+    <div class="mobilemenu"></div>
     <div style="float:right; padding-right: 15px"><?= $loggedInAs; ?></div>
     <div style="clear:both"></div>
     <?= $this->Flash->render() ?>
     
     
     <div style="display: flex;">
+        <div class="menunavdesktopanchor" ></div>
         <nav class="menunav" style="min-width: 170px">
             <?php if($loggedInUser != null) { ?>
             <ul class="menu">

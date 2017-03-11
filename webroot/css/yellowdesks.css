@@ -1,8 +1,13 @@
+
 body {
     padding: 0;
     margin: 0;
     border: 0;
+    font-family: 'din';
+    font-weight: 100;
 }
+
+
 
 a {
     color: darkgrey;
@@ -36,3 +41,31 @@ input[readonly] {
     background-color: #eee;
     border: 1px solid darkgray;
 }
+
+button {
+    border: none;
+}
+
+.users.form input {
+    font-size: 40px;
+}
+
+.users.form .input.password {
+    padding-top: 30px;
+    
+}
+.users.form button {
+    margin-top: 30px;
+    min-height: 50px;
+    min-width: 200px;
+    font-size: 27px;
+    background-color: #000;
+    color: #f3ed3d;
+}
+
+.yellowdesksyellow {
+    color: #f3ed3d;
+}
+
+
+        
