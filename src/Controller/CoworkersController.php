@@ -141,6 +141,8 @@ class CoworkersController extends AppController {
             $row -> emailconfirmed = false;
             $model->patchEntity($row, $data);
 
+            $row -> password = password_hash($data["password"], PASSWORD_BCRYPT);
+
             try {
                 $model->save($row);
                 $ret["error"] = "";
