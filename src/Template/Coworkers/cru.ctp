@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <th>Username</th>
-            <td><input type="text" readonly="readonly" name="username" placeholder="johndoe" value='<?php echo @$row["username"] ?>' /></td>
+            <td><input type="text" name="username" placeholder="johndoe" value='<?php echo @$row["username"] ?>' /></td>
         </tr>
         <tr>
             <th>Address</th>
@@ -40,7 +40,7 @@
         </tr>
         <tr>
             <th></th>
-            <td><a href="<?php echo $this->Url->build(["action" => "changepass", $row->id]); ?>">Change Password</a></td>
+            <td><a href="<?php echo $this->Url->build(["action" => "changepass", $row["id"]]); ?>">Change Password</a></td>
         </tr>
         <tr>
             <th></th>
