@@ -26,10 +26,6 @@
         <td>
             <?php if ($row->paypalipn_id > 0) { ?> 
                 <a href="<?= $url ?>">Invoice</a>
-            <?php } elseif (time() - strtotime($row->dt_inserted) > 15 * 60) { ?>
-                // those should be removed by appcontroller::cleanupbookings()
-
-                Reservation expired.
             <?php } else { ?>
                 not payed yet.
             <?php } ?>
