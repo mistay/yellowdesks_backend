@@ -135,24 +135,25 @@ class CoworkersController extends AppController {
         $data = json_decode($jsondata, true);
 
         $model = TableRegistry::get('Coworkers');
-        $row = $model->newEntity();
-
-        if (is_array($data)) {
-
-            $row -> emailconfirmed = false;
-            $model->patchEntity($row, $data);
-            if($model->save($row)) {
-                if ($row->id > 0) {
-                    $ret["success"] = true;
-                    $ret["coworker"] = [];
-                    $ret["coworker"]["id"] = $row -> id;
-                    $ret["coworker"]["username"] = $row -> username;
+        if ($row = $model->newEntity()) {
+            if (is_array($data)) {
+                $row -> emailconfirmed = false;
+                $model->patchEntity($row, $data);
+                if($model->save($row)) {
+                    if ($row->id > 0) {
+                        $ret["success"] = true;
+                        $ret["coworker"] = [];
+                        $ret["coworker"]["id"] = $row -> id;
+                        $ret["coworker"]["username"] = $row -> username;
+                    } else
+                        $ret["error"] = "could create coworker id. username duplicate?";
                 } else
-                    $ret["error"] = "could create coworker id. username duplicate?";
-            }
-            else
-                $ret["error"] = "could not save data. database error?";
+                    $ret["error"] = "could not save data. database error?";
+            } else 
+                $ret["error"] = "could not read data from request. this api method requires data in http request body.";
         }
+        else
+            $ret["error"] = "could create coworker id. duplicate username?";
         echo json_encode($ret);
         exit();
     }
