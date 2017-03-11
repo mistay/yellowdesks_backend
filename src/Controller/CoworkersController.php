@@ -129,7 +129,7 @@ class CoworkersController extends AppController {
         $this -> autoRender = false;
 
         $ret=[];
-        $ret["success"] = false;
+        $ret["error"] = "";
 
         $jsondata = $_REQUEST["data"];
         $data = json_decode($jsondata, true);
@@ -141,13 +141,18 @@ class CoworkersController extends AppController {
 
             $row -> emailconfirmed = false;
             $model->patchEntity($row, $data);
-            $model->save($row);
-
-            $ret["success"] = true;
-            $ret["coworker"] = [];
-            $ret["coworker"]["id"] = $row -> id;
+            if($model->save($row)) {
+                if ($row->id > 0) {
+                    $ret["success"] = true;
+                    $ret["coworker"] = [];
+                    $ret["coworker"]["id"] = $row -> id;
+                    $ret["coworker"]["username"] = $row -> username;
+                } else
+                    $ret["error"] = "could create coworker id. username duplicate?";
+            }
+            else
+                $ret["error"] = "could not save data. database error?";
         }
-
         echo json_encode($ret);
         exit();
     }
