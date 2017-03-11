@@ -1,4 +1,4 @@
-<h2><?php echo empty($row) ? "Add" : "Edit" ?> Host</h2>
+<h2><pre><?php echo $row->isNew() ? "Add" : "Edit" ?> Host</h2>
 
 <form name="form1" method="post">
     <table>
@@ -148,7 +148,13 @@
         </tr>
         <tr>
             <th></th>
-            <td><a href="<?php echo $this->Url->build(["action" => "changepass", $row->id]); ?>">Change Password</a></td>
+            <td>
+                <?php if ($row->isNew()) { ?>
+                    Password can be changed after coworker is registered.
+                <?php } else { ?>
+                    <a href="<?= $this->Url->build(["action" => "changepass", $row["id"]]); ?>">Change Password</a>
+                <?php } ?>
+            </td>
         </tr>
         <tr>
             <th></th>

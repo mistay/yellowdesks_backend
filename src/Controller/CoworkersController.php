@@ -76,7 +76,7 @@ class CoworkersController extends AppController {
         }
     }
     
-    public function changepass($unsafe_id) {
+    public function changepass($unsafe_id=null) {
         if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]);
         
         $user = $this->getloggedInUser();
