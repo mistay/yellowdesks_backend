@@ -63,8 +63,6 @@ class PicturesController extends AppController {
         $rows = $model->find('all')->where($where);
         $this->set("rows", $rows);
         
-        
-        
         // e.g. http://localhost:8888/yellowdesks/pictures?host_id=5&format=jsonbrowser
         /*
         [
@@ -72,13 +70,11 @@ class PicturesController extends AppController {
                 "id": 1,
                 "name": "standdesk",
                 "mime": "image\/jpeg",
-                "data": "<base64string...>"
             },
             {
                 "id": 2,
                 "name": "restroom",
                 "mime": "image\/jpeg",
-                "data": "<base64string...>"
            }
         ]
         */
