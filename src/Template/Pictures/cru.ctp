@@ -5,7 +5,7 @@
          
     <?php if ($loggedinuser -> role == "ADMIN") { ?>
         <select name="host_id">
-            <?php foreach ($rows as $row): ?>
+            <?php foreach ($hosts as $row): ?>
                 <option value="<?= $row->id ?>"><?= $row->name . " (id: " . $row->id . ")" ?></option>
             <?php endforeach ?>
         </select>
