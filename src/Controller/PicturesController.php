@@ -22,7 +22,7 @@ class PicturesController extends AppController {
     public function cru() {
         $model = TableRegistry::get('Hosts');
         $rows = $model->find('all');
-        $this->set("rows", $rows);
+        $this->set("hosts", $hosts);
         
         $user = $this->getloggedInUser();
         $data = $this->request->getData();
@@ -30,7 +30,9 @@ class PicturesController extends AppController {
             foreach ($data["files"] as $file) {
                 $model2 = TableRegistry::get('Pictures');
                 $row = $model2->newEntity();
-                
+                $rows = $model->find('all');
+                $this->set("rows", $rows);
+        
                 $row->mime=$file["type"];
                 $row->name="";
                 
@@ -43,7 +45,7 @@ class PicturesController extends AppController {
                 $succ = $model2->save($row);
 
                 // assign host this picture if not done yet.
-                foreach ($rows as $rowhost) {
+                foreach ($hosts as $rowhost) {
                     if ($rowhost -> id == $row -> host_id) {
                         // found
                         if ($rowhost -> picture_id == null) {
