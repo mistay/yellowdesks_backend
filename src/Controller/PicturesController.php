@@ -91,7 +91,6 @@ class PicturesController extends AppController {
                         [   "id" => $row->id,
                             "name" => $row->name,
                             "mime" => $row->mime,
-                            "data" => base64_encode(stream_get_contents($row->data)),
                         ]);
                 
             }
