@@ -59,7 +59,7 @@ class PicturesController extends AppController {
             $where = isset($_REQUEST["host_id"]) ? ['Hosts.id' => $_REQUEST["host_id"]] : [];  
 
         //$query = $model->find('all')->where($where)->contain(['Hosts']);
-        $rows = $model->find('all')->where($where);
+        $rows = $model->find('all', ['fields' => ["id", "name"]])->where($where);
         $this->set("rows", $rows);
         
         // e.g. http://localhost:8888/yellowdesks/pictures?host_id=5&format=jsonbrowser
