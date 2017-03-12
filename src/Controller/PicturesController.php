@@ -21,7 +21,7 @@ class PicturesController extends AppController {
     
     public function cru() {
         $model = TableRegistry::get('Hosts');
-        $rows = $model->find('all');
+        $hosts = $model->find('all');
         $this->set("hosts", $hosts);
         
         $user = $this->getloggedInUser();
