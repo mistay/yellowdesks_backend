@@ -35,10 +35,9 @@ class PicturesController extends AppController {
                 $row->name="";
                 
                 if ($user -> role == Roles::ADMIN)
-                    $row->host_id = $data -> host_id;
+                    $row->host_id = $data["host_id"];
                 if ($user -> role == Roles::HOST)
                     $row->host_id = $user -> id;
-                
                 $row->data = file_get_contents($file["tmp_name"]);
                 $succ = $model2->save($row);
                 
