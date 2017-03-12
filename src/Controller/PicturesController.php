@@ -21,8 +21,8 @@ class PicturesController extends AppController {
     
     public function cru() {
         $model = TableRegistry::get('Hosts');
-        $query = $model->find('all');
-        $this->set("rows", $query);
+        $rows = $model->find('all');
+        $this->set("rows", $rows);
         
         $user = $this->getloggedInUser();
         $data = $this->request->getData();
@@ -35,11 +35,26 @@ class PicturesController extends AppController {
                 $row->name="";
                 
                 if ($user -> role == Roles::ADMIN)
-                    $row->host_id = $data["host_id"];
+                    $row -> host_id = $data["host_id"];
                 if ($user -> role == Roles::HOST)
-                    $row->host_id = $user -> id;
+                    $row -> host_id = $user -> id;
+
                 $row->data = file_get_contents($file["tmp_name"]);
                 $succ = $model2->save($row);
+
+                // assign host this picture if not done yet.
+                foreach ($rows as $rowhost) {
+                    if ($rowhost -> id == $row -> host_id) {
+                        // found
+                        if ($rowhost -> picture_id == null) {
+                            $data = [];
+                            $data["picture_id"] = $row -> id;
+                            $model -> patchEntity($rowhost, $data);
+                            $model -> save($rowhost);
+                        }
+                        break;
+                    }
+                }
                 
                 // prevent DUPes by browser reload
                 $this->redirect(["action" => "cru"]);
