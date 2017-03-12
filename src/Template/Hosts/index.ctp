@@ -12,6 +12,7 @@
         <th>GPS</th>
         <th>Price</th>
         <th>Open</th>
+        <th>Pictures</th>
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -37,6 +38,7 @@
         <?php echo money_format("%i", $row->price_1month); ?>
         <?php echo money_format("%i", $row->price_6months); ?></td>
         <td><?php echo $row->open_from == null ? "" : date("H:i", strtotime($row->open_from)); ?> - <?php echo $row->open_till == null ? "" : date("H:i", strtotime($row->open_till)); ?><?php echo $row->open_247fixworkers ? "<br />open 24/7" : "" ?></td>
+        <td><a href="<?php echo $this->Url->build(["action" => "pictures", $row->id]); ?>">Pictures</a></td>
         <td><a href="<?php echo $this->Url->build(["action" => "cru", $row->id]); ?>">Edit</a></td>
         <td><a onclick="return confirm('are you sure?')" href="<?php echo $this->Url->build(["action" => "delete", $row->id]); ?>">Delete</a></td>
     </tr>
