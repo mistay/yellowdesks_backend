@@ -1,4 +1,4 @@
-<h2><?php echo $row->isNew() ? "Add" : "Edit" ?> Picture</h2>
+<h2>Add Picture</h2>
 
 <form name="form1" method="post" enctype="multipart/form-data">
     <?php $loggedinuser = $this->request->session()->read('User'); ?>
