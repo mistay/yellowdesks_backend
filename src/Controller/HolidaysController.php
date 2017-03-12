@@ -25,8 +25,8 @@ class HolidaysController extends AppController {
         //if (!$this -> hasAccess([Roles::COWORKER, Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         // todo: bei 11 tagen zB 1x10er block + 1x einzelticket und nicht dividieren!
 
-        cleanupbookings();
-        
+        $this->cleanupbookings();
+
         $host_id = (int) $unsafe_host_id;
         
         $model = TableRegistry::get('Hosts');
