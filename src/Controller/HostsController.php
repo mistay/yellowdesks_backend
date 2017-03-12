@@ -19,6 +19,30 @@ class HostsController extends AppController {
 
     }
 
+    public function pictures($host_id = null) {
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        
+        
+        $modelPictures = TableRegistry::get('Pictures');
+        
+        $user = $this->getloggedInUser();
+        
+        if ($user->role == Roles::HOST)
+            $host_id = $user -> id;
+            
+        
+        $where = ($host_id == null) ? [] : ['host_id' => $host_id];
+
+
+        $model = TableRegistry::get('Hosts');
+        $row = $model->get($host_id);
+        $this->set("row", $row);
+
+        $pictures = $modelPictures->find('all', ['fields' => ["id", "name"]])->where($where);
+        $this->set("pictures", $pictures);
+    }
+
     public function cru($unsafe_id=null) {
         if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         
