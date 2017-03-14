@@ -35,15 +35,14 @@ class PaypalipnsController extends AppController {
         $model->patchEntity($row, $this -> request -> getData());
         $row -> rawrequest = $request;
         $row -> sandbox = $sandbox;
-        $model->save($row);
-
+        
         $ipn = new PaypalIPN();
         //$ipn->useSandbox(); // remove me for production
-        $verified = $ipn->verifyIPN();
-        if ($verified)
-        {
-            $this->updatebookings($row->id);
-        }
+        $row -> verified = $ipn->verifyIPN();
+
+        $row -> server = $_SERVER["HTTP_SERVER"];
+        $model->save($row);
+        $this->updatebookings($row->id);
 
         // Reply with an empty 200 response to indicate to paypal the IPN was received correctly.
         // header("HTTP/1.1 200 OK");
