@@ -216,6 +216,9 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         // todo: 2h-ticket (wie?)
         $total = 0;
         $timespan = $this->calculate_timespan($begin, $end);
+        $rets["num_months"] = $timespan["months"];
+        $rets["num_days"] = $timespan["days"];
+
         if ($timespan["months"] >= 6) {
             // 1st rule
             $rets["debug_rule"] = 1;
