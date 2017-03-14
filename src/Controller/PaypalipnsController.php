@@ -42,7 +42,7 @@ class PaypalipnsController extends AppController {
         $verified = $ipn->verifyIPN();
         if ($verified)
         {
-            $this->updatebookings($row->id, $request->custom);
+            $this->updatebookings($row->id);
         }
 
         // Reply with an empty 200 response to indicate to paypal the IPN was received correctly.
@@ -51,31 +51,22 @@ class PaypalipnsController extends AppController {
     }
 
 
-    public function updatebookings($paypalipn_id, $customfield) {
-
-        // e.g. $customfield = '{"17":3.05,"19":17.05,"23":4.07}'
-        $custom = json_decode($customfield, true);
-        /*
-        $custom = [   
-            "17" => 3.05,
-            "19" => 17.05,
-            "23" => 4.07,
-        ];
-        */
-
-        $booking_ids = array_keys($custom);
-
-        $model2 = TableRegistry::get('Bookings');
-        $rows = $model2->find('all')->where(['Bookings.id IN' => $booking_ids]);
-        $sum = 0;
-        foreach ($rows as $booking) {
-            var_dump($booking->price);
-            $sum += $booking->price + $booking->vat;
-        }
+    public function updatebookings($paypalipn_id) {
+        $this -> autoRender = false;
         
         $model_paypalipns = TableRegistry::get('Paypalipns');
         $paypalipn = $model_paypalipns->get($paypalipn_id);
+        
+        // e.g. [1101]
+        $custom = json_decode($paypalipn -> custom, true);
 
+        $model2 = TableRegistry::get('Bookings');
+        $rows = $model2->find('all')->where(['Bookings.id IN' => $custom]);
+        $sum = 0;
+        foreach ($rows as $booking) {
+            $sum += $booking->price + $booking->vat;
+        }
+        
         // compare floats, accept tolerance of 0.01 and of course more money than requested :)
         if ($paypalipn -> mc_gross - $sum > - 0.01) {
             // überweisungsbetrag is i.O., alle bookings ueberwiesen, yehaa!
