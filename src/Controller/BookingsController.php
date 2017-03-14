@@ -268,8 +268,10 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
             $row -> description = $booking[ "type" ];
             $row -> price = $booking[ "price" ];
             $row -> servicefee_host = $booking[ "price" ] / 100 * 20; // 20% to YD
-            $row -> servicefee_coworker = 0;
             $row -> vat = ($booking[ "price" ] / 100 * 20);
+            $row -> amount_host = $row -> price - $row -> servicefee_host;
+            $row -> vat_host = $row -> amount_host / 100 * 20; // todo: gilt nur für .at unternehmer
+
             $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
             $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
 
