@@ -17,7 +17,7 @@
     <?php foreach ($rows as $row): ?>
     <tr>
         <td><?= $row -> id ?></td>
-        <td><?= $row -> confirmed ? "yes" : "no" ?></td>
+        <td><?= $row -> paypalipn_id == null ? "no" : "yes" ?></td>
         <td><?php echo date("d.m.Y H:i", strtotime($row->dt_inserted)); ?></td>
         
         <?php
