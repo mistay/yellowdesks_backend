@@ -32,6 +32,6 @@
         <td><?= $row->description; ?></td>
         <td><?= money_format('%i', $row->price); ?></td>
         <td><?= money_format('%i', $row->vat); ?></td>
-        <?php $total = $row->price + $row->vat; echo $total; ?>
+        <td><?php $total = $row->price + $row->vat; echo $total; ?></td>
     </tr>
 </table>
