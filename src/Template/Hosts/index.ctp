@@ -38,7 +38,6 @@
         <?php echo money_format("%i", $row->price_1month); ?>
         <?php echo money_format("%i", $row->price_6months); ?></td>
         <td>
-        Open
         <?php echo $row->open_247fixworkers ? "24/7<br />" : "" ?></td>
         <?php echo $row->open_monday_from == null || $row->open_monday_till == null  ?  "" : "Mon " ?>
         <?php echo $row->open_tuesday_from == null || $row->open_tuesday_till == null  ?  "" : "Tue " ?>
