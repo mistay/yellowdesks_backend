@@ -2,6 +2,7 @@
 
 <table>
     <tr>
+        <th>id</th>
         <th>Confirmed</th>
         <th>Booking Date (GMT)</th>
         <th>Invoice Host</th>
@@ -15,6 +16,7 @@
     </tr>
     <?php foreach ($rows as $row): ?>
     <tr>
+        <td><?= $row -> id ?></td>
         <td><?= $row -> confirmed ? "yes" : "no" ?></td>
         <td><?php echo date("d.m.Y H:i", strtotime($row->dt_inserted)); ?></td>
         
