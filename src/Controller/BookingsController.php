@@ -242,8 +242,7 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
                 $total = sizeof($workingdays) * $host -> price_1day;
             }
         }
-        $rets["total"] = $total;
-
+        
         $booking = [
             "type" => "Yellowdesk Ticket",
             "begin" => date("Y-m-d", $from),
@@ -283,6 +282,10 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
                 $total += $row -> price + $row -> vat;
             }
         }
+        $rets["total"] = $total;
+
+
+
         if (@$_REQUEST["jsonbrowser"]) echo "<pre>";
         echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
