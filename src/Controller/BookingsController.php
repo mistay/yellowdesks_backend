@@ -227,7 +227,7 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         } else {
             $workingdays = $this -> calculate_workingdays($hostid, $begin, $end);
             $rets["workingdays"] = $workingdays;
-            $rets["num_workingdays"] = sizeof("workingdays");
+            $rets["num_workingdays"] = sizeof($workingdays);
 
             if (sizeof($workingdays) >= 10)  {
                 // 3rd rule
