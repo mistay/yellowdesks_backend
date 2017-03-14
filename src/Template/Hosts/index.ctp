@@ -38,13 +38,13 @@
         <?php echo money_format("%i", $row->price_1month); ?>
         <?php echo money_format("%i", $row->price_6months); ?></td>
         <td>
-        <?php echo $row->open_monday_from == null || $row->open_monday_till == null  ?  "" : "Mon:" . date("H:i", strtotime($row->open_monday_from)) . "-" . date("H:i", strtotime($row->open_monday_till)) . "<br/>" ?>
-        <?php echo $row->open_tuesday_from == null || $row->open_tuesday_till == null  ?  "" : "Tue:" . date("H:i", strtotime($row->open_tuesday_from)) . "-" . date("H:i", strtotime($row->open_tuesday_till)) . "<br/>" ?>
-        <?php echo $row->open_wednesday_from == null || $row->open_wednesday_till == null  ?  "" : "Wed:" . date("H:i", strtotime($row->open_wednesday_from)) . "-" . date("H:i", strtotime($row->open_wednesday_till)) . "<br/>" ?>
-        <?php echo $row->open_thursday_from == null || $row->open_thursday_till == null  ?  "" : "Thu" . date("H:i", strtotime($row->open_thursday_from)) . "-" . date("H:i", strtotime($row->open_thursday_till)) . "<br/>" ?>
-        <?php echo $row->open_friday_from == null || $row->open_friday_till == null  ?  "" : "Fri:" . date("H:i", strtotime($row->open_friday_from)) . "-" . date("H:i", strtotime($row->open_friday_till)) . "<br/>" ?>
-        <?php echo $row->open_saturday_from == null || $row->open_saturday_till == null  ?  "" : "Sat:" . date("H:i", strtotime($row->open_saturday_from)) . "-" . date("H:i", strtotime($row->open_saturday_till)) . "<br/>" ?>
-        <?php echo $row->open_sunday_from == null || $row->open_sunday_till == null  ?  "" : "Sun:" . date("H:i", strtotime($row->open_sunday_from)) . "-" . date("H:i", strtotime($row->open_sunday_till)) ." <br/>" ?>
+        <?php echo $row->open_monday_from == null || $row->open_monday_till == null  ?  "" : "Mon " ?>
+        <?php echo $row->open_tuesday_from == null || $row->open_tuesday_till == null  ?  "" : "Tue " ?>
+        <?php echo $row->open_wednesday_from == null || $row->open_wednesday_till == null  ?  "" : "Wed " ?>
+        <?php echo $row->open_thursday_from == null || $row->open_thursday_till == null  ?  "" : "Thu " ?>
+        <?php echo $row->open_friday_from == null || $row->open_friday_till == null  ?  "" : "Fri " ?>
+        <?php echo $row->open_saturday_from == null || $row->open_saturday_till == null  ?  "" : "Sat " ?>
+        <?php echo $row->open_sunday_from == null || $row->open_sunday_till == null  ?  "" : "Sun" ?>
         <?php echo $row->open_247fixworkers ? "<br />open 24/7" : "" ?></td>
         <td><a href="<?php echo $this->Url->build(["action" => "pictures", $row->id]); ?>">Pictures</a></td>
         <td><a href="<?php echo $this->Url->build(["action" => "cru", $row->id]); ?>">Edit</a></td>
