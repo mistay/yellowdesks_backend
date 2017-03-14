@@ -12,7 +12,7 @@ class BookingsController extends AppController {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
 
         $model = TableRegistry::get('Bookings');
-        $query = $model->find('all')->contain(['Hosts', 'Coworkers']);
+        $query = $model->find('all')->order("dt_inserted DESC")->contain(['Hosts', 'Coworkers']);
         $this->set("rows", $query);
     }
 
