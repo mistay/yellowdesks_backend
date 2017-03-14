@@ -21,8 +21,6 @@ $total=0;
         <th>Date</th>
         <th>Coworker</th>
         <th>Price excl. VAT</th>
-        <th>Service Fee</th>
-        <th>Subtotal</th>
         <th>VAT</th>
         <th>Total</th>
     </tr>
