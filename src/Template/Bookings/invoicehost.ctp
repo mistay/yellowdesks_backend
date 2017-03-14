@@ -17,6 +17,7 @@ $total=0;
 
 <table>
     <tr>
+        <th>id</th>
         <th>Date</th>
         <th>Coworker</th>
         <th>Price</th>
@@ -26,6 +27,7 @@ $total=0;
     </tr>
     <?php foreach ($rows as $row): ?>
     <tr>
+        <td><?= $row -> id ?></td>
         <td><?php echo date("d.m.Y", strtotime($row->dt_inserted)); ?></td>
         <td><?php echo $row->coworker->companyname . " " . $row->coworker->firstname . " " . $row->coworker->lastname; ?></td>
         <td><?php echo money_format('%i', $row->price); ?></td>

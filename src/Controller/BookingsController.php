@@ -11,8 +11,13 @@ class BookingsController extends AppController {
     public function index() {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
 
+        $this->cleanupBookings();
+        
         $model = TableRegistry::get('Bookings');
-        $query = $model->find('all')->order("dt_inserted DESC")->contain(['Hosts', 'Coworkers']);
+
+        $user = $this -> getLoggedinUser();
+
+        $query = $model->find('all')->order(["dt_inserted DESC"])->where()->contain(['Hosts', 'Coworkers']);
         $this->set("rows", $query);
     }
 
@@ -23,7 +28,7 @@ class BookingsController extends AppController {
         
         $model = TableRegistry::get('Bookings');
 
-        $user = $this->getLoggedinUser();
+        $user = $thi -> getLoggedinUser();
 
         $query = $model->find('all')->order(["dt_inserted DESC"])->where(["coworker_id" => $user -> id])->contain(['Hosts', 'Coworkers']);
         $this->set("rows", $query);
@@ -42,14 +47,16 @@ class BookingsController extends AppController {
         $this->set("row", $query);
     }
     
-    public function invoicehost($id) {
+    public function invoicehost() {
         if (!$this -> hasAccess([Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
  
+        $user = $this -> getloggedinUser();
+
         $model = TableRegistry::get('Bookings');
-        $query = $model->find('all')->contain(['Coworkers'])->where(['host_id' => $id]);
+        $query = $model->find('all')->contain(['Coworkers'])->where(['host_id' => $user->id]);
 
         $hosts = TableRegistry::get('Hosts');
-        $this->set("host", $hosts->get($id));
+        $this->set("host", $hosts->get( $user->id));
 
         // todo: security: check if user is permitted to request this invoice
         $this->set("rows", $query);
