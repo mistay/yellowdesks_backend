@@ -32,7 +32,7 @@ $total=0;
         <td><?php echo money_format('%i', $row->amount_host); ?></td>
         <td><?php echo money_format('%i', $row->vat_host); ?></td>
         <?php $subtotal = $row->amount_host + $row->vat_host; // todo: sum??? sum financially, not mathematically ?>
-        <td><?php $total += subtotal; echo money_format('%i', $subtotal); ?></td>
+        <td><?php $total += $subtotal; echo money_format('%i', $subtotal); ?></td>
     </tr>
     <?php endforeach; ?>
     <tr>
