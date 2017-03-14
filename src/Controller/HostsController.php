@@ -105,7 +105,7 @@ class HostsController extends AppController {
             
             if ($pass1 == $pass2) {
                 
-                $row->password = md5($row->username . $pass1);
+                $row->password = password_hash($pass1, PASSWORD_BCRYPT);
                 
                 if ($model->save($row)) {
                     $this->Flash->set('Password successfully set.');
