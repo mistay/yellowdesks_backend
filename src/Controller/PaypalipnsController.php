@@ -40,7 +40,7 @@ class PaypalipnsController extends AppController {
         //$ipn->useSandbox(); // remove me for production
         $row -> verified = $ipn->verifyIPN();
 
-        $row -> server = $_SERVER["HTTP_SERVER"];
+        $row -> server = print_r($_SERVER, true);
         $model->save($row);
         $this->updatebookings($row->id);
 
