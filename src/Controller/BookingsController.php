@@ -28,7 +28,7 @@ class BookingsController extends AppController {
         
         $model = TableRegistry::get('Bookings');
 
-        $user = $thi -> getLoggedinUser();
+        $user = $this -> getLoggedinUser();
 
         $query = $model->find('all')->order(["dt_inserted DESC"])->where(["coworker_id" => $user -> id])->contain(['Hosts', 'Coworkers']);
         $this->set("rows", $query);
