@@ -38,6 +38,8 @@
         <?php echo money_format("%i", $row->price_1month); ?>
         <?php echo money_format("%i", $row->price_6months); ?></td>
         <td>
+        Open
+        <?php echo $row->open_247fixworkers ? "24/7<br />" : "" ?></td>
         <?php echo $row->open_monday_from == null || $row->open_monday_till == null  ?  "" : "Mon " ?>
         <?php echo $row->open_tuesday_from == null || $row->open_tuesday_till == null  ?  "" : "Tue " ?>
         <?php echo $row->open_wednesday_from == null || $row->open_wednesday_till == null  ?  "" : "Wed " ?>
@@ -45,7 +47,6 @@
         <?php echo $row->open_friday_from == null || $row->open_friday_till == null  ?  "" : "Fri " ?>
         <?php echo $row->open_saturday_from == null || $row->open_saturday_till == null  ?  "" : "Sat " ?>
         <?php echo $row->open_sunday_from == null || $row->open_sunday_till == null  ?  "" : "Sun" ?>
-        <?php echo $row->open_247fixworkers ? "<br />open 24/7" : "" ?></td>
         <td><a href="<?php echo $this->Url->build(["action" => "pictures", $row->id]); ?>">Pictures</a></td>
         <td><a href="<?php echo $this->Url->build(["action" => "cru", $row->id]); ?>">Edit</a></td>
         <td><a onclick="return confirm('are you sure?')" href="<?php echo $this->Url->build(["action" => "delete", $row->id]); ?>">Delete</a></td>
