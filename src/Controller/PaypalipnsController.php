@@ -30,12 +30,11 @@ class PaypalipnsController extends AppController {
         $this->autoRender = false;
         $request = print_r($_REQUEST, true);
         $model = TableRegistry::get('Paypalipns');
-        $row = $model->newEntity();
-        $row->rawrequest = $request;
-        $row->mc_gross = $request->mc_gross;
-        $row->custom = $request->custom;
-        $row->sandbox = $sandbox;
+        $row = $model -> newEntity();
 
+        $model->patchEntity($row, $this -> request -> getData());
+        $row -> rawrequest = $request;
+        $row -> sandbox = $sandbox;
         $model->save($row);
 
         $ipn = new PaypalIPN();
