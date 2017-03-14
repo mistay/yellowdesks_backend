@@ -53,7 +53,7 @@ class BookingsController extends AppController {
         $user = $this -> getloggedinUser();
 
         $model = TableRegistry::get('Bookings');
-        $query = $model->find('all')->contain(['Coworkers'])->where(['host_id' => $user->id]);
+        $query = $model->find('all')->contain(['Coworkers'])->where(['paypalipn_id IS NOT' => null, 'host_id' => $user->id]);
 
         $hosts = TableRegistry::get('Hosts');
         $this->set("host", $hosts->get( $user->id));
