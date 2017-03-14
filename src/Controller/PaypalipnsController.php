@@ -52,7 +52,8 @@ class PaypalipnsController extends AppController {
 
     public function updatebookings($paypalipn_id) {
         $this -> autoRender = false;
-        
+        $ret = [];
+
         $model_paypalipns = TableRegistry::get('Paypalipns');
         $paypalipn = $model_paypalipns->get($paypalipn_id);
         
@@ -66,13 +67,27 @@ class PaypalipnsController extends AppController {
             $sum += $booking->price + $booking->vat;
         }
         
+        $ret["sum_paypal"] = $paypalipn -> mc_gross;
+        $ret["sum"] = $sum;
+        $ret["diff"] = $paypalipn -> mc_gross - $sum;
+        
+
         // compare floats, accept tolerance of 0.01 and of course more money than requested :)
         if ($paypalipn -> mc_gross - $sum > - 0.01) {
+            $ret["sums_match"] = true;
+
             // überweisungsbetrag is i.O., alle bookings ueberwiesen, yehaa!
             foreach ($rows as $booking) {
                 $booking -> paypalipn_id = $paypalipn_id;
                 $model2 -> save($booking);
             }
+        }
+
+        if (strpos($_SERVER['REQUEST_URI'], "updatebookings") !== false) {
+            // todo: direkt aufgerufen, nicht sehr schön. besser: über cake lösen
+            // wenn man kein exit() macht meldet cake (zurecht), dass es keine header mehr senden kann (weil http body schon geschickt wurde)
+            echo json_encode($ret);
+            exit(0);
         }
     }
 }
