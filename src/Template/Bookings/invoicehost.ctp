@@ -36,7 +36,7 @@ $total=0;
     </tr>
     <?php endforeach; ?>
     <tr>
-        <td colspan="6">
+        <td colspan="5">
             
         </td>
         <td><h2>
