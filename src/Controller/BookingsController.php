@@ -110,31 +110,31 @@ class BookingsController extends AppController {
             switch (date('N', $test_date)) {
                 case 1: //monday
                     if ($host->open_monday_from != null && $host->open_monday_till != null)
-                        array_push($workingdays, $test_date); continue;
+                        array_push($workingdays, date("Y-m-d", $test_date)); continue;
                     break;
                 case 2:
                     if ($host->open_tuesday_from != null && $host->open_tuesday_till != null)
-                        array_push($workingdays, $test_date); continue;
+                        array_push($workingdays, date("Y-m-d", $test_date)); continue;
                     break;
                 case 3:
                     if ($host->open_wednesday_from != null && $host->open_wednesday_till != null)
-                        array_push($workingdays, $test_date); continue;
+                        array_push($workingdays, date("Y-m-d", $test_date)); continue;
                     break;
                 case 4:
                     if ($host->open_thursday_from != null && $host->open_thursday_till != null)
-                        array_push($workingdays, $test_date); continue;
+                        array_push($workingdays, date("Y-m-d", $test_date)); continue;
                     break;
                 case 5:
                     if ($host->open_friday_from != null && $host->open_friday_till != null)
-                        array_push($workingdays, $test_date); continue;
+                        array_push($workingdays, date("Y-m-d", $test_date)); continue;
                     break;
                 case 6:
                     if ($host->open_saturday_from != null && $host->open_saturday_till != null)
-                        array_push($workingdays, $test_date); continue;
+                        array_push($workingdays, date("Y-m-d", $test_date)); continue;
                     break;
                 case 7:
                     if ($host->open_sunday_from != null && $host->open_sunday_till != null)
-                        array_push($workingdays, $test_date); continue;
+                        array_push($workingdays, date("Y-m-d", $test_date)); continue;
                     break;
             }
 
@@ -149,7 +149,7 @@ class BookingsController extends AppController {
 
                 if (date('N', $test_date) >= 1 && date('N', $test_date) <= 5)
                     // mo - fr
-                    array_push($workingdays, $test_date); continue;
+                    array_push($workingdays, date("Y-m-d", $test_date)); continue;
             break;
             
 
