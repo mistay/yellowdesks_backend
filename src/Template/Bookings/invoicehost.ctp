@@ -21,8 +21,9 @@ $total=0;
         <th>Date</th>
         <th>Coworker</th>
         <th>Price excl. VAT</th>
-        <th>VAT </th>
         <th>Service Fee</th>
+        <th>Subtotal</th>
+        <th>VAT</th>
         <th>Total</th>
     </tr>
     <?php foreach ($rows as $row): ?>
@@ -30,10 +31,9 @@ $total=0;
         <td><?= $row -> id ?></td>
         <td><?php echo date("d.m.Y", strtotime($row->dt_inserted)); ?></td>
         <td><?php echo $row->coworker->companyname . " " . $row->coworker->firstname . " " . $row->coworker->lastname; ?></td>
-        <td><?php echo money_format('%i', $row->price); ?></td>
-        <td><?php echo money_format('%i', $row->vat); ?></td>
-        <td><?php echo money_format('%i', $row->servicefee_host); ?></td>
-        <?php $subtotal = $row->price + $row->vat - $row->servicefee_host; $total += $subtotal // todo: sum??? sum financially, not mathematically ?>
+        <td><?php echo money_format('%i', $row->amount_host); ?></td>
+        <td><?php echo money_format('%i', $row->vat_host); ?></td>
+        <?php $subtotal = $row->amount_host + $row->vat_host; // todo: sum??? sum financially, not mathematically ?>
         <td><?php echo money_format('%i', $subtotal); ?></td>
     </tr>
     <?php endforeach; ?>
