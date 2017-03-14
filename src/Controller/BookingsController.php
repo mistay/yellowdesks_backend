@@ -188,8 +188,11 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
    mon 6.11.2017 = working day ("arbeitstag"), will be charged
    tue 7.11.2017 = working day ("arbeitstag"), will be charged
 */
-    public function prepare($hostid, $begin, $end) {
-        if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+    public function prepare($hostid, $begin, $end, $requestOffer=false) {
+        if ($requestOffer !== false) {
+            // login if user would like to book, otherwise it's just a price calculation (no login needed)
+            if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        }
         $rets = [];
         
         $user = $this->getloggedinUser();
@@ -247,35 +250,35 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         $total = 0;
         // todo: collision check
 
-        $row = $this -> Bookings -> newEntity();
-        $row -> coworker_id = $user -> id;
-        $row -> payment_id = null;
-        $row -> host_id = $hostid;
-        $row -> description = $booking[ "type" ];
-        $row -> price = $booking[ "price" ];
-        $row -> servicefee_host = $booking[ "price" ] / 100 * 20; // 20% to YD
-        $row -> servicefee_coworker = 0;
-        $row -> vat = ($booking[ "price" ] / 100 * 20);
-        $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
-        $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
+        if ($requestOffer !== false) {
+            $row = $this -> Bookings -> newEntity();
+            $row -> coworker_id = $user -> id;
+            $row -> payment_id = null;
+            $row -> host_id = $hostid;
+            $row -> description = $booking[ "type" ];
+            $row -> price = $booking[ "price" ];
+            $row -> servicefee_host = $booking[ "price" ] / 100 * 20; // 20% to YD
+            $row -> servicefee_coworker = 0;
+            $row -> vat = ($booking[ "price" ] / 100 * 20);
+            $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
+            $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
 
-        if ($this -> Bookings -> save($row)) {
-            $ret = [
-                "nickname" => $host -> nickname,
-                "host_id" => $host -> id,
-                "title" => $host -> title,
-                "price" => $row -> price,
-                "vat" => $row -> vat,
-                "description" => $booking[ "type" ],
-                "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
-                "end" => date("Y-m-d", strtotime($booking[ "end" ])),
-            ];
+            if ($this -> Bookings -> save($row)) {
+                $ret = [
+                    "nickname" => $host -> nickname,
+                    "host_id" => $host -> id,
+                    "title" => $host -> title,
+                    "price" => $row -> price,
+                    "vat" => $row -> vat,
+                    "description" => $booking[ "type" ],
+                    "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
+                    "end" => date("Y-m-d", strtotime($booking[ "end" ])),
+                ];
 
-            $rets[$row->id] = $ret;
-            $total += $row -> price + $row -> vat;
+                $rets[$row->id] = $ret;
+                $total += $row -> price + $row -> vat;
+            }
         }
-
-
         if (@$_REQUEST["jsonbrowser"]) echo "<pre>";
         echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
