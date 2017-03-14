@@ -57,11 +57,139 @@ class BookingsController extends AppController {
     
     public function preparebookingrequest() {
         if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
-        
-        
-        
     }
     
+
+    /*  see: AGBs 
+        $str_date1 $str_date2, e.g. '2017-02-01'
+    */
+    private function calculate_timespan($str_date_begin, $str_date_end) {
+        $date1 = new \DateTime($str_date_begin);
+        $date2 = new \DateTime($str_date_end); 
+        $date2->add(new \DateInterval('P1D')); // end date is included as of definition
+
+        $diff = $date1->diff($date2);
+        //printf('%u year(s), %u month(s), %u day(s)', $diff->y, $diff->m, $diff->d);
+
+        return ["years" => $diff->y, "months" => $diff->m, "days" => $diff->d];
+    }
+
+    /*  see: AGBs 
+        $str_date1 $str_date2, e.g. '2017-02-01'
+    */
+    private function calculate_workingdays($host_id, $str_date_begin, $str_date_end) {
+
+        $from = strtotime($str_date_begin);
+        $to = strtotime($str_date_end);
+
+        $hosts = TableRegistry::get('Hosts');
+        $host = $hosts->get($host_id);
+
+        $modelholidays = TableRegistry::get('Holidays');
+        $holidays = $modelholidays->find('all'); // todo: auf land/zeitraum? einschränken?
+
+        $days = 0;
+        $workingdays = [];
+        do {
+            $test_date = mktime(date("H", $from), date("i", $from), date("s", $from), date("m", $from), date("d", $from) + $days, date("Y", $from));
+            $days++;
+
+            // 1. continue with next day if day is public holiday
+            $found=false;
+            foreach ($holidays as $holiday) {
+                if (date("Y-m-d", $test_date) == date("Y-m-d", strtotime($holiday->date))) {
+                    $found = true;
+                    break;
+                }
+            }
+            if ($found)
+                // zu testendender tag ist ein feiertag, kein coworking möglich
+                continue;
+
+            // 2. add day to list of workingdays if host is open at that day, else continue with next day
+            switch (date('N', $test_date)) {
+                case 1: //monday
+                    if ($host->open_monday_from != null && $host->open_monday_till != null)
+                        array_push($workingdays, $test_date); continue;
+                    break;
+                case 2:
+                    if ($host->open_tuesday_from != null && $host->open_tuesday_till != null)
+                        array_push($workingdays, $test_date); continue;
+                    break;
+                case 3:
+                    if ($host->open_wednesday_from != null && $host->open_wednesday_till != null)
+                        array_push($workingdays, $test_date); continue;
+                    break;
+                case 4:
+                    if ($host->open_thursday_from != null && $host->open_thursday_till != null)
+                        array_push($workingdays, $test_date); continue;
+                    break;
+                case 5:
+                    if ($host->open_friday_from != null && $host->open_friday_till != null)
+                        array_push($workingdays, $test_date); continue;
+                    break;
+                case 6:
+                    if ($host->open_saturday_from != null && $host->open_saturday_till != null)
+                        array_push($workingdays, $test_date); continue;
+                    break;
+                case 7:
+                    if ($host->open_sunday_from != null && $host->open_sunday_till != null)
+                        array_push($workingdays, $test_date); continue;
+                    break;
+            }
+
+            // we assume host is open mo-fr if no opening hours set
+            if ($host->open_monday_from != null && $host->open_monday_till != null &&
+                $host->open_tuesday_from != null && $host->open_tuesday_till != null &&
+                $host->open_wednesday_from != null && $host->open_wednesday_till != null &&
+                $host->open_thursday_from != null && $host->open_thursday_till != null &&
+                $host->open_friday_from != null && $host->open_friday_till != null &&
+                $host->open_saturday_from != null && $host->open_saturday_till != null &&
+                $host->open_sunday_from != null && $host->open_sunday_till != null)
+
+                if (date('N', $test_date) >= 1 && date('N', $test_date) <= 5)
+                    // mo - fr
+                    array_push($workingdays, $test_date); continue;
+            break;
+            
+
+        } while($test_date < $to);
+        return $workingdays;
+    }
+
+/*
+Auszug aus YD-AGBs:
+
+preisberechnung
+===============
+die reihenfolge der untenstehenden regeln ist relevant. sobald eine regelbedingung erfüllt ist, wird nur diese regel (und keine andere) angewendet.
+
+1. regel: bei buchungen > 1monat: monatspreis für anzahl der monate, letzter monat aliquot.
+z.B: coworker bucht von 1.2. bis 7.3. (=1,22 monate da 1 februarmonat + 7 tage im märz), monatspreis: 309EUR
+     kosten für coworker: 1,22 Monate * 309EUR = 376,98 EUR
+
+2. regel: bei buchungen > 10 tage: kosten für coworker: 10-tagespreis * anzahl werktage / 10
+z.B: 13 Tage (10er-Tagespreis: 215 EUR) kosten 13 Tage * 215EUR / 10 = 259,50EUR
+
+3. regel: bei buchungen > 1 tag: kosten einzelticketpreis * anzahl der tage
+z.B: 3 Tage ju je 25EUR kosten 3 * 25EUR = 75EUR
+
+day of rest ("ruhetag")
+=======================
+definition
+  1. all public holidays in austria, listed in wikipedia (https://en.wikipedia.org/wiki/List_of_holidays_by_country)
+  2. all days in hosts's profile where no opening-hours are set (at the time of booking)
+
+example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg" (assuming opening hours on monday till saturday)
+   tue 31.10.2017 = working day ("arbeitstag"), will be charged
+   wed 1.11.2017 = public holiday as of wikipedia, day of rest, no charge
+   thu 2.11.2017 = working day ("arbeitstag"), will be charged
+   fri 3.11.2017 = working day ("arbeitstag"), will be charged
+   sat 4.11.2017 = working day ("arbeitstag"), will be charged
+   sun 5.11.2017 = day of rest, no charge
+   mon 6.11.2017 = working day ("arbeitstag"), will be charged
+   tue 7.11.2017 = working day ("arbeitstag"), will be charged
+*/
     public function prepare($hostid, $begin, $end) {
         if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $rets = [];
@@ -73,11 +201,8 @@ class BookingsController extends AppController {
         $model_hosts = TableRegistry::get('Hosts');
         $host = $model_hosts->get($hostid);
 
-
         $model_holidays = TableRegistry::get('Holidays');
         $holidays = $query = $model_holidays->find('all');
-
-
 
         $from = strtotime($begin);
         $to = strtotime($end);
@@ -87,103 +212,73 @@ class BookingsController extends AppController {
             $rets["debug_invalid date"] = "to < from, darf ned sein";
         }
 
-        // todo: calculate products
-        // zB 1x einzelticket, 1x 10er-block
-
-
-        // todo: 6monate noch weichen und ggf. 2h-ticket noch weichen (wie?)
-        
-        $months = 0;
-        do {
-            $months++;
-
-            // todo: 31.1. + 1 monat soll was ergeben? 31.2. gibts ned. irgendwas im februar? hmm. what?
-            $test_date = mktime(date("H", $from), date("i", $from), date("s", $from), date("m", $from) + $months, date("d", $from), date("Y", $from));
-        
-        } while($test_date < $to);
-        $months -= 1;
-        $rets["debug_months"] = $months;
-
-        $days = 0;
-        $workingdays = [];
-        do {
-            $test_date = mktime(date("H", $from), date("i", $from), date("s", $from), date("m", $from) + $months, date("d", $from) + $days, date("Y", $from));
-            $days++;
-
-            if (date('N', $test_date) == 6 || date('N', $test_date) == 7 ) {
-                // zu testender tag ist sat or sun
-                continue;
-            }
-
-            $found=false;
-            foreach ($holidays as $holiday) {
-                if (date("Y-m-d", $test_date) == date("Y-m-d", strtotime($holiday->date))) {
-
-                    $found = true;
-                    break;
-                }
-            }
-            if ($found)
-                // zu testendender tag ist ein feiertag
-                continue;
-
-            array_push($workingdays, $test_date);
-        } while($test_date < $to);
-        $rets["debug_days"] = $days;
-        $rets["debug_workingdays"] = sizeof($workingdays);
-
-        $ticket_10 = (int)(sizeof($workingdays) / 10);
-        $ticket_1 = sizeof($workingdays) % 10;
-        $rets["debug_10erbloecke"] = $ticket_10;
-        $rets["debug_einzeleintritte"] = $ticket_1;
-
-
-        $bookings = [];
-        foreach ($workingdays as $workingday) {
-            $booking = [
-                "type" => "Single Entry Ticket",
-                "begin" => date("Y-m-d", $workingday),
-                "end" => date("Y-m-d", $workingday),  
-                "price" => $host->price_1day,
-            ];
-            array_push($bookings, $booking);
-        }
-
+        // todo: 2h-ticket (wie?)
         $total = 0;
-        // todo: collision check
-        foreach ($bookings as $booking) {
-            $row = $this -> Bookings -> newEntity();
-            $row -> coworker_id = $user -> id;
-            $row -> payment_id = null;
-            $row -> host_id = $hostid;
-            $row -> description = $booking[ "type" ];
-            $row -> price = $booking[ "price" ];
-            $row -> servicefee_host = 0;
-            $row -> servicefee_coworker = 0;
-            $row -> vat = ($booking[ "price" ] / 100 * 20);
-            $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
-            $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
+        $timespan = $this->calculate_timespan($begin, $end);
+        if ($timespan["months"] >= 6) {
+            // 1st rule
+            $rets["debug_rule"] = 1;
+            $total = ($timespan["months"] + ($timespan["days"] / 30)) * $host -> price_6months / 6;
+        } elseif ($timespan["months"] >= 1) {
+            // 2nd rule
+            $rets["debug_rule"] = 2;
+            $total = ($timespan["months"] + ($timespan["days"] / 30)) * $host -> price_1month;
+        } else {
+            $workingdays = $this -> calculate_workingdays($hostid, $begin, $end);
+            $rets["debug_workingdays"] = $workingdays;
 
-            if ($this -> Bookings -> save($row)) {
-                $ret = [
-                    "nickname" => $host -> nickname,
-                    "host_id" => $host -> id,
-                    "title" => $host -> title,
-                    "price" => $row -> price,
-                    "vat" => $row -> vat,
-                    "description" => $booking[ "type" ],
-                    "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
-                    "end" => date("Y-m-d", strtotime($booking[ "end" ])),
-                ];
-
-                $rets[$row->id] = $ret;
-                $total += $row -> price + $row -> vat;
+            if (sizeof($workingdays) >= 10)  {
+                // 3rd rule
+                $rets["debug_rule"] = 3;
+                $total = sizeof($workingdays) * $host -> price_10days / 10;
+            } elseif (sizeof($workingdays) >= 1)  {
+                // 4th rule
+                $rets["debug_rule"] = 4;
+                $total = sizeof($workingdays) * $host -> price_1day;
             }
-
         }
         $rets["total"] = $total;
 
-        //echo "<pre>";
+        $booking = [
+            "type" => "Yellowdesk Ticket",
+            "begin" => date("Y-m-d", $from),
+            "end" => date("Y-m-d", $to),  
+            "price" => $host -> price_1day,
+        ];
+
+        $total = 0;
+        // todo: collision check
+
+        $row = $this -> Bookings -> newEntity();
+        $row -> coworker_id = $user -> id;
+        $row -> payment_id = null;
+        $row -> host_id = $hostid;
+        $row -> description = $booking[ "type" ];
+        $row -> price = $booking[ "price" ];
+        $row -> servicefee_host = $booking[ "price" ] / 100 * 20; // 20% to YD
+        $row -> servicefee_coworker = 0;
+        $row -> vat = ($booking[ "price" ] / 100 * 20);
+        $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
+        $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
+
+        if ($this -> Bookings -> save($row)) {
+            $ret = [
+                "nickname" => $host -> nickname,
+                "host_id" => $host -> id,
+                "title" => $host -> title,
+                "price" => $row -> price,
+                "vat" => $row -> vat,
+                "description" => $booking[ "type" ],
+                "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
+                "end" => date("Y-m-d", strtotime($booking[ "end" ])),
+            ];
+
+            $rets[$row->id] = $ret;
+            $total += $row -> price + $row -> vat;
+        }
+
+
+        if (@$_REQUEST["formatjsonbrowser"]) echo "<pre>";
         echo json_encode($rets, JSON_PRETTY_PRINT);
         exit();
     }
