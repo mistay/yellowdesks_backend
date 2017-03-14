@@ -106,6 +106,7 @@ class BookingsController extends AppController {
                 // zu testendender tag ist ein feiertag, kein coworking möglich
                 continue;
 
+echo date("Y-m-d", $test_date);
             // 2. add day to list of workingdays if host is open at that day, else continue with next day
             switch (date('N', $test_date)) {
                 case 1: //monday
@@ -151,7 +152,6 @@ class BookingsController extends AppController {
                     // mo - fr
                     array_push($workingdays, date("Y-m-d", $test_date)); continue;
                 }
-            break;
         } while($test_date < $to);
         return $workingdays;
     }
