@@ -68,19 +68,19 @@
         </tr>
         <tr>
             <th>Price for 1 Day</th>
-            <td><input type="text" name="price_1day" placeholder="120.50" value='<?php echo @$row["price_1day"] ?>' /></td>
+            <td><input type="text" name="price_1day" placeholder="25.00" value='<?php echo @$row["price_1day"] ?>' /></td>
         </tr>
         <tr>
             <th>Price for 10 Days</th>
-            <td><input type="text" name="price_10days" placeholder="120.50" value='<?php echo @$row["price_10days"] ?>' /></td>
+            <td><input type="text" name="price_10days" placeholder="215.00" value='<?php echo @$row["price_10days"] ?>' /></td>
         </tr>
         <tr>
             <th>Price for 1 Month</th>
-            <td><input type="text" name="price_1month" placeholder="120.50" value='<?php echo @$row["price_1month"] ?>' /></td>
+            <td><input type="text" name="price_1month" placeholder="309.00" value='<?php echo @$row["price_1month"] ?>' /></td>
         </tr>
         <tr>
             <th>Price for 6 Months</th>
-            <td><input type="text" name="price_6moths" placeholder="120.50" value='<?php echo @$row["price_6moths"] ?>' /></td>
+            <td><input type="text" name="price_6months" placeholder="1800.00" value='<?php echo @$row["price_6months"] ?>' /></td>
         </tr>
         <tr>
             <th>Dogs welcome</th>
