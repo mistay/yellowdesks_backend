@@ -262,7 +262,8 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         $total_bookings = 0;
         
         $row = $this -> Bookings -> newEntity();
-        $row -> coworker_id = $user -> id;
+        if ($requestOffer !== false)
+            $row -> coworker_id = $user -> id;
         $row -> payment_id = null;
         $row -> host_id = $hostid;
         $row -> description = $booking[ "type" ];
@@ -275,11 +276,6 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
         $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
 
-        if ($requestOffer !== false) {
-            $this -> Bookings -> save($row);
-            $rets[$row->id] = $ret;
-        }
-        
         $ret = [
             "nickname" => $host -> nickname,
             "host_id" => $host -> id,
@@ -290,6 +286,13 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
             "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
             "end" => date("Y-m-d", strtotime($booking[ "end" ])),
         ];
+        
+        if ($requestOffer !== false) {
+            $this -> Bookings -> save($row);
+            $rets[$row->id] = $ret;
+        }
+        
+        
         $total_bookings += $row -> price + $row -> vat;
         
         $rets["total"] = $total_bookings;
