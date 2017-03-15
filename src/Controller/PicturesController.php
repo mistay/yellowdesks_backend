@@ -90,11 +90,11 @@ class PicturesController extends AppController {
         $rows = $model->find('all', ['fields' => ["id", "name"]])->where($where);
         $this->set("rows", $rows);
 
-
-        $modelhost = TableRegistry::get('Hosts');
-        $host = $modelhost->get($host_id);
-        $this->set("host", $host);
-        
+        if ($user->role == Roles::HOST) {
+            $modelhost = TableRegistry::get('Hosts');
+            $host = $modelhost->get($host_id);
+            $this->set("host", $host);
+        }
         
         // e.g. http://localhost:8888/yellowdesks/pictures?host_id=5&format=jsonbrowser
         /*

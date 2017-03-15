@@ -28,7 +28,7 @@
         $url100cropped = $this->Url->build(["controller" => "pictures", "action" => "get", $row->id, "resolution" => "100x100", "crop" => "true"]);
     ?>
 
-    <?php $profilepictureclass = ($host->picture_id == $row->id) ? "profilepicture" : "" ?>
+    <?php $profilepictureclass = (isset($host) && $host->picture_id == $row->id) ? "profilepicture" : "" ?>
 
     <div class="deletewrapper">
         <?php if ($profilepictureclass == "") { ?>
