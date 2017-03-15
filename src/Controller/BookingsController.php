@@ -254,12 +254,12 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
             "type" => "Yellowdesk Ticket",
             "begin" => date("Y-m-d", $from),
             "end" => date("Y-m-d", $to),  
-            "price" => $host -> price_1day,
+            "price" => $total,
         ];
 
-        $total = 0;
         // todo: collision check
 
+        $total_bookings = 0;
         if ($requestOffer !== false) {
             $row = $this -> Bookings -> newEntity();
             $row -> coworker_id = $user -> id;
@@ -286,14 +286,11 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
                     "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
                     "end" => date("Y-m-d", strtotime($booking[ "end" ])),
                 ];
-
+                $total_bookings += $row -> price + $row -> vat;
                 $rets[$row->id] = $ret;
-                $total += $row -> price + $row -> vat;
             }
         }
-        $rets["total"] = $total;
-
-
+        $rets["total"] = $total_bookings;
 
         if (@$_REQUEST["jsonbrowser"]) echo "<pre>";
         echo json_encode($rets, JSON_PRETTY_PRINT);
