@@ -19,6 +19,16 @@ class PicturesController extends AppController {
         $this->loadComponent('Paginator');
     }
     
+    public function delete($unsafe_id) {
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        $model = TableRegistry::get('Pictures');
+        $row = $model->get($unsafe_id);
+        $result = $model->delete($row);
+        
+        return $this->redirect(['action' => 'index']);
+    }
+
     public function cru() {
         $model = TableRegistry::get('Hosts');
         $hosts = $model->find('all');
@@ -68,16 +78,23 @@ class PicturesController extends AppController {
         if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $model = TableRegistry::get('Pictures');
         
-        
         $user = $this->getloggedInUser();
         if ($user->role == Roles::HOST)
-            $where = ['host_id' => $user -> id];  
+            $host_id = $user -> id;
         if ($user->role == Roles::ADMIN)
-            $where = isset($_REQUEST["host_id"]) ? ['Hosts.id' => $_REQUEST["host_id"]] : [];  
+            $host_id = null;
+
+        $where = $host_id == null ? [] : ['host_id' => $host_id]; 
 
         //$query = $model->find('all')->where($where)->contain(['Hosts']);
         $rows = $model->find('all', ['fields' => ["id", "name"]])->where($where);
         $this->set("rows", $rows);
+
+
+        $modelhost = TableRegistry::get('Hosts');
+        $host = $modelhost->get($host_id);
+        $this->set("host", $host);
+        
         
         // e.g. http://localhost:8888/yellowdesks/pictures?host_id=5&format=jsonbrowser
         /*

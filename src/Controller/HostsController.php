@@ -124,6 +124,7 @@ class HostsController extends AppController {
         
         $model = TableRegistry::get('Hosts');
         $row = $model->get($unsafe_id);
+        // todo: erst lesen damit man löschen kann? warum nicht return $this->deleteAll(['id' => 1]); https://book.cakephp.org/3.0/en/orm/deleting-data.html
         $result = $model->delete($row);
         
         return $this->redirect(['action' => 'index']);
