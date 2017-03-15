@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 class UsersController extends AppController
 {
@@ -52,7 +53,15 @@ class UsersController extends AppController
     }
     
     public function home() {
-    
+        $model = TableRegistry::get('Hosts');
+        $query = $model->find('all');
+
+        $this->set("rows", $query);
+
+        $loggedinuser = $this -> getLoggedInUser();
+        $this->set("loggedinuser", $loggedinuser);
+
+
     }
 
     function getdetails() {

@@ -38,23 +38,168 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         <link rel="stylesheet" href="fonts/eraser/stylesheet.css">
         <link rel="stylesheet" href="fonts/din1451/stylesheet.css">
         
+        <script>
+            <?php
+
+
+                // security: only expose public fields
+                $rets = [];
+                foreach ($rows as $row) {
+                    $ret = new stdClass();
+
+                    if (strpos($row->nickname, "test") === 0 && ($loggedinuser == null || $loggedinuser->role != "ADMIN"))
+                        continue;
+                    $ret-> id = $row -> id;
+                    $ret-> nickname = $row -> nickname;
+                    $ret-> title = $row -> title;
+                    $ret-> details = $row -> details;
+                    $ret-> extras = $row -> extras;
+                    $ret-> lat_loose = $row -> lat_loose;
+                    $ret-> lng_loose = $row -> lng_loose;
+                    $ret-> open_monday_from = $row -> open_monday_from;
+                    $ret-> open_monday_till = $row -> open_monday_till;
+                    $ret-> open_tuesday_from = $row -> open_tuesday_from;
+                    $ret-> open_tuesday_till = $row -> open_tuesday_till;
+                    $ret-> open_wednesday_from = $row -> open_wednesday_from;
+                    $ret-> open_wednesday_till = $row -> open_wednesday_till;
+                    $ret-> open_thursday_from = $row -> open_thursday_from;
+                    $ret-> open_thursday_till = $row -> open_thursday_till;
+                    $ret-> open_friday_from = $row -> open_friday_from;
+                    $ret-> open_friday_till = $row -> open_friday_till;
+                    $ret-> open_saturday_from = $row -> open_saturday_from;
+                    $ret-> open_saturday_till = $row -> open_saturday_till;
+                    $ret-> open_sunday_from = $row -> open_sunday_from;
+                    $ret-> open_sunday_till = $row -> open_sunday_till;
+                    $ret-> price_1day = $row -> price_1day;
+                    $ret-> price_10days = $row -> price_10days;
+                    $ret-> price_1month = $row -> price_1month;
+                    $ret-> price_6months = $row -> price_6months;
+                    array_push($rets, $ret);
+                }
+            ?>
+            var hosts = <?= json_encode($rets); ?>;
+            //console.log(hosts[0]);
+        </script>
+
+        <script>
+            var map;
+
+            function bla(host) {
+
+                var str  = '<div class="infobox">'+
+                    '</div>'+
+                    '<h1 id="firstHeading" class="firstHeading">host.nickname</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>host.title</b><br />' +
+                    '<b>Included: </b>host.details<br />'+
+                    '<b>Extras: </b>host.extras<br />'+
+                    '<b>Open Monday:</b>host.open_monday_from - host.open_monday_till<br />'+
+                    '<b>Open Tuesday:</b>host.open_tuesday_from - host.open_tuesday_till<br />'+
+                    '<b>Open Wednesday:</b>host.open_wednesday_from - host.open_wednesday_till<br />'+
+                    '<b>Open Thursday:</b>host.open_thursday_from - host.open_thursday_till<br />'+
+                    '<b>Open Friday:</b>host.open_friday_from - host.open_friday_till<br />'+
+                    '<b>Open Saturday:</b>host.open_saturday_from - host.open_saturday_till<br />'+
+                    '<b>Open Sunday:</b>host.open_sunday_from - host.open_sunday_till<br />'+
+                    '<b>Open Price 1day:</b>host.price_1day<br />'+
+                    '<b>Open Price 10days:</b>host.price_10days<br />'+
+                    '<b>Open Price 1 month:</b>host.price_1month<br />'+
+                    '<b>Open Price 6 months:</b>host.price_6months<br />'+
+                    '</div>';
+
+                str = str.replace("host.nickname", host.nickname);
+                str = str.replace("host.title", host.title);
+                str = str.replace("host.details", host.details);
+                str = str.replace("host.extras", host.extras);
+                str = str.replace("host.picture_id", host.picture_id);
+                str = str.replace("host.video_id", host.video_id);
+                str = str.replace("host.open_247fixworkers", host.open_247fixworkers);
+                str = str.replace("host.open_monday_from", host.open_monday_from);
+                str = str.replace("host.open_monday_till", host.open_monday_till);
+                str = str.replace("host.open_tuesday_from", host.open_tuesday_from);
+                str = str.replace("host.open_tuesday_till", host.open_tuesday_till);
+                str = str.replace("host.open_wednesday_from", host.open_wednesday_from);
+                str = str.replace("host.open_wednesday_till", host.open_wednesday_tkll);
+                str = str.replace("host.open_thursday_from", host.open_thursday_from);
+                str = str.replace("host.open_thursday_till", host.open_thursday_till);
+                str = str.replace("host.open_friday_from", host.open_friday_from);
+                str = str.replace("host.open_friday_till", host.open_friday_till);
+                str = str.replace("host.open_saturday_from", host.open_saturday_from);
+                str = str.replace("host.open_saturday_till", host.open_saturday_from);
+                str = str.replace("host.open_sunday_from", host.open_sunday_from);
+                str = str.replace("host.open_sunday_till", host.open_sunday_till);
+                str = str.replace("host.price_1day", host.price_1day);
+                str = str.replace("host.price_10days", host.price_10days);
+                str = str.replace("host.price_1month", host.price_1month);
+                str = str.replace("host.price_6months", host.price_6months);
+                
+                return str;
+            }
+
+            String.prototype.format = function()
+            {
+                var content = this;
+                for (var i=0; i < arguments.length; i++)
+                {
+                        var replacement = '{' + i + '}';
+                        content = content.replace(replacement, arguments[i]);  
+                }
+                return content;
+            };
+
+            function markerclick(event) {
+                var infowindow = new google.maps.InfoWindow({
+                    content: bla(this.host),
+                });
+                infowindow.open(map, this);
+            }
+
+            function initMap() {
+                var image = "<?= $this->Url->build('/img/yellowdot.png', true); ?>";
+                var uluru = {lat: 47.806021, lng: 13.050602000000026};
+                    map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 12,
+                    center: uluru
+                    });
+
+                for (i=0; i<hosts.length; i++) {
+                    
+
+                    marker = new google.maps.Marker({
+                        position: {lat: hosts[i].lat_loose, lng: hosts[i].lng_loose},
+                        map: map,
+                        icon: image,
+                        host: hosts[i],
+                        });
+                    marker.addListener('click', markerclick);
+                    
+                    
+
+                }
+            }
+        </script>
+
         <?php
             $url = $this->Url->build('/favicon.jpg', true);
         ?>
         
         <link rel="icon" type="image/jpeg" href="<?= $url ?>" />
-    
         <script src="js/jquery-1.9.1.min.js"></script>
         
         <style>
+
+            html {
+                height: 100%;
+                width: 100%;
+            }
             body {
-                background: url("img/eva.jpg") no-repeat center center fixed;
-                background-size: cover;
+                /* background: url("img/eva.jpg") no-repeat center center fixed;
+                background-size: cover; */
                 padding: 0px;
                 margin: 0px;
                 bottom: 0px;
                 font-family: din;
-                
+                height: 100%;
+                width: 100%;
             }
             
             .footer {
@@ -63,9 +208,11 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 width: 100%;
                 text-align: center;
                 color: white;
+                z-index: 100;
             }
+
             .footer a {
-                color: white;
+                color: black;
                 text-decoration: none;
             }
             
@@ -77,7 +224,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 font-size: 55px;
                 margin-left: 50px;
                 font-family: eraserregular;
-            
             }
             
             .findandrent {
@@ -88,6 +234,9 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
             
             .content {
                 padding-top: 25%;
+                z-index: 100;
+                position: absolute;
+                
             }
             
             .menu {
@@ -96,6 +245,9 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-end;
+                position: absolute;
+                right: 0;
+                z-index: 100;
             }
             
             .menu a {
@@ -108,6 +260,11 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 text-decoration: none;
                 color: black;
             }
+
+            #map {
+                height: 100%;
+                width: 100%;
+            }
         </style>
         
         <script>
@@ -117,30 +274,46 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         </script>
     </head>
     <body>
+
         <div class="menu">
             <a href="">Jetzt Host werden</a>
             <?php
-            $url = $this->Url->build([
-                "controller" => "users",
-                "action" => "login",
-            ]);
+            if ($loggedinuser == null) {
+                $url = $this->Url->build([
+                    "controller" => "users",
+                    "action" => "login",
+                ]);
+                $text = __("Login");
+            } else {
+                $url = $this->Url->build([
+                    "controller" => "users",
+                    "action" => "logout",
+                ]);
+                $text = __("Logout");
+            }
             ?>
             
-            <a href="<?= $url ?>">Login</a>
+            <a href="<?= $url ?>"><?= $text ?></a>
             <a href="">Registrieren</a>
         </div>
         
         
         <div class="content">
             <span class="yellowdesks">yellow desks</span>
-        </div>
-        <div>
-            <span class="findandrent">&gt; &gt; <strong>Find</strong> work space near you</span>
-        </div>
-        <div>
-            <span class="findandrent">&gt; &gt; <strong>Rent out</strong> work space</span>
+            <div>
+                <span class="findandrent">&gt; &gt; <strong>Find</strong> work space near you</span>
+            </div>
+            <div>
+                <span class="findandrent">&gt; &gt; <strong>Rent out</strong> work space</span>
+            </div>
         </div>
         
+        
         <div class="footer"><a href="http://coworkingsalzburg.com">by <span class="coworkingsalzburg"><strong>COWORKING</strong>SALZBURG</span></a></div>
+    
+        <div id="map"></div>
+        
     </body>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&callback=initMap"></script>
 </html>
