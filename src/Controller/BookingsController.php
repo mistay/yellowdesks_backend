@@ -260,36 +260,37 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         // todo: collision check
 
         $total_bookings = 0;
-        if ($requestOffer !== false) {
-            $row = $this -> Bookings -> newEntity();
-            $row -> coworker_id = $user -> id;
-            $row -> payment_id = null;
-            $row -> host_id = $hostid;
-            $row -> description = $booking[ "type" ];
-            $row -> price = $booking[ "price" ];
-            $row -> servicefee_host = $booking[ "price" ] / 100 * 20; // 20% to YD
-            $row -> vat = ($booking[ "price" ] / 100 * 20);
-            $row -> amount_host = $row -> price - $row -> servicefee_host;
-            $row -> vat_host = $row -> amount_host / 100 * 20; // todo: gilt nur für .at unternehmer
+        
+        $row = $this -> Bookings -> newEntity();
+        $row -> coworker_id = $user -> id;
+        $row -> payment_id = null;
+        $row -> host_id = $hostid;
+        $row -> description = $booking[ "type" ];
+        $row -> price = $booking[ "price" ];
+        $row -> servicefee_host = $booking[ "price" ] / 100 * 20; // 20% to YD
+        $row -> vat = ($booking[ "price" ] / 100 * 20);
+        $row -> amount_host = $row -> price - $row -> servicefee_host;
+        $row -> vat_host = $row -> amount_host / 100 * 20; // todo: gilt nur für .at unternehmer
 
-            $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
-            $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
+        $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
+        $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
 
-            if ($this -> Bookings -> save($row)) {
-                $ret = [
-                    "nickname" => $host -> nickname,
-                    "host_id" => $host -> id,
-                    "title" => $host -> title,
-                    "price" => $row -> price,
-                    "vat" => $row -> vat,
-                    "description" => $booking[ "type" ],
-                    "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
-                    "end" => date("Y-m-d", strtotime($booking[ "end" ])),
-                ];
-                $total_bookings += $row -> price + $row -> vat;
-                $rets[$row->id] = $ret;
-            }
-        }
+        if ($requestOffer !== false)
+            $this -> Bookings -> save($row);
+
+        $ret = [
+            "nickname" => $host -> nickname,
+            "host_id" => $host -> id,
+            "title" => $host -> title,
+            "price" => $row -> price,
+            "vat" => $row -> vat,
+            "description" => $booking[ "type" ],
+            "begin" => date("Y-m-d", strtotime($booking[ "begin" ])),
+            "end" => date("Y-m-d", strtotime($booking[ "end" ])),
+        ];
+        $total_bookings += $row -> price + $row -> vat;
+        $rets[$row->id] = $ret;
+        
         $rets["total"] = $total_bookings;
 
         if (@$_REQUEST["jsonbrowser"]) echo "<pre>";
