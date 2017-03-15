@@ -275,9 +275,11 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         $row -> begin = date("Y-m-d", strtotime($booking[ "begin" ]));
         $row -> end = date("Y-m-d", strtotime($booking[ "end" ]));
 
-        if ($requestOffer !== false)
+        if ($requestOffer !== false) {
             $this -> Bookings -> save($row);
-
+            $rets[$row->id] = $ret;
+        }
+        
         $ret = [
             "nickname" => $host -> nickname,
             "host_id" => $host -> id,
@@ -289,7 +291,6 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
             "end" => date("Y-m-d", strtotime($booking[ "end" ])),
         ];
         $total_bookings += $row -> price + $row -> vat;
-        $rets[$row->id] = $ret;
         
         $rets["total"] = $total_bookings;
 
