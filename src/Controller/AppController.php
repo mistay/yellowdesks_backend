@@ -93,7 +93,11 @@ class AppController extends CrumbsController
     }
 
     public function cleanupbookings() {
-        // delete all reserverations that are 15minutes old
+        // delete all reserverations that are 15 days old
+        // zu heiß. es können jetzt auch die hosts bis zu tage später buchungen akzeptieren
+        return;
+
+        // todo: ueberlegen wie wir cleanup loesen koennen
         $model = TableRegistry::get('Bookings');
         $time = date("Y-m-d H:i:s",  $this->timegmt() - (15 * 60));
         $query = $model->deleteAll(["dt_inserted < " => $time]);
