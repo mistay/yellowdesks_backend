@@ -47,7 +47,7 @@ class BookingsController extends AppController {
         $this->set("row", $query);
     }
     
-    public function invoicehost() {
+    public function host() {
         if (!$this -> hasAccess([Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
  
         $user = $this -> getloggedinUser();
