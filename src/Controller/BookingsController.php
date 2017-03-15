@@ -218,6 +218,8 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         if ($to < $from) {
             // todo: was machen mit dem fall?
             $rets["debug_invalid date"] = "to < from, darf ned sein";
+
+            $to = $from;
         }
 
         // todo: 2h-ticket (wie?)
@@ -294,7 +296,6 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
             $this -> Bookings -> save($row);
             $rets[$row->id] = $ret;
         }
-        
         
         $total_bookings += $row -> price + $row -> vat;
         
