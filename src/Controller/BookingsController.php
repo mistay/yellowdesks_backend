@@ -254,7 +254,7 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
 
         // https://de.wikipedia.org/wiki/Rundung
         // kaufmaennisch gerundet: stelle die wegfaellt 0,1,2,3 od 4: abrunden, sonst: aufrunden.
-        $total = round(($total, 2, PHP_ROUND_HALF_UP));
+        $total = round($total, 2, PHP_ROUND_HALF_UP);
 
         
         $booking = [
