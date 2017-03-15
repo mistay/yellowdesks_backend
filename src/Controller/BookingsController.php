@@ -251,6 +251,11 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
                 $total = sizeof($workingdays) * $host -> price_1day;
             }
         }
+
+        // https://de.wikipedia.org/wiki/Rundung
+        // kaufmaennisch gerundet: stelle die wegfaellt 0,1,2,3 od 4: abrunden, sonst: aufrunden.
+        $total = round(($total, 2, PHP_ROUND_HALF_UP));
+
         
         $booking = [
             "type" => "Yellowdesk Ticket",
@@ -271,9 +276,6 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         $row -> description = $booking[ "type" ];
         $row -> price = $booking[ "price" ];
         $row -> servicefee_host = $booking[ "price" ] / 100 * 20; // 20% to YD
-
-        // https://de.wikipedia.org/wiki/Rundung
-        // kaufmaennisch gerundet: stelle die wegfaellt 0,1,2,3 od 4: abrunden, sonst: aufrunden.
         $row -> vat = round(($booking[ "price" ] / 100 * 20), 2, PHP_ROUND_HALF_UP);
         $row -> amount_host = $row -> price - $row -> servicefee_host;
         $row -> vat_host = round(($row -> amount_host / 100 * 20), 2, PHP_ROUND_HALF_UP); // todo: gilt nur für .at unternehmer
