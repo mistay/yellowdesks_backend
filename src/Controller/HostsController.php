@@ -14,15 +14,10 @@ class HostsController extends AppController {
         $query = $model->find('all');
 
         $this->set("rows", $query);
-        
-
-
     }
 
     public function pictures($host_id = null) {
         if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
-        
-        
         
         $modelPictures = TableRegistry::get('Pictures');
         
@@ -31,9 +26,7 @@ class HostsController extends AppController {
         if ($user->role == Roles::HOST)
             $host_id = $user -> id;
             
-        
         $where = ($host_id == null) ? [] : ['host_id' => $host_id];
-
 
         $model = TableRegistry::get('Hosts');
         $row = $model->get($host_id);
@@ -56,7 +49,6 @@ class HostsController extends AppController {
         if ($user->role==Roles::HOST)
             $id = $user -> id;
         
-        
         $row = [];
         if ($id>0) {
             $row = $model->get($id);
@@ -71,12 +63,8 @@ class HostsController extends AppController {
             $row->lat_loose = null;
             $row->lng_loose = null;
             
-        //else
-        //    $row = $model->newEntity();
-
             $model->save($row);
             
-           
             $this->calclatlngloose();
             
             return $this->redirect(['action' => 'index']);
@@ -156,8 +144,6 @@ class HostsController extends AppController {
                                                             },
                                                'Payments', 'Videos']);
         
-        
-        
         $model = TableRegistry::get('Logs');
         $row = $model->newEntity();
         $row->message = print_r($_REQUEST, true) .  print_r($_SERVER, true);
@@ -222,7 +208,6 @@ class HostsController extends AppController {
         
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $this->set("rows", $query);
-        
     }
 }
 ?>
