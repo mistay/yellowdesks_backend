@@ -271,7 +271,7 @@ $this->layout = false;
             
             $urlprofile = $this->Url->build([
                     "controller" => "users",
-                    "action" => "login",
+                    "action" => "welcome",
                 ]);
 
             $urlbecomeahost = $this->Url->build([
@@ -303,7 +303,7 @@ $this->layout = false;
                 <a href="<?= $urlbecomeahost ?>">Become A Host</a>
                 <a href="<?= $urlregister ?>">Sign Up</a>
             <?php } else { ?>
-                <a href="<?= $url ?>"><?= __("Profile") ?></a>
+                <a href="<?= $urlprofile ?>"><?= __("Profile") ?></a>
             <?php } ?>
 
             <a href="<?= $url ?>"><?= $text ?></a>
