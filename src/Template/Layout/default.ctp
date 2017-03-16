@@ -45,6 +45,8 @@
     
     <div style="display: flex;">
         <div class="menunavdesktopanchor" ></div>
+
+        <?php if ($this->request->session()->read('User') != null) { ?>
         <nav class="menunav" style="min-width: 170px">
             <?php if($loggedInUser != null) { ?>
             <ul class="menu">
@@ -79,6 +81,7 @@
             <?php } ?>
             <div class="hostname"><?= gethostname(); ?></div>
         </nav>
+        <?php } ?>
         <div class="content">
             <?= $this->fetch('content') ?>
         </div>  
