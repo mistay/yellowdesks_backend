@@ -7,35 +7,8 @@ use Cake\ORM\TableRegistry;
 
 class UsersController extends AppController
 {
-    public function index()
-    {
-        $this->set('users', $this->Users->find('all'));
-    }
-
-    public function view($id)
-    {
-        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
-        $user = $this->Users->get($id);
-        $this->set(compact('user'));
-    }
-
     public function signup() {
 
-    }
-    
-    public function add() {
-       if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
-       
-        $user = $this->Users->newEntity();
-        if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'add']);
-            }
-            $this->Flash->error(__('Unable to add the user.'));
-        }
-        $this->set('user', $user);
     }
     
     public function loginappfb() {
@@ -64,12 +37,20 @@ class UsersController extends AppController
 
         $loggedinuser = $this -> getLoggedInUser();
         $this->set("loggedinuser", $loggedinuser);
+    }
 
-
+    public function welcome() {
+        $loggedinuser = $this -> getLoggedInUser();
+        if ($loggedinuser -> role == Roles::ADMIN) {
+            $this -> redirect(["controller" => "bookings", "action" => "index"]);
+        } else if ($loggedinuser -> role == Roles::HOST) {
+            $this -> redirect(["controller" => "bookings", "action" => "host"]);
+        } else if ($loggedinuser -> role == Roles::COWORKER) {
+            $this -> redirect(["controller" => "bookings", "action" => "mybookings"]);
+        }
     }
 
     function getdetails() {
-        
         $this->basicauth();
         $ret=[];
         $ret["error"] = "unknown error";
@@ -98,7 +79,6 @@ class UsersController extends AppController
             //$target = $this -> initMenu(true);
             //$this -> redirect($target);
         }
-        //var_dump($this -> getLoggedInUser());
         $success = null;
         
         if ($this->request->is('post')) {
@@ -107,12 +87,8 @@ class UsersController extends AppController
 
             $this -> auth($username, $password);
             
-            // layout.ctp wurde schon gerendert, d.h. layout hat noch kein menu.
-            // nochmal redirecten damit layout.ctp neu gerendert wird (dann mit menu, im eingloggten zustand)
-            //$this->redirect(["controller" => "hosts", "action" => ""]);
-            $this->redirect(["action" => "login"]);
+            $this->redirect(["action" => "welcome"]);
         }
-        //var_dump($this -> getLoggedInUser());
         
         if ($this -> getLoggedInUser() != null) {
             if (isset($_REQUEST["redirect_url"])) {
