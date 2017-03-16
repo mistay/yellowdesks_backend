@@ -26,7 +26,6 @@
             background-color: red;
             font-size: 50px;
             text-align: center;
-
         }
         <?php } ?>
     </style>
@@ -43,7 +42,6 @@
     <div style="float:right; padding-right: 15px"><?= $loggedInAs; ?></div>
     <div style="clear:both"></div>
     <?= $this->Flash->render() ?>
-    
     
     <div style="display: flex;">
         <div class="menunavdesktopanchor" ></div>
@@ -65,25 +63,21 @@
                 <?php } ?>
                 
                 <?php if ($loggedinuser -> role == "HOST") { ?>
-                    <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "cru"]); ?>"><li>My Details</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "cru"]); ?>"><li>My Profile</li></a>
                     <a href="<?= $this->Url->build(["controller" => "pictures", "action" => "index"]); ?>"><li>My Pictures</li></a>
                     <a href="<?= $this->Url->build(["controller" => "bookings", "action" => "host"]); ?>"><li>My Bookings</li></a>
-                
+                    <a href="<?= $this->Url->build("/"); ?>"><li>Map</li></a>
                 <?php } ?>
                 
-                
                 <?php if ($loggedinuser -> role == "COWORKER") { ?>
-                    <a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "cru"]); ?>"><li>My Details</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "cru"]); ?>"><li>My Profile</li></a>
                     <a href="<?= $this->Url->build(["controller" => "bookings", "action" => "mybookings"]); ?>"><li>My Bookings</li></a>
-                    <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "map"]); ?>"><li>Map</li></a>
-                
+                    <a href="<?= $this->Url->build("/"); ?>"><li>Map</li></a>
                 <?php } ?>
             </ul>
             
-            
             <?php } ?>
             <div class="hostname"><?= gethostname(); ?></div>
-            
         </nav>
         <div class="content">
             <?= $this->fetch('content') ?>
