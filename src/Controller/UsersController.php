@@ -19,6 +19,10 @@ class UsersController extends AppController
         $this->set(compact('user'));
     }
 
+    public function signup() {
+
+    }
+    
     public function add() {
        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
        
