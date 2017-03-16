@@ -269,6 +269,16 @@ $this->layout = false;
         <div class="menu">
             <?php
             
+            $urlprofile = $this->Url->build([
+                    "controller" => "users",
+                    "action" => "login",
+                ]);
+
+            $urlbecomeahost = $this->Url->build([
+                    "controller" => "users",
+                    "action" => "becomeahost",
+                ]);
+
             $urlregister = $this->Url->build([
                     "controller" => "users",
                     "action" => "signup",
@@ -290,7 +300,10 @@ $this->layout = false;
             ?>
 
             <?php if ($loggedinuser == null) { ?>
+                <a href="<?= $urlbecomeahost ?>">Become A Host</a>
                 <a href="<?= $urlregister ?>">Sign Up</a>
+            <?php } else { ?>
+                <a href="<?= $url ?>"><?= __("Profile") ?></a>
             <?php } ?>
 
             <a href="<?= $url ?>"><?= $text ?></a>
