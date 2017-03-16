@@ -1,0 +1,76 @@
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    -webkit-box-wrap: wrap;
+}
+
+.description {
+    flex: 1;
+    padding-right: 100px;
+}
+.signupform {
+    flex: 2;
+}
+
+.signup table tr td {
+    background: white;
+    
+}
+
+.signup input[type=text], .signup input[type=password] {
+    border: 0px;
+    border-bottom: 3px dotted black;
+}
+
+.signup input[type=submit] {
+    border: 1px solid black;
+    height: 40px;
+    background-color: white;
+    padding-left: 30px;
+    padding-right: 30px;
+    
+}
+
+label {
+    font-size: 12px;
+    
+}
+
+
+input {
+    font-size: 15px;
+}
+
+tr.space {
+    height: 50px;
+    vertical-align: bottom;
+}
+
+
+tr.inputs {
+    height: 30px;
+}
+
+
+td {
+    padding-right: 50px;
+}
+
+
+span {
+    font-size: 10px;
+}
+
+.errorline {
+    line-height: 0px;
+    height: 1px;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
