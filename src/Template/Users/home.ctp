@@ -1,17 +1,4 @@
 <?php
-/**
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -20,12 +7,6 @@ use Cake\Error\Debugger;
 use Cake\Network\Exception\NotFoundException;
 
 $this->layout = false;
-
-if (!Configure::read('debug')):
-    throw new NotFoundException('Please replace src/Template/Pages/home.ctp with your own version.');
-endif;
-
-$cakeDescription = 'CakePHP: the rapid development PHP framework';
 ?>
 <!DOCTYPE html>
 <html>
@@ -40,8 +21,6 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
         
         <script>
             <?php
-
-
                 // security: only expose public fields
                 $rets = [];
                 foreach ($rows as $row) {
@@ -56,20 +35,20 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                     $ret-> extras = $row -> extras;
                     $ret-> lat_loose = $row -> lat_loose;
                     $ret-> lng_loose = $row -> lng_loose;
-                    $ret-> open_monday_from = $row -> open_monday_from;
-                    $ret-> open_monday_till = $row -> open_monday_till;
-                    $ret-> open_tuesday_from = $row -> open_tuesday_from;
-                    $ret-> open_tuesday_till = $row -> open_tuesday_till;
-                    $ret-> open_wednesday_from = $row -> open_wednesday_from;
-                    $ret-> open_wednesday_till = $row -> open_wednesday_till;
-                    $ret-> open_thursday_from = $row -> open_thursday_from;
-                    $ret-> open_thursday_till = $row -> open_thursday_till;
-                    $ret-> open_friday_from = $row -> open_friday_from;
-                    $ret-> open_friday_till = $row -> open_friday_till;
-                    $ret-> open_saturday_from = $row -> open_saturday_from;
-                    $ret-> open_saturday_till = $row -> open_saturday_till;
-                    $ret-> open_sunday_from = $row -> open_sunday_from;
-                    $ret-> open_sunday_till = $row -> open_sunday_till;
+                    $ret-> open_monday_from = $row -> open_monday_from == null ? null : date("H:i", strtotime($row -> open_monday_from));
+                    $ret-> open_monday_till = $row -> open_monday_till == null ? null : date("H:i", strtotime($row -> open_monday_till));
+                    $ret-> open_tuesday_from = $row -> open_tuesday_from == null ? null : date("H:i", strtotime($row -> open_tuesday_from));
+                    $ret-> open_tuesday_till = $row -> open_tuesday_till == null ? null : date("H:i", strtotime($row -> open_tuesday_till));
+                    $ret-> open_wednesday_from = $row -> open_wednesday_from == null ? null : date("H:i", strtotime($row -> open_wednesday_from));
+                    $ret-> open_wednesday_till = $row -> open_wednesday_till == null ? null : date("H:i", strtotime($row -> open_wednesday_till));
+                    $ret-> open_thursday_from = $row -> open_thursday_from == null ? null : date("H:i", strtotime($row -> open_thursday_from));
+                    $ret-> open_thursday_till = $row -> open_thursday_till == null ? null : date("H:i", strtotime($row -> open_thursday_till));
+                    $ret-> open_friday_from = $row -> open_friday_from == null ? null : date("H:i", strtotime($row -> open_friday_from));
+                    $ret-> open_friday_till = $row -> open_friday_till == null ? null : date("H:i", strtotime($row -> open_friday_till));
+                    $ret-> open_saturday_from = $row -> open_saturday_from == null ? null : date("H:i", strtotime($row -> open_saturday_from));
+                    $ret-> open_saturday_till = $row -> open_saturday_till == null ? null : date("H:i", strtotime($row -> open_saturday_till));
+                    $ret-> open_sunday_from = $row -> open_sunday_from == null ? null : date("H:i", strtotime($row -> open_sunday_from));
+                    $ret-> open_sunday_till = $row -> open_sunday_till == null ? null : date("H:i", strtotime($row -> open_sunday_till));
                     $ret-> price_1day = $row -> price_1day;
                     $ret-> price_10days = $row -> price_10days;
                     $ret-> price_1month = $row -> price_1month;
@@ -78,13 +57,13 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 }
             ?>
             var hosts = <?= json_encode($rets); ?>;
-            //console.log(hosts[0]);
+            console.log(hosts[0]);
         </script>
 
         <script>
             var map;
 
-            function bla(host) {
+            function getinfoboxcontent(host) {
 
                 var str  = '<div class="infobox">'+
                     '</div>'+
@@ -93,17 +72,17 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                     '<p><b>host.title</b><br />' +
                     '<b>Included: </b>host.details<br />'+
                     '<b>Extras: </b>host.extras<br />'+
-                    '<b>Open Monday:</b>host.open_monday_from - host.open_monday_till<br />'+
-                    '<b>Open Tuesday:</b>host.open_tuesday_from - host.open_tuesday_till<br />'+
-                    '<b>Open Wednesday:</b>host.open_wednesday_from - host.open_wednesday_till<br />'+
-                    '<b>Open Thursday:</b>host.open_thursday_from - host.open_thursday_till<br />'+
-                    '<b>Open Friday:</b>host.open_friday_from - host.open_friday_till<br />'+
-                    '<b>Open Saturday:</b>host.open_saturday_from - host.open_saturday_till<br />'+
-                    '<b>Open Sunday:</b>host.open_sunday_from - host.open_sunday_till<br />'+
-                    '<b>Open Price 1day:</b>host.price_1day<br />'+
-                    '<b>Open Price 10days:</b>host.price_10days<br />'+
-                    '<b>Open Price 1 month:</b>host.price_1month<br />'+
-                    '<b>Open Price 6 months:</b>host.price_6months<br />'+
+                    'open_monday'+
+                    'open_tuesday'+
+                    'open_wednesday'+
+                    'open_thursday'+
+                    'open_friday'+
+                    'open_saturday'+
+                    'open_sunday'+
+                    'price_1day'+
+                    'price_10days'+
+                    'price_1month'+
+                    'price_6months'+
                     '</div>';
 
                 str = str.replace("host.nickname", host.nickname);
@@ -113,25 +92,19 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 str = str.replace("host.picture_id", host.picture_id);
                 str = str.replace("host.video_id", host.video_id);
                 str = str.replace("host.open_247fixworkers", host.open_247fixworkers);
-                str = str.replace("host.open_monday_from", host.open_monday_from);
-                str = str.replace("host.open_monday_till", host.open_monday_till);
-                str = str.replace("host.open_tuesday_from", host.open_tuesday_from);
-                str = str.replace("host.open_tuesday_till", host.open_tuesday_till);
-                str = str.replace("host.open_wednesday_from", host.open_wednesday_from);
-                str = str.replace("host.open_wednesday_till", host.open_wednesday_tkll);
-                str = str.replace("host.open_thursday_from", host.open_thursday_from);
-                str = str.replace("host.open_thursday_till", host.open_thursday_till);
-                str = str.replace("host.open_friday_from", host.open_friday_from);
-                str = str.replace("host.open_friday_till", host.open_friday_till);
-                str = str.replace("host.open_saturday_from", host.open_saturday_from);
-                str = str.replace("host.open_saturday_till", host.open_saturday_from);
-                str = str.replace("host.open_sunday_from", host.open_sunday_from);
-                str = str.replace("host.open_sunday_till", host.open_sunday_till);
-                str = str.replace("host.price_1day", host.price_1day);
-                str = str.replace("host.price_10days", host.price_10days);
-                str = str.replace("host.price_1month", host.price_1month);
-                str = str.replace("host.price_6months", host.price_6months);
-                
+                str = str.replace("open_monday", host.open_monday_from == null ? "" : '<b>Open Monday</b> ' + host.open_monday_from + '-' + host.open_monday_till + '<br />');
+                str = str.replace("open_tuesday", host.open_tuesday_from == null ? "" : '<b>Open Tuesday</b> ' + host.open_tuesday_from + '-' + host.open_tuesday_till + '<br />');
+                str = str.replace("open_wednesday", host.open_wednesday_from == null ? "" : '<b>Open Wednesday</b> ' + host.open_wednesday_from + '-' + host.open_wednesday_till + '<br />');
+                str = str.replace("open_thursday", host.open_thursday_from == null ? "" : '<b>Open Thursday</b> ' + host.open_thursday_from + '-' + host.open_thursday_till + '<br />');
+                str = str.replace("open_friday", host.open_friday_from == null ? "" : '<b>Open Friday</b> ' + host.open_friday_from + '-' + host.open_friday_till + '<br />');
+                str = str.replace("open_saturday", host.open_saturday_from == null ? "" : '<b>Open saturday</b> ' + host.open_saturday_from + '-' + host.open_saturday_till + '<br />');
+                str = str.replace("open_sunday", host.open_sunday_from == null ? "" : '<b>Open sunday</b> ' + host.open_sunday_from + '-' + host.open_sunday_till + '<br />');
+
+                str = str.replace("price_1day", host.price_1day == null ? "" : '<b>Price 1 Day</b> ' + host.price_1day + '<br />');
+                str = str.replace("price_10days", host.price_10days == null ? "" : '<b>Price 10 Days</b> ' + host.price_10days + '<br />');
+                str = str.replace("price_1month", host.price_1month == null ? "" : '<b>Price 1 Month</b> ' + host.price_1month + '<br />');
+                str = str.replace("price_6months", host.price_6months == null ? "" : '<b>Price 6 Months</b> ' + host.price_6months + '<br />');
+
                 return str;
             }
 
@@ -148,7 +121,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 
             function markerclick(event) {
                 var infowindow = new google.maps.InfoWindow({
-                    content: bla(this.host),
+                    content: getinfoboxcontent(this.host),
                 });
                 infowindow.open(map, this);
             }
@@ -157,7 +130,7 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 var image = "<?= $this->Url->build('/img/yellowdot.png', true); ?>";
                 var uluru = {lat: 47.806021, lng: 13.050602000000026};
                     map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 12,
+                    zoom: 10,
                     center: uluru
                     });
 
@@ -225,13 +198,25 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 margin-left: 50px;
                 font-family: eraserregular;
             }
+            @media (max-width: 600px) {
+                .yellowdesks {
+                    font-size: 30px;
+                    margin-left: 5px;
+                }
+            }
             
             .findandrent {
                 font-size: 20px;
                 background-color: #f3ed3d;
                 margin-left: 50px;
             }
-            
+            @media (max-width: 600px) {
+                .findandrent {
+                    font-size: 15px;
+                    margin-left: 5px;
+                }
+            }
+
             .content {
                 padding-top: 25%;
                 z-index: 100;
@@ -248,6 +233,12 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 position: absolute;
                 right: 0;
                 z-index: 100;
+            }
+            @media (max-width: 600px) {
+                .menu {
+                    justify-content: flex-start;
+                    width: 100%;
+                }
             }
             
             .menu a {
@@ -276,8 +267,13 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
     <body>
 
         <div class="menu">
-            <a href="">Jetzt Host werden</a>
             <?php
+            
+            $urlregister = $this->Url->build([
+                    "controller" => "users",
+                    "action" => "signup",
+                ]);
+            
             if ($loggedinuser == null) {
                 $url = $this->Url->build([
                     "controller" => "users",
@@ -292,9 +288,12 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 $text = __("Logout");
             }
             ?>
-            
+
+            <?php if ($loggedinuser == null) { ?>
+                <a href="<?= $urlregister ?>">Sign Up</a>
+            <?php } ?>
+
             <a href="<?= $url ?>"><?= $text ?></a>
-            <a href="">Registrieren</a>
         </div>
         
         
