@@ -47,9 +47,18 @@ class BookingsController extends AppController {
         $this->set("row", $query);
     }
     
-    public function host() {
+    public function host($year = null, $month = null) {
         if (!$this -> hasAccess([Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
  
+        if ($year == null || !is_numeric($year) || $year < 1990 || $year > 3000)
+            $year = date("Y");
+
+        if ($month == null || !is_numeric($month) || $month < 1 || $month > 12)
+            $month = date("m");
+         
+        $this->set("year", $year);
+        $this->set("month", $month);
+  
         $user = $this -> getloggedinUser();
 
         $model = TableRegistry::get('Bookings');
@@ -60,6 +69,8 @@ class BookingsController extends AppController {
 
         // todo: security: check if user is permitted to request this invoice
         $this->set("rows", $query);
+
+        
     }
     
     public function preparebookingrequest() {
@@ -301,6 +312,8 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         
         $total_bookings += $row -> price + $row -> vat;
         
+        $rets["price"] = $row -> price;
+        $rets["vat"] = $row -> vat;
         $rets["total"] = $total_bookings;
 
         if (@$_REQUEST["jsonbrowser"]) echo "<pre>";
