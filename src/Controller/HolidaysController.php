@@ -49,8 +49,9 @@ class HolidaysController extends AppController {
         $workingdays["price"] = $price;
         
         
-        echo json_encode($workingdays, JSON_PRETTY_PRINT);
-        exit();
+        $this->autoRender = false;
+        $this->response->type('application/json');
+        $this->response->body(json_encode($rets, JSON_PRETTY_PRINT));
     }
 }
 ?>

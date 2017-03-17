@@ -17,6 +17,8 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
+use Cake\Http\Response;
+
 use Cake\ORM\TableRegistry;
 
 /**
@@ -46,6 +48,7 @@ class AppController extends CrumbsController
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         
+        $this->response = $this->response->withHeader('X-API-Level', '1');
         
         //y//
         /*

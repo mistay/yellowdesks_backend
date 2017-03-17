@@ -84,10 +84,9 @@ class PaypalipnsController extends AppController {
         }
 
         if (strpos($_SERVER['REQUEST_URI'], "updatebookings") !== false) {
-            // todo: direkt aufgerufen, nicht sehr schön. besser: über cake lösen
-            // wenn man kein exit() macht meldet cake (zurecht), dass es keine header mehr senden kann (weil http body schon geschickt wurde)
-            echo json_encode($ret);
-            exit(0);
+            $this->autoRender = false;
+            $this->response->type('application/json');
+            $this->response->body(json_encode($rets, JSON_PRETTY_PRINT));
         }
     }
 }

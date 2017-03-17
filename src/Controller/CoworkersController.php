@@ -38,9 +38,9 @@ class CoworkersController extends AppController {
                 ]);
             }
             
-            echo json_encode($ret, JSON_PRETTY_PRINT);
-            if (@$_REQUEST["format"] == "jsonbrowser") echo "</pre>";
-            exit();
+            $this->autoRender = false;
+            $this->response->type('application/json');
+            $this->response->body(json_encode($rets, JSON_PRETTY_PRINT));
         }
     }
     
@@ -153,8 +153,9 @@ class CoworkersController extends AppController {
         } else 
             $ret["error"] = "could not read data from request. this api method requires data in http request body.";
 
-        echo json_encode($ret);
-        exit();
+        $this->autoRender = false;
+        $this->response->type('application/json');
+        $this->response->body(json_encode($rets, JSON_PRETTY_PRINT));
     }
 }
 ?>

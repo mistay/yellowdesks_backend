@@ -8,7 +8,9 @@ use Cake\ORM\TableRegistry;
 class UsersController extends AppController
 {
     public function signup() {
+    }
 
+    public function forgotpassword() {
     }
     
     public function loginappfb() {
@@ -20,8 +22,9 @@ class UsersController extends AppController
             $loggedinuser = $this->getloggedInUser();
             $ret["loggedinuser"] = $loggedinuser;
         }
-        echo json_encode($ret);
-        exit();
+        $this->autoRender = false;
+        $this->response->type('application/json');
+        $this->response->body(json_encode($rets, JSON_PRETTY_PRINT));
     }
     
     function logout() {
@@ -66,9 +69,9 @@ class UsersController extends AppController
             $ret["lastname"] = $loggedinuser->lastname;
         }
         
-        echo json_encode($ret);
-        exit();
-        
+        $this->autoRender = false;
+        $this->response->type('application/json');
+        $this->response->body(json_encode($rets, JSON_PRETTY_PRINT));
     }
     
     function login() {
