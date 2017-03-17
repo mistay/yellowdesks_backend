@@ -317,8 +317,11 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
         $rets["total"] = $total_bookings;
 
         if (@$_REQUEST["jsonbrowser"]) echo "<pre>";
-        echo json_encode($rets, JSON_PRETTY_PRINT);
-        exit();
+
+        $this->autoRender = false;
+        $this->response->type('application/json');
+        $this->response->body(json_encode($rets, JSON_PRETTY_PRINT));
     }
+ 
 }
 ?>
