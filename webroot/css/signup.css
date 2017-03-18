@@ -16,7 +16,6 @@
 
 .signup table tr td {
     background: white;
-    
 }
 
 .signup input[type=text], .signup input[type=password] {
@@ -30,14 +29,11 @@
     background-color: white;
     padding-left: 30px;
     padding-right: 30px;
-    
 }
 
 label {
     font-size: 12px;
-    
 }
-
 
 input {
     font-size: 15px;
@@ -48,16 +44,13 @@ tr.space {
     vertical-align: bottom;
 }
 
-
 tr.inputs {
     height: 30px;
 }
 
-
 td {
     padding-right: 50px;
 }
-
 
 span {
     font-size: 10px;
