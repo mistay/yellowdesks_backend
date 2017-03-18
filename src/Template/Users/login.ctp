@@ -8,17 +8,20 @@
         
         ?>
         <a href="<?= $this->Url->build(["controller" => "users", "action" => "logout"]); ?>"><?= __('Logout'); ?></a>
+        
         <?php
         
     } else {
     ?>
-<?= $this->Form->create() ?>
-        <?= __('Please enter your username and password') ?>
-        <br /><br />
-        <?= $this->Form->input('username') ?>
-        <?= $this->Form->input('password') ?>
-<?= $this->Form->button(__('Login')); ?>
-<?= $this->Form->end() ?>
+    <?= $this->Form->create() ?>
+            <?= __('Please enter your username and password') ?>
+            <br /><br />
+            <?= $this->Form->input('username') ?>
+            <?= $this->Form->input('password') ?>
+            <a href="<?= $this->Url->build(["controller" => "users", "action" => "forgotpassword"]); ?>"><?= __('Forgot Password'); ?></a>
+            <br />
+            <?= $this->Form->button(__('Login')); ?>
+    <?= $this->Form->end() ?>
     
     <?php } ?>
 </div>
