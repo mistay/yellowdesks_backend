@@ -5,76 +5,128 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
 use Cake\Mailer\Email;
-
+use Cake\Routing\Router;
 
 class UsersController extends AppController
 {
     public function signup() {
     }
 
-    public function forgotpassword() {
+    public function resetpassword($email = "", $validatestring = "") {
+        if (strlen($email) < 3) {
+            $this -> Flash -> success (__("Please provide an E-Mail address with at least {0} characters.", 3));
+            // todo: prevent controller from rendering view
+            return;
+        }
+        if (strlen($validatestring) < 10) { // 10? how long are the hashes?
+            // todo: prevent controller from rendering view
+            $this -> Flash -> success (__("Please provide a validate string with at least {0} characters.", 10));
+            return;
+        }
+        $user = $this -> searchUserByMail($email);
+        
+        if ($user -> count < 1) {
+            $this -> Flash -> success (__("Sorry, no such E-Mail address found."));
+            // todo: prevent controller from rendering view
+            return;
+        } elseif ($user -> count > 1) {
+            $this -> Flash -> success (__("Sorry, more than one E-Mail address found. Please provide a unique E-Mail address."));
+            // todo: prevent controller from rendering view
+            return;
+        } else {
+            // genau eine e-mail adresse gefunden
+
+            // user wants to set new password
+            if (trim($user -> row -> passwordreset) != trim($validatestring)) {
+                $this -> Flash -> success (__("Sorry, the provided validation string does not match any password reset request."));
+                // todo: prevent controller from rendering view
+                return;
+            } else {
+                if ($this -> request -> is('post')) {
+                    $pass1 = $this->request->getData()["password1"];
+                    $pass2 = $this->request->getData()["password2"];
+                    
+                    if ($pass1 == $pass2) {
+                        $user -> row ["password"] = password_hash($pass1, PASSWORD_BCRYPT);
+                        $user -> model -> save ($user -> row);
+                        $this -> Flash -> success (__("Password updated successfully."));
+                    } else {
+                        $this -> Flash -> success (__("Passwords do not match."));
+                    }
+                }
+            }
+        }
+    }
+
+    private function searchUserByMail($email) {
+        //$ret = stdClass();
         $modelCoworkers = TableRegistry::get('Coworkers');
         $modelHosts = TableRegistry::get('Hosts');
+        
+        $query = $modelCoworkers -> find('all') -> where(["Coworkers.email LIKE" => '%' . $email . '%']);
+        $coworkers = $query->toArray();
+        
+        //todo: create std class object
+        @$ret -> numCoworkers = sizeof($coworkers);
 
+        $query = $modelHosts -> find('all') -> where(["Hosts.email LIKE" => '%' . $email . '%']);
+        $hosts = $query->toArray();
+        $ret -> numHosts = sizeof($hosts);
+
+        $ret -> count = $ret -> numCoworkers + $ret -> numHosts;
+
+        if ($ret -> numCoworkers + $ret -> numHosts == 1) {
+            $ret -> model = $ret -> numCoworkers == 1 ? $modelCoworkers : $modelHosts;
+            $ret -> row =  $ret -> numCoworkers == 1 ? $coworkers[0] : $hosts[0];
+        }
+        return $ret;
+    }
+
+    public function forgotpassword($email = "", $validatestring = "") {
         if ($this -> request -> is('post')) {
             $email = $this -> request -> data['email'];
 
             if (strlen($email) < 3) {
-                $this -> Flash -> success (__("Please provide an E-Mail address with at least 3 characters."));
+                $this -> Flash -> success (__("Please provide an E-Mail address with at least {0} characters.", 3));
                 return;
             }
-
-            $query = $modelCoworkers -> find('all') -> where(["Coworkers.email LIKE" => '%' . $email . '%']);
-            $coworkers = $query->toArray();
-
-            $query = $modelHosts -> find('all') -> where(["Hosts.email LIKE" => '%' . $email . '%']);
-            $hosts = $query->toArray();
+            $user = $this -> searchUserByMail($email);
             
-            $num = (sizeof($coworkers) + sizeof($hosts));
-            if ($num < 1) {
+            if ($user -> count < 1) {
                 $this -> Flash -> success (__("Sorry, no such E-Mail address found."));
                 return;
-            } elseif ($num > 1) {
+            } elseif ($user -> count > 1) {
                 $this -> Flash -> success (__("Sorry, more than one E-Mail address found. Please provide a unique E-Mail address."));
                 return;
             } else {
                 // genau eine e-mail adresse gefunden
 
-                if (sizeof($coworkers) == 1)
-                    foreach ($coworkers as $row) {
-                        //echo "mail:" . $row -> email;
-                    }
-                if (sizeof($hosts) == 1)
-                    foreach ($hosts as $row) {
-                        //echo "mail:" . $row -> email;
-                    }
-
-                $to = $row["email"];
-
-                // Sample SMTP configuration.
-                Email::setConfigTransport('langhofer', [
-                    'host' => 'ssl://ssl.langhofer.at',
-                    'port' => 25,
-                    'username' => 'armin',
-                    'password' => 'phOOb4r*',
-                    'className' => 'Smtp',
-                    'tls' => true
-                ]);
-
-                $email = new Email();
-                $email->setTransport('langhofer');
-                $ret = $email
-                    ->setTemplate('default')
-                    ->setLayout('default')
-                    ->setEmailFormat('both')
-                    ->setTo('office@langhofer.at')
-                    ->setFrom('office@langhofer.at')
-                    ->send();
-
-                echo "foo"; var_dump($ret);
-
+                $row["passwordreset"] = base64_encode(random(1000000));
+                $user -> model -> save ($row);
+                $this -> sendRecoverInstructions($row ["email"]);
             }
         }
+    }
+
+    private function sendRecoverInstructions($to) {
+        
+
+        $reseturl =  Router::url([ 
+            'controller' => 'Users','action' => 'resetpassword',
+            '272191aba8f8e89291a939feea02'
+            ]);
+
+        $message = __("Your E-mail has been reset. Please navigate to {0} to set your new password.", $reseturl);
+
+        $email = new Email();
+        $email -> setTransport('langhofer');
+        $email
+            ->setTemplate('default')
+            ->setLayout('fancy')
+            ->setEmailFormat('both')
+            ->setTo('hello@yellowdesks.com')
+            ->setFrom('office@langhofer.at')
+            ->send($message);
     }
     
     public function loginappfb() {
