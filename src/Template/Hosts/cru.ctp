@@ -26,6 +26,7 @@
             <th>Excluded</th>
             <td><input type="text" name="extras" placeholder="parking lot, photo studio equipment, plotter" value='<?php echo @$row["extras"] ?>' /></td>
         </tr>
+        
         <tr>
             <th>Opening Instructions</th>
             <td><input type="text" name="openinginstructions" placeholder="You'll receive an e-mail with a PIN code that you can use to access the building." value='<?php echo @$row["openinginstructions"] ?>' /></td>
@@ -37,6 +38,10 @@
         <tr>
             <th>E-Mail</th>
             <td><input type="text" name="email" placeholder="johndoe@example.com" value='<?php echo @$row["email"] ?>' /></td>
+        </tr>
+        <tr>
+            <th>VAT ID</th>
+            <td><input type="text" name="vatid" placeholder="ATU123456789" value='<?php echo @$row["vatid"] ?>' /></td>
         </tr>
         <tr>
             <th>Paypal E-Mail (for sending the money)</th>
