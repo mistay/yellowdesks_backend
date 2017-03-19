@@ -9,7 +9,54 @@ use Cake\Routing\Router;
 
 class UsersController extends AppController
 {
+
+    public function signupsuccess() {
+
+    } 
+
     public function signup() {
+        if ($this -> request -> is('post')) {
+            $data = $this -> request -> data;
+
+            // sticky form
+            $this->set("data", $data);
+
+            if (trim($data["companyname"]) == "") {
+                $this -> Flash -> success (__("This is a B2B service only. Please provide your companyname."));
+                return;
+            }
+
+            if (trim($data["firstname"]) == "") {
+                $this -> Flash -> success (__("Please provide your first name."));
+                return;
+            }
+
+            if (trim($data["lastname"]) == "") {
+                $this -> Flash -> success (__("Please provide your first name."));
+                return;
+            }
+
+            if (strpos($data["email"], "@") === false) {
+                $this -> Flash -> success (__("Please provide your e-mail address."));
+                return;
+            }
+
+            if (strlen($data["password"]) < 8) {
+                $this -> Flash -> success (__("Please make sure your password is at least 8 characters long."));
+                return;
+            }
+            if (!isset($data["termsandconditions"])) {
+                $this -> Flash -> success (__("Please aggree to our terms and conditions."));
+                return;
+            }
+
+            $model = TableRegistry::get('Coworkers');
+            $row = $model -> newEntity();
+            $data["username"] = $data["email"];
+            $model->patchEntity($row, $data);
+            $model->save($row);
+            $this->redirect(["action" => "signupsuccess"]);
+        }
     }
 
     public function resetpassword($email = "", $validatestring = "") {

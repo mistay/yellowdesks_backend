@@ -15,9 +15,9 @@
                     <td><label for="firstname">First Name</label></td>
                 </tr>
                 <tr>
-                    <td><input type="text" name="companyname" id="companyname" placeholder="Company Name" />
+                    <td><input type="text" name="companyname" id="companyname" placeholder="Company Name" value="<?= @$data['companyname'] ?>"  />
                     
-                    <td><input type="text" name="firstname" placeholder="First Name" /></td>
+                    <td><input type="text" name="firstname" placeholder="First Name" value="<?= @$data['firstname'] ?>" /></td>
                 </tr>
                 <tr class="errorline">
                     <td>
@@ -30,14 +30,14 @@
                 </tr>
                 
                 <tr>
-                    <td><input type="text" name="lastname" placeholder="Last Name"/></td>
-                    <td><input type="text" name="email" placeholder="E-Mail"/></td>
+                    <td><input type="text" name="lastname" placeholder="Last Name" value="<?= @$data['lastname'] ?>" /></td>
+                    <td><input type="text" name="email" placeholder="E-Mail" value="<?= @$data['email'] ?>" /></td>
                 </tr>
                 <tr class="space">
                     <td colspan="2"><label for="password">Password</label></td>
                 </tr>
                 <tr class="inputs">
-                    <td colspan="2"><input type="password" name="password" id="password" placeholder="Password"/></td>
+                    <td colspan="2"><input type="password" name="password" id="password" placeholder="Password" value="<?= @$data['password'] ?>" /></td>
                 </tr>
                 <tr class="errorline">
                     <td colspan="2">
@@ -45,7 +45,7 @@
                     </td>
                 </tr>
                 <tr class="space">
-                    <td><input type="checkbox" name="termsandconditions" /><label for="termsandconditions"><?= __("I aggree to <a href={0}>Terms & Conditions</a>", $this->Url->build(["controller" => "termsandconditions", "action" => "index"])); ?></label></td>
+                    <td><input type="checkbox" value="yes" name="termsandconditions" /><label for="termsandconditions"><?= __("I aggree to <a href={0}>Terms & Conditions</a>", $this->Url->build(["controller" => "termsandconditions", "action" => "index"])); ?></label></td>
                     <td></td>
                 </tr>
                 <tr>
