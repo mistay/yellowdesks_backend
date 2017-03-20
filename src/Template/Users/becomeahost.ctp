@@ -13,17 +13,17 @@
                 <h3>Your personal data</h3>
                 <table id="table1">
                     <tr>
-                        <td><label for="companyname">Company Name</label></td>
+                        <td><label for="name">Company Name</label></td>
                         <td><label for="firstname">First Name</label></td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="companyname" id="companyname" placeholder="Company Name" value="<?= @$data['companyname'] ?>"  />
+                        <td><input type="text" name="name" id="name" placeholder="Company Name" value="<?= @$data['name'] ?>"  />
                         
                         <td><input type="text" name="firstname" placeholder="First Name" value="<?= @$data['firstname'] ?>" /></td>
                     </tr>
                     <tr class="errorline">
                         <td>
-                            <span class="check companyname"><?= __("Please note that Yellow Desks is a B2B service.") ?></span></td>
+                            <span class="check name"><?= __("Please note that Yellow Desks is a B2B service.") ?></span></td>
                         </td>
                     </tr>
                     <tr class="space">
