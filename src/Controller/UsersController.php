@@ -178,6 +178,7 @@ class UsersController extends AppController
                     
                     if ($pass1 == $pass2) {
                         $user -> row ["password"] = password_hash($pass1, PASSWORD_BCRYPT);
+                        $user -> row ["passwordreset"] = null;
                         $user -> model -> save ($user -> row);
                         $this -> Flash -> success (__("Password updated successfully."));
                     } else {
@@ -231,20 +232,21 @@ class UsersController extends AppController
             } else {
                 // genau eine e-mail adresse gefunden
 
-                $row["passwordreset"] = base64_encode(random(1000000));
-                $user -> model -> save ($row);
-                $this -> sendRecoverInstructions($row ["email"]);
+                $this -> Flash -> success (__("We sent you an email containing instructions for resetting your password. Please check your inbox."));
+                $user -> row["passwordreset"] = base64_encode(rand());
+                $user -> model -> save ($user -> row);
+                $this -> sendRecoverInstructions($user -> row ["email"], $user -> row["passwordreset"]);
+                
             }
         }
     }
 
-    private function sendRecoverInstructions($to) {
-        
-
+    private function sendRecoverInstructions($to, $hash) {
         $reseturl =  Router::url([ 
             'controller' => 'Users','action' => 'resetpassword',
-            '272191aba8f8e89291a939feea02'
-            ]);
+            $to,
+            $hash,
+            ], true);
 
         $message = __("Your E-mail has been reset. Please navigate to {0} to set your new password.", $reseturl);
 
@@ -290,6 +292,12 @@ class UsersController extends AppController
 
     public function welcome() {
         $loggedinuser = $this -> getLoggedInUser();
+
+        if ($loggedinuser == null) {
+            $this -> redirect(["controller" => "users", "action" => "login"]);
+            return;
+        }
+
         if ($loggedinuser -> role == Roles::ADMIN) {
             $this -> redirect(["controller" => "bookings", "action" => "index"]);
         } else if ($loggedinuser -> role == Roles::HOST) {
@@ -336,7 +344,10 @@ class UsersController extends AppController
 
             $this -> auth($username, $password);
             
-            $this->redirect(["action" => "welcome"]);
+            $this->basicauth();
+            if ($this -> getLoggedInUser() != null) {
+                $this->redirect(["action" => "welcome"]);
+            }
         }
         
         if ($this -> getLoggedInUser() != null) {
