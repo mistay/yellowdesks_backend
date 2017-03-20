@@ -14,6 +14,82 @@ class UsersController extends AppController
 
     } 
 
+    public function becomeahost() {
+        if ($this -> request -> is('post')) {
+            $data = $this -> request -> data;
+
+            // sticky form
+            $this->set("data", $data);
+
+            if (trim($data["companyname"]) == "") {
+                $this -> Flash -> success (__("This is a B2B service only. Please provide your companyname."));
+                return;
+            }
+
+            if (trim($data["firstname"]) == "") {
+                $this -> Flash -> success (__("Please provide your first name."));
+                return;
+            }
+
+            if (trim($data["lastname"]) == "") {
+                $this -> Flash -> success (__("Please provide your first name."));
+                return;
+            }
+
+            if (strpos($data["email"], "@") === false) {
+                $this -> Flash -> success (__("Please provide your e-mail address."));
+                return;
+            }
+
+            if (trim($data["lastname"]) == "") {
+                $this -> Flash -> success (__("Please provide your address."));
+                return;
+            }
+
+            if (trim($data["postal_code"]) == "") {
+                $this -> Flash -> success (__("Please provide your postal code."));
+                return;
+            }
+
+            if (trim($data["city"]) == "") {
+                $this -> Flash -> success (__("Please provide your city."));
+                return;
+            }
+
+            if (strlen($data["password"]) < 8) {
+                $this -> Flash -> success (__("Please make sure your password is at least 8 characters long."));
+                return;
+            }
+
+            if (!isset($data["termsandconditions"])) {
+                $this -> Flash -> success (__("Please aggree to our terms and conditions."));
+                return;
+            }
+
+            if ((int)$data["desks"] <= 0) {
+                $this -> Flash -> success (__("Please provide at least one desk."));
+                return;
+            }
+
+            if (trim($data["details"]) == "") {
+                $this -> Flash -> success (__("Please explain what's included for your coworker."));
+                return;
+            }
+
+            if (trim($data["extras"]) == "") {
+                $this -> Flash -> success (__("Please explain what's excluded for your coworker."));
+                return;
+            }
+
+            $model = TableRegistry::get('Hosts');
+            $row = $model -> newEntity();
+            $data["username"] = $data["email"];
+            $model->patchEntity($row, $data);
+            $model->save($row);
+            $this->redirect(["action" => "signupsuccess"]);
+        }
+    }
+
     public function signup() {
         if ($this -> request -> is('post')) {
             $data = $this -> request -> data;
@@ -45,6 +121,7 @@ class UsersController extends AppController
                 $this -> Flash -> success (__("Please make sure your password is at least 8 characters long."));
                 return;
             }
+
             if (!isset($data["termsandconditions"])) {
                 $this -> Flash -> success (__("Please aggree to our terms and conditions."));
                 return;
