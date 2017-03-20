@@ -84,6 +84,12 @@
                         <td></td>
                     </tr>
                     <tr class="space">
+                        <td colspan="2"><label for="included">Title</label></td>
+                    </tr>
+                    <tr class="inputs">
+                        <td colspan="2"><input type="text" name="title" id="title" placeholder="Beatuiful office space downtown" value="<?= @$data['title'] ?>" /></td>
+                    </tr>
+                    <tr class="space">
                         <td colspan="2"><label for="included">Included</label></td>
                     </tr>
                     <tr class="inputs">
