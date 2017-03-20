@@ -7,6 +7,6 @@
         <input type="password" name="password1" placeholder="mysecret" />
         <input type="password" name="password2" placeholder="mysecret" />
 
-        <input type="submit" value="Request Password"/>
+        <input type="submit" value="<?= __("Save") ?>/>
     </form>
 </div>
