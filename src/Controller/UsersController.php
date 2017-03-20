@@ -71,6 +71,11 @@ class UsersController extends AppController
                 return;
             }
 
+            if (trim($data["title"]) == "") {
+                $this -> Flash -> success (__("Please provide a sloagen, a title for your yellow desks."));
+                return;
+            }
+
             if (trim($data["details"]) == "") {
                 $this -> Flash -> success (__("Please explain what's included for your coworker."));
                 return;
@@ -84,6 +89,7 @@ class UsersController extends AppController
             $model = TableRegistry::get('Hosts');
             $row = $model -> newEntity();
             $data["username"] = $data["email"];
+            $data["nickname"] = $data["firstname"];
             $model->patchEntity($row, $data);
             $model->save($row);
             $this->redirect(["action" => "signupsuccess"]);
