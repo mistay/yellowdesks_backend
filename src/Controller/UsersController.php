@@ -21,7 +21,7 @@ class UsersController extends AppController
             // sticky form
             $this->set("data", $data);
 
-            if (trim($data["companyname"]) == "") {
+            if (trim($data["name"]) == "") {
                 $this -> Flash -> success (__("This is a B2B service only. Please provide your companyname."));
                 return;
             }
