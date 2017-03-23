@@ -90,7 +90,7 @@
                         <td colspan="2"><input type="text" name="title" id="title" placeholder="Beatuiful office space downtown" value="<?= @$data['title'] ?>" /></td>
                     </tr>
                     <tr class="space">
-                        <td colspan="2"><label for="included">Included</label></td>
+                        <td colspan="2"><label for="included">Included  (for office space minimum requirements are: WiFi, desk and chair)</label></td>
                     </tr>
                     <tr class="inputs">
                         <td colspan="2"><input type="text" name="details" id="details" placeholder="Included: Coffee, B/W A4 Printer, WiFi, Telephone Room." value="<?= @$data['details'] ?>" /></td>
