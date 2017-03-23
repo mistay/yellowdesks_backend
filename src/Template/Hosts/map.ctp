@@ -101,13 +101,12 @@
         for (i=0; i<hosts.length; i++) {
             
 
-            marker = new google.maps.Marker({
-                position: {lat: hosts[i].lat, lng: hosts[i].lng},
-                map: map,
-                icon: image,
-                host: hosts[i],
-                });
-            marker.addListener('click', markerclick);
+        marker = new google.maps.Marker({
+            position: {lat: 47.806021, lng: 13.050602000000026},
+            map: map,
+            icon: image,
+            host: hosts[i],
+            });
             
             
 
