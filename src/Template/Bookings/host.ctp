@@ -14,6 +14,26 @@
 $total=0;
 ?>
 
+<form name="form1" method="post">
+    <table>
+        <tr>
+            <th>Year</th>
+            <td><input name="year" type="text" value="<?= $year ?>" /></td>
+        </tr>
+        <tr>
+            <th>Month</th>
+            <td><input name="month" type="text" value="<?= $month ?>" /></td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><input name="submit" type="submit" value="Submit" /></td>
+        </tr>
+    </table>
+</form>
+
+<br />
+<br />
+
 <table>
     <tr>
         <th>id</th>

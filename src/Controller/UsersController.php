@@ -92,6 +92,20 @@ class UsersController extends AppController
             $data["nickname"] = $data["firstname"];
             $model->patchEntity($row, $data);
             $model->save($row);
+
+
+            $message = __($this -> appconfigs ["welcomemailhosts"], $row -> nickname);
+
+            $email = new Email();
+            $email -> setTransport('appdefault');
+            $email
+                ->setTemplate('default')
+                ->setLayout('fancy')
+                ->setEmailFormat('both')
+                ->setTo('hello@yellowdesks.com')
+                ->setFrom('office@langhofer.at')
+                ->send($message);
+
             $this->redirect(["action" => "signupsuccess"]);
         }
     }
@@ -138,6 +152,19 @@ class UsersController extends AppController
             $data["username"] = $data["email"];
             $model->patchEntity($row, $data);
             $model->save($row);
+
+            $message = __($this -> appconfigs ["welcomemailcoworkers"], $row -> firstname);
+
+            $email = new Email();
+            $email -> setTransport('appdefault');
+            $email
+                ->setTemplate('default')
+                ->setLayout('fancy')
+                ->setEmailFormat('both')
+                ->setTo('hello@yellowdesks.com')
+                ->setFrom('office@langhofer.at')
+                ->send($message);
+
             $this->redirect(["action" => "signupsuccess"]);
         }
     }
