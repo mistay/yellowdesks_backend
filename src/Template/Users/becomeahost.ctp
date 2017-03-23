@@ -39,7 +39,7 @@
                         <td><label for="address">Address</label></td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><input type="text" name="address" id="address" placeholder="Address." value="<?= @$data['address'] ?>" /></td>
+                        <td colspan="2"><input type="text" name="address" id="address" placeholder="Address" value="<?= @$data['address'] ?>" /></td>
                     </tr>
                     <tr class="space">
                         <td><label for="postal_code">Postal Code</label></td>
