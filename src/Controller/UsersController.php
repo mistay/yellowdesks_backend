@@ -248,7 +248,7 @@ class UsersController extends AppController
             $hash,
             ], true);
 
-        $message = __("Your E-mail has been reset. Please navigate to {0} to set your new password.", $reseturl);
+        $message = __("Your E-mail has been reset. Please navigate to {0} to reset your password.", $reseturl);
 
         $email = new Email();
         $email -> setTransport('appdefault');
