@@ -35,7 +35,7 @@
         <div class="devheader" >this is the development system!!</div>
     <?php } ?>
     <div class="burger"><img src="<?= $this->Url->build("/img/burger.png"); ?>" /></div>
-    <div class="header"><a href="<?= $this->Url->build("/"); ?>">YELLOW DESKS</a></div>
+    <div class="header"><a href="<?= $this->Url->build("/"); ?>">Yellowdesks</a></div>
     <div class="subheader"><a href="<?= $this->Url->build("/"); ?>">find workspace near you</a></div>
     <div class="subsubheader">a <a href="http://coworkingsalzburg.com">coworkingsalzburg.com</a> startup</div>
     <div class="mobilemenu"></div>
