@@ -20,6 +20,8 @@ use Cake\Event\Event;
 use Cake\Http\Response;
 
 use Cake\ORM\TableRegistry;
+use Cake\Mailer\Email;
+
 
 /**
  * Application Controller
@@ -32,6 +34,7 @@ use Cake\ORM\TableRegistry;
 class AppController extends CrumbsController
 {
 
+    var $appconfigs = [];
     /**
      * Initialization hook method.
      *
@@ -50,6 +53,21 @@ class AppController extends CrumbsController
         
         $this->response = $this->response->withHeader('X-API-Level', '1');
         
+        $model = TableRegistry::get('Configs');
+        $query = $model->find('all');
+        foreach ($query as $tmp) {
+            $this -> appconfigs [$tmp["configkey"]] = $tmp["configvalue"];
+        }
+
+        Email::setConfigTransport('appdefault', [
+            'host' => $this -> appconfigs['emailhost'],
+            'port' => 25,
+            'username' => $this -> appconfigs['emailusername'],
+            'password' => $this -> appconfigs['emailpassword'],
+            'className' => 'Smtp',
+            'tls' => true
+        ]);
+
         //y//
         /*
         $this->loadComponent('Auth', [
