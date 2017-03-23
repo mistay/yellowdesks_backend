@@ -251,7 +251,7 @@ class UsersController extends AppController
         $message = __("Your E-mail has been reset. Please navigate to {0} to set your new password.", $reseturl);
 
         $email = new Email();
-        $email -> setTransport('langhofer');
+        $email -> setTransport('appdefault');
         $email
             ->setTemplate('default')
             ->setLayout('fancy')
