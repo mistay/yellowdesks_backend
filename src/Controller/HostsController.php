@@ -192,6 +192,7 @@ class HostsController extends AppController {
                             "price_10days" => $row->price_10days,
                             "price_1month" => $row->price_1month,
                             "price_6months" => $row->price_6months,
+                            "cancllationscheme" => $row->cancllationscheme,
                             "title" => $row->title,
                             "videoURL" => (sizeof($row->videos) > 0 ? Router::url(['controller' => 'videos', 'action' => '', $row->videos[0]->url], true) : null),
                             
