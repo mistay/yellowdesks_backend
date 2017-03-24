@@ -256,6 +256,15 @@ $this->layout = false;
                 height: 100%;
                 width: 100%;
             }
+
+            .menu a:first-child {
+                min-width: auto;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .androidlogo {
+                height: 20px;
+            }
         </style>
         
         <script>
@@ -269,6 +278,8 @@ $this->layout = false;
         <div class="menu">
             <?php
             
+            $urlroot = $this->Url->build("/");
+
             $urlprofile = $this->Url->build([
                     "controller" => "users",
                     "action" => "welcome",
@@ -289,15 +300,17 @@ $this->layout = false;
                     "controller" => "users",
                     "action" => "login",
                 ]);
-                $text = __("Login");
+                $loginlogouttext = __("Login");
             } else {
                 $url = $this->Url->build([
                     "controller" => "users",
                     "action" => "logout",
                 ]);
-                $text = __("Logout");
+                $loginlogouttext = __("Logout");
             }
             ?>
+
+            <a href="https://play.google.com/store/apps/details?id=at.langhofer.yellowdesks"><img class="androidlogo" src="<?= $urlroot ?>/img/android_logo_bw_transparent.png" /></a>
 
             <?php if ($loggedinuser == null) { ?>
                 <a href="<?= $urlbecomeahost ?>">Become A Host</a>
@@ -306,7 +319,7 @@ $this->layout = false;
                 <a href="<?= $urlprofile ?>"><?= __("Profile") ?></a>
             <?php } ?>
 
-            <a href="<?= $url ?>"><?= $text ?></a>
+            <a href="<?= $url ?>"><?= $loginlogouttext ?></a>
         </div>
         
         
