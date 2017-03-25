@@ -97,13 +97,15 @@ class UsersController extends AppController
             $message = __($this -> appconfigs ["welcomemailhosts"], $row -> nickname);
 
             $email = new Email();
-            $email -> setTransport('appdefault');
+            $email  -> setTransport('appdefault');
+
             $email
                 ->setTemplate('default')
                 ->setLayout('fancy')
                 ->setEmailFormat('both')
-                ->setTo('hello@yellowdesks.com')
-                ->setFrom('office@langhofer.at')
+                ->setTo( $row -> email )
+                ->setFrom( $this -> appconfigs["emailsender"] )
+                ->subject( __('Welcome to {0}', $this -> appconfigs['projectname'] ))
                 ->send($message);
 
             $this->redirect(["action" => "signupsuccess"]);
@@ -161,8 +163,9 @@ class UsersController extends AppController
                 ->setTemplate('default')
                 ->setLayout('fancy')
                 ->setEmailFormat('both')
-                ->setTo('hello@yellowdesks.com')
-                ->setFrom('office@langhofer.at')
+                ->setTo( $row -> email )
+                ->setFrom( $this -> appconfigs["emailsender"] )
+                ->subject( __('Welcome to {0}', $this -> appconfigs['projectname'] ))
                 ->send($message);
 
             $this->redirect(["action" => "signupsuccess"]);
@@ -275,17 +278,19 @@ class UsersController extends AppController
             $hash,
             ], true);
 
-        $message = __("Your E-mail has been reset. Please navigate to {0} to reset your password.", $reseturl);
+        $message = __("Somebody requested to reset your email. If it was you, please navigate to {0} to set a new password.", $reseturl);
 
         $email = new Email();
         $email -> setTransport('appdefault');
+
         $email
-            ->setTemplate('default')
-            ->setLayout('fancy')
-            ->setEmailFormat('both')
-            ->setTo('hello@yellowdesks.com')
-            ->setFrom('office@langhofer.at')
-            ->send($message);
+                ->setTemplate('default')
+                ->setLayout('fancy')
+                ->setEmailFormat('both')
+                ->setTo( $to )
+                ->setFrom( $this -> appconfigs["emailsender"] )
+                ->subject( __('Recover your password on {0}', $this -> appconfigs['projectname'] ))
+                ->send($message);
     }
     
     public function loginappfb() {
