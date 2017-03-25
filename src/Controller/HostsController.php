@@ -8,12 +8,33 @@ use Cake\Event\Event;
 
 class HostsController extends AppController {
     
-    public function map() {
-        if (!$this -> hasAccess([Roles::COWORKER, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
-        $model = TableRegistry::get('Hosts');
-        $query = $model->find('all');
+    // called by jquery ajax
+    public function setposition() {
+        $this->autoRender=false;
+        if (!$this -> hasAccess([Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        if ($this -> request -> is('post')) {
 
-        $this->set("rows", $query);
+            $model = TableRegistry::get('Hosts');
+            $user = $this->getloggedInUser();
+            $row = $model->get($user->id);
+
+            $data = $this->request->getData();
+            $model->patchEntity($row, ["lat" => $data["lat"], "lng" => $data["lng"]] );
+
+            $model->save($row);
+
+            $model->calclatlngloose();
+        }
+    }
+
+    public function map() {
+        if (!$this -> hasAccess([Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        $model = TableRegistry::get('Hosts');
+        $user = $this->getloggedinUser();
+        $row = $model->get($user->id);
+
+        $this->set("row", $row);
     }
 
     public function pictures($host_id = null) {
@@ -64,8 +85,6 @@ class HostsController extends AppController {
             $row->lng_loose = null;
             
             $model->save($row);
-            
-            $this->calclatlngloose();
             
             return $this->redirect(['action' => 'index']);
         }
@@ -119,19 +138,7 @@ class HostsController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
     
-    public function calclatlngloose() {
-        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
-        
-        $model = TableRegistry::get('Hosts');
-        $query = $model->find('all')->where(['lat_loose is' => null, 'lng_loose is' => null,]);
-
-        foreach ($query as $row) {
-            $row->lat_loose = $row->lat + (mt_rand(-1000,1000) / 1000000.0);
-            $row->lng_loose = $row->lng + (mt_rand(-1000,1000) / 1000000.0);
-            
-            $model->save($row);
-        }
-    }
+    
     
     // todo: request device information (display size) and send imageURL with correct resolution
     // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311

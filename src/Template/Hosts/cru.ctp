@@ -60,14 +60,6 @@
             <td><input type="text" name="city" placeholder="Salzburg" value='<?php echo @$row["city"] ?>' /></td>
         </tr>
         <tr>
-            <th>Lat</th>
-            <td><input type="text" name="lat" placeholder="47.734" value='<?php echo @$row["lat"] ?>' /></td>
-        </tr>
-        <tr>
-            <th>Lng</th>
-            <td><input type="text" name="lng" placeholder="13.5005" value='<?php echo @$row["lng"] ?>' /></td>
-        </tr>
-        <tr>
             <th>Price for 2 Hours</th>
             <td><input type="text" name="price_2hours" placeholder="120.50" value='<?php echo @$row["price_2hours"] ?>' /></td>
         </tr>

@@ -18,7 +18,7 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <?= $this->Html->script('yellowdesks.js'); ?>
     <style>
         <?php if ($_SERVER['SERVER_NAME'] == "localhost") { ?>

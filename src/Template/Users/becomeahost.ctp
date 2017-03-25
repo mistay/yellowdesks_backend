@@ -120,39 +120,13 @@
     </div>
 </div>
 
+<?= $this->Html->script('mapmarker.js') ?>
+
 <script>
-    var map;
-    var marker = null;
-
-    // salzburg, default
-    var lat = 47.80097678080353;
-    var lng = 13.044660806655884;
-    
-    function initMap() {
-        var uluru = {lat: lat, lng: lng};
-        map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
-            center: uluru
-        });
-
-        makeMarker();
-    }
-
-    function markerdragged() {
-        $("#lat").val(marker.position.lat()).trigger("change");
-        $("#lng").val(marker.position.lng()).trigger("change");
-    }
-
-    function makeMarker() {
-        var image = '../img/yellowdot.png';
-        marker = new google.maps.Marker({
-            position: {lat: lat, lng: lng},
-            map: map,
-            icon: image,
-            draggable:true,
-        });
-        marker.addListener('drag', markerdragged);
-    }
+    $(window).on('positionchanged', function (e) {
+        $("#lat").val(e.state.lat).trigger("change");
+        $("#lng").val(e.state.lng).trigger("change");
+    });
 
     $( document ).ready(function() {
         $("#address").bind("input", function() {
