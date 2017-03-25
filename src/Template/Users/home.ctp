@@ -310,7 +310,7 @@ $this->layout = false;
             }
             ?>
 
-            <a href="https://play.google.com/store/apps/details?id=at.langhofer.yellowdesks"><img class="androidlogo" src="<?= $urlroot ?>/img/android_logo_bw_transparent.png" /></a>
+            <a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img class="androidlogo" src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
 
             <?php if ($loggedinuser == null) { ?>
                 <a href="<?= $urlbecomeahost ?>">Become A Host</a>
