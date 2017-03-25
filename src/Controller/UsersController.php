@@ -349,7 +349,20 @@ class UsersController extends AppController
             $this -> auth($username, $password);
             
             $this->basicauth();
-            if ($this -> getLoggedInUser() != null) {
+            $user = $this -> getLoggedInUser();
+            if ($user != null) {
+
+                if ($user->role == ROLES::COWORKER)
+                    $model = TableRegistry::get('Coworkers');
+                if ($user->role == ROLES::HOST)
+                    $model = TableRegistry::get('Hosts');
+                if ($user->role == ROLES::ADMIN)
+                    $model = TableRegistry::get('Admins');
+
+                $row = $model -> get($user -> id);
+                $row ["lastlogin"] = date("Y-m-d H:i:s"); // todo: this is local time
+                $model->save($row);
+
                 $this->redirect(["action" => "welcome"]);
             }
         }
