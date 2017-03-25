@@ -62,6 +62,7 @@
                     <a href="<?= $this->Url->build(["controller" => "bookings"]); ?>"><li>Bookings</li></a>
                     <a href="<?= $this->Url->build(["controller" => "configs"]); ?>"><li>Configs</li></a>
                     <a href="<?= $this->Url->build(["controller" => "pictures"]); ?>"><li>Pictures</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "videos"]); ?>"><li>Videos</li></a>
                     <a href="<?= $this->Url->build(["controller" => "logs"]); ?>"><li>Logs</li></a>
                     <a href="<?= $this->Url->build(["controller" => "emails"]); ?>"><li>Emails</li></a>
                 <?php } ?>
