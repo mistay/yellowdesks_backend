@@ -1073,7 +1073,9 @@ class CrumbsController extends Controller {
         
         $recipients = [];
 
-        if (trim($this -> appconfigs ["redirectAllMailTo"]) != "") {
+        if (trim($this -> appconfigs ["redirectAllMailTo"]) == "") {
+            array_push($recipients, $to);
+        } else {
             array_push($recipients, trim($this -> appconfigs ["redirectAllMailTo"]));
         }
 
