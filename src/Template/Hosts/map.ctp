@@ -25,12 +25,15 @@
         console.log('position changed', e.state);
 
         $.ajax({
-            url: "/yellowdesks/hosts/setposition",
+            url: "setposition",
             data: {lat: e.state.lat, lng: e.state.lng},
             method: "post",
             })
             .done(function() {
                 $(".ajaxresponse").html("saved successfully");
+            })
+            .fail(function() {
+                $(".ajaxresponse").html("error saving position");
             });
     });
 
