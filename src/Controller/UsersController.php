@@ -93,10 +93,15 @@ class UsersController extends AppController
             $model->patchEntity($row, $data);
             $model->save($row);
 
+            $message = __($this -> appconfigs ["welcomemailhosts"], 
+                $data["firstname"], 
+                Router::url(['controller' => 'Hosts','action' => 'cru'], true),
+                Router::url(['controller' => 'Pictures','action' => ''], true),
+                Router::url(['controller' => 'Videos','action' => ''], true),
+                $this -> appconfigs ["emailfooter"]
+                );
 
-            $message = __($this -> appconfigs ["welcomemailhosts"], $row -> nickname);
-
-            $this -> sendMail($to, $this -> appconfigs["emailsender"], __('Welcome to {0}', $this -> appconfigs['projectname'] ), $message);
+            $this -> sendMail($data["email"], $this -> appconfigs["emailsender"], __('Welcome to {0}', $this -> appconfigs['projectname'] ), $message);
 
             $this->redirect(["action" => "signupsuccess"]);
         }
@@ -146,7 +151,13 @@ class UsersController extends AppController
             $model->patchEntity($row, $data);
             $model->save($row);
 
-            $message = __($this -> appconfigs ["welcomemailcoworkers"], $row -> firstname);
+            $url_coworker_profile =  Router::url(['controller' => 'Coworkers','action' => 'cru'], true);
+
+            $message = __($this -> appconfigs ["welcomemailcoworkers"], 
+                $row -> firstname, 
+                $url_coworker_profile, 
+                $this -> appconfigs ["emailfooter"]
+                );
 
             $this -> sendMail($row -> email, $this -> appconfigs["emailsender"], __('Welcome to {0}', $this -> appconfigs['projectname']), $message);
             
