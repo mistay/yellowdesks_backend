@@ -6,7 +6,7 @@
         <?= __("Please provide a new password.") ?>
         <input type="password" name="password1" placeholder="mysecret" />
         <input type="password" name="password2" placeholder="mysecret" />
-
-        <input type="submit" value="<?= __("Save") ?>/>
+        
+        <input type="submit" value="<?= __('Save') ?>" />
     </form>
 </div>
