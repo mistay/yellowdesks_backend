@@ -13,7 +13,7 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 
 use Cake\Core\Configure\Engine\PhpConfig;
-
+use Cake\Mailer\Email;
 
 /* v1.46
  * first edit: 20130628
@@ -1068,62 +1068,44 @@ class CrumbsController extends Controller {
         }
     }
 
-    /**
-     *
-     * @param type $recipients
-     * @param type $subject
-     * @param type $message
-     * @param type $footer
-     * @param type $emailFrom
-     * @param type $bcc
-     * @return type boolean true(E-Mailversand erfolgreich akzeptiert)/false(E-Mailversand nicht akzeptiert)
-     */
-    function sendMail($recipients, $subject = "", $message = "", $footer = "", $emailFrom = "", $bcc = "") {
+    
+    function sendMail($to, $from, $subject, $message) {
+        
+        $recipients = [];
 
-        if ($emailFrom == "") {
-            $emailFrom = trim($this -> Config -> getConfigValue("standardEmailFrom"));
-        }
-        if ($footer == "") {
-            $footer = trim($this -> Config -> getConfigValue("standardEmailFooter"));
+        if (trim($this -> appconfigs ["redirectAllMailTo"]) != "") {
+            array_push($recipients, trim($this -> appconfigs ["redirectAllMailTo"]));
         }
 
-        $header = "From: $emailFrom" . "\r\n" . "Reply-To: $emailFrom" . "\r\n" . "X-Mailer: " . $this -> Config -> getConfigValue("xmailer") . "\r\n" . 'Content-type: text/plain; charset=utf-8';
-
-        if (trim($this -> Config -> getConfigValue("setBccToAllMail")) != "") {
-
-            $header .= "\r\nBcc: " . trim($this -> Config -> getConfigValue("setBccToAllMail"));
-            // fuer debugzwecke alle email adressen (comma seperated) anhaengen
-
-            if (trim($bcc) != "") {
-                $header .= "," . trim($bcc);
-            }
-            // bcc wird angeh√§ngt falls gesetzt
-
-        } elseif (trim($bcc) != "") {
-            $header .= "\r\nBcc: " . trim($bcc);
-            // $bcc wird gesetzt
+        if (trim($this -> appconfigs ["emailrecipientdebug"]) != "") {
+            array_push($recipients, trim($this -> appconfigs ["emailrecipientdebug"]));
         }
 
-        if (trim($this -> Config -> getConfigValue("redirectAllMailTo")) != "") {
-            $recipients = trim($this -> Config -> getConfigValue("redirectAllMailTo"));
-            // zum testen von emails
+        $email = new Email();
+        $email -> setTransport('appdefault');
+
+        foreach ($recipients as $recipient) {
+            if (trim($recipient) != "") 
+                $email
+                    ->setTemplate('default')
+                    ->setLayout('fancy')
+                    ->setEmailFormat('both')
+                    ->setTo( $recipient )
+                    ->setFrom( $from )
+                    ->subject( $subject )
+                    ->send( $message );
         }
+        
+        $modelemails = TableRegistry::get('Emails');
+        $emailrow = $modelemails -> newEntity();
 
-        $message = str_replace("###EMAILFOOTER###", $footer, $message);
+        $emailrow["actualrecipients"] = join($recipients, ", ");
+        $emailrow["originalrecipients"] = $to;
+        $emailrow["sender"] = $from;
+        $emailrow["subject"] = $subject;
+        $emailrow["message"] = $message;
 
-        $maillog['Maillog']['user_id'] = $this -> getLoggedInUserID();
-        $maillog['Maillog']['message'] = $message;
-        $maillog['Maillog']['subject'] = $subject;
-        $maillog['Maillog']['uts_inserted'] = time();
-        $maillog['Maillog']['recipient_email'] = $recipients;
-        $this -> Maillog -> saveAll($maillog);
-
-        if (($mailSuccess = mail($recipients, $subject, $message, $header))) {
-
-            $this -> Maillog -> updateAll(array('Maillog.successfully_sent' => 1), array('Maillog.id' => $this -> Maillog -> id));
-        }
-
-        return $mailSuccess;
+        $modelemails -> save ( $emailrow );
     }
 
     
