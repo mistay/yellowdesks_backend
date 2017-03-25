@@ -90,6 +90,7 @@ class UsersController extends AppController
             $row = $model -> newEntity();
             $data["username"] = $data["email"];
             $data["nickname"] = $data["firstname"];
+            $data["password"] = password_hash($data["password"], PASSWORD_BCRYPT);
             $model->patchEntity($row, $data);
             $model->save($row);
 
