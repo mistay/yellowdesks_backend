@@ -93,6 +93,8 @@ class UsersController extends AppController
             $model->patchEntity($row, $data);
             $model->save($row);
 
+            $model->calclatlngloose();
+
             $message = __($this -> appconfigs ["welcomemailhosts"], 
                 $data["firstname"], 
                 Router::url(['controller' => 'Hosts','action' => 'cru'], true),
