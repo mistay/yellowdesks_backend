@@ -1,4 +1,4 @@
-<h2>Coworkers</h2>
+<h2>Configs</h2>
 
 <a href="<?php echo $this->Url->build(["action" => "cru"]); ?>">Add</a>
 

@@ -35,5 +35,16 @@ class ConfigsController extends AppController {
             //return $this->redirect(['action' => 'cru']);
         }
     }
+
+    public function delete($id) {
+        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        $model = TableRegistry::get('Configs');
+        $row = $model->get($id);
+        $result = $model->delete($row);
+        
+        return $this->redirect(['action' => 'index']);
+    }
+
 }
 ?>
