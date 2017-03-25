@@ -96,17 +96,7 @@ class UsersController extends AppController
 
             $message = __($this -> appconfigs ["welcomemailhosts"], $row -> nickname);
 
-            $email = new Email();
-            $email  -> setTransport('appdefault');
-
-            $email
-                ->setTemplate('default')
-                ->setLayout('fancy')
-                ->setEmailFormat('both')
-                ->setTo( $row -> email )
-                ->setFrom( $this -> appconfigs["emailsender"] )
-                ->subject( __('Welcome to {0}', $this -> appconfigs['projectname'] ))
-                ->send($message);
+            $this -> sendMail($to, $this -> appconfigs["emailsender"], __('Welcome to {0}', $this -> appconfigs['projectname'] ), $message);
 
             $this->redirect(["action" => "signupsuccess"]);
         }
@@ -152,22 +142,14 @@ class UsersController extends AppController
             $model = TableRegistry::get('Coworkers');
             $row = $model -> newEntity();
             $data["username"] = $data["email"];
+            $data["password"] = password_hash($data["password"], PASSWORD_BCRYPT);
             $model->patchEntity($row, $data);
             $model->save($row);
 
             $message = __($this -> appconfigs ["welcomemailcoworkers"], $row -> firstname);
 
-            $email = new Email();
-            $email -> setTransport('appdefault');
-            $email
-                ->setTemplate('default')
-                ->setLayout('fancy')
-                ->setEmailFormat('both')
-                ->setTo( $row -> email )
-                ->setFrom( $this -> appconfigs["emailsender"] )
-                ->subject( __('Welcome to {0}', $this -> appconfigs['projectname'] ))
-                ->send($message);
-
+            $this -> sendMail($row -> email, $this -> appconfigs["emailsender"], __('Welcome to {0}', $this -> appconfigs['projectname']), $message);
+            
             $this->redirect(["action" => "signupsuccess"]);
         }
     }
@@ -280,17 +262,7 @@ class UsersController extends AppController
 
         $message = __("Somebody requested to reset your email. If it was you, please navigate to {0} to set a new password.", $reseturl);
 
-        $email = new Email();
-        $email -> setTransport('appdefault');
-
-        $email
-                ->setTemplate('default')
-                ->setLayout('fancy')
-                ->setEmailFormat('both')
-                ->setTo( $to )
-                ->setFrom( $this -> appconfigs["emailsender"] )
-                ->subject( __('Recover your password on {0}', $this -> appconfigs['projectname'] ))
-                ->send($message);
+        $this -> sendMail($to, $this -> appconfigs["emailsender"], __('Reset your password on {0}', $this -> appconfigs['projectname'] ), $message);
     }
     
     public function loginappfb() {
