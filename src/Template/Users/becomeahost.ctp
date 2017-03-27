@@ -124,6 +124,7 @@
 
 <script>
     $(window).on('positionchanged', function (e) {
+        console.log("event" + e.state.lat);
         $("#lat").val(e.state.lat);
         $("#lng").val(e.state.lng);
     });

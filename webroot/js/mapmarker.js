@@ -17,7 +17,7 @@ function initMap() {
 
 function makeMarker() {
     marker = new google.maps.Marker({
-        position: {lat: lat, lng: lng},
+        position: {lat: this.position.lat, lng: this.position.lng},
         map: map,
         icon: '../img/yellowdot.png',
         draggable:true,
