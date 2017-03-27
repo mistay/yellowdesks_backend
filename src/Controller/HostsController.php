@@ -20,7 +20,7 @@ class HostsController extends AppController {
             $row = $model->get($user->id);
 
             $data = $this->request->getData();
-            $model->patchEntity($row, ["lat" => $data["lat"], "lng" => $data["lng"]] );
+            $model->patchEntity($row, ["lat" => $data["lat"], "lng" => $data["lng"], "lat_loose" = null, "lat_lng" => null] );
 
             $model->save($row);
 
