@@ -1,6 +1,3 @@
-
-
-
 <script>
     // todo: security: remove hosts.name!!! sonst kann coworker dien firmennamen schon vorab lesen
     // todo: auch felder wie webseite, e-mail, ... entfernen
@@ -9,7 +6,7 @@
         "lng" => $row["lng"],
         ]); 
     ?>;
-    //console.log(hosts[0]);
+    //console.log(host);
 </script>
 
 <div class="ajaxresponse"></div>
@@ -18,12 +15,9 @@
 
 <?= $this->Html->script('mapmarker.js') ?>
 <script type="text/javascript">
-    setPosition(host.lat, host.lng);
-
     $(".ajaxresponse").html();
     $(window).on('positionchanged', function (e) {
-        console.log('position changed', e.state);
-
+        //console.log('position changed', e.state);
         $.ajax({
             url: "setposition",
             data: {lat: e.state.lat, lng: e.state.lng},
@@ -35,8 +29,12 @@
             .fail(function() {
                 $(".ajaxresponse").html("error saving position");
             });
+        
+        
     });
-
+    //console.log("subscribing to event");
+    if (host.lat != null && host.lng == null)
+        setPosition(host.lat, host.lng);
 </script>
 
 <?= __("Please specify your accurate position by moving the marker above. You wonder why it does not appear like that in the overview map? No drama - we did it on purpose. Your coworker will receive the exact location just after booking."); ?>
