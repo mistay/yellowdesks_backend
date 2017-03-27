@@ -17,7 +17,7 @@
 <script type="text/javascript">
     $(".ajaxresponse").html();
     $(window).on('positionchanged', function (e) {
-        //console.log('position changed', e.state);
+        console.log('position changed', e.state);
         $.ajax({
             url: "setposition",
             data: {lat: e.state.lat, lng: e.state.lng},
@@ -32,9 +32,9 @@
         
         
     });
-    //console.log("subscribing to event");
-    if (host.lat != null && host.lng == null)
+    if (host.lat != null && host.lng != null) {
         setPosition(host.lat, host.lng);
+    }
 </script>
 
 <?= __("Please specify your accurate position by moving the marker above. You wonder why it does not appear like that in the overview map? No drama - we did it on purpose. Your coworker will receive the exact location just after booking."); ?>
