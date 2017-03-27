@@ -7,6 +7,18 @@
             <td><input type="text" name="name" placeholder="My Company Ltd" value='<?php echo @$row["name"] ?>' /></td>
         </tr>
         <tr>
+            <th>Firstname</th>
+            <td><input type="text" name="firstname" placeholder="Romy" value='<?php echo @$row["firstname"] ?>' /></td>
+        </tr>
+        <tr>
+            <th>Lastname</th>
+            <td><input type="text" name="lastname" placeholder="Sigl" value='<?php echo @$row["lastname"] ?>' /></td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td><input type="text" name="name" placeholder="My Company Ltd" value='<?php echo @$row["name"] ?>' /></td>
+        </tr>
+        <tr>
             <th>Nickname</th>
             <td><input type="text" name="nickname" placeholder="John" value='<?php echo @$row["nickname"] ?>' /></td>
         </tr>
