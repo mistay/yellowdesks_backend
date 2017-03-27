@@ -129,15 +129,5 @@
         $("#lng").val(e.state.lng);
     });
 
-    $( document ).ready(function() {
-        $("#address").bind("input", function() {
-        // todo: escape properly
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&address=" + $(this).val(),
-            }).done(function(result) {
-                console.log(result.results[0].geometry.location.lat + "/" + result.results[0].geometry.location.lng);
-                setPosition (result.results[0].geometry.location.lat, result.results[0].geometry.location.lng);
-            });
-        });
-    });
+    
 </script>

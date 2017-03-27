@@ -18,6 +18,10 @@
     $(".ajaxresponse").html();
     $(window).on('positionchanged', function (e) {
         console.log('position changed', e.state);
+
+        marker.setPosition(position);
+        map.setCenter(position);
+
         $.ajax({
             url: "setposition",
             data: {lat: e.state.lat, lng: e.state.lng},
@@ -36,7 +40,11 @@
         setPosition(host.lat, host.lng);
     }
 </script>
-
 <?= __("Please specify your accurate position by moving the marker above. You wonder why it does not appear like that in the overview map? No drama - we did it on purpose. Your coworker will receive the exact location just after booking."); ?>
+
+<p>
+<?= __("Address"); ?>
+<input type="text" id="address"></input>
+</p>
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&callback=initMap"></script>
