@@ -69,6 +69,7 @@ $this->layout = false;
                     '</div>'+
                     '<h1 id="firstHeading" class="firstHeading">host.nickname</h1>'+
                     '<div id="bodyContent">'+
+                    '<p><a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android">Book on Android App</a></p>' +
                     '<p><b>host.title</b><br />' +
                     '<b>Included: </b>host.details<br />'+
                     '<b>Extras: </b>host.extras<br />'+
