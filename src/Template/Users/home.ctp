@@ -311,8 +311,8 @@ $this->layout = false;
             }
             ?>
 
-            <a class="androidlogo" href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
-            <a class="facebooklogo" href="https://www.facebook.com/yellowdesks/"><img src="<?= $urlroot ?>img/facebook_transparent.png" /></a>
+            <a class="androidlogo" target="_blank" href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
+            <a class="facebooklogo" target="_blank" href="https://www.facebook.com/yellowdesks/"><img src="<?= $urlroot ?>img/facebook_transparent.png" /></a>
             
             <?php if ($loggedinuser == null) { ?>
                 <a href="<?= $urlbecomeahost ?>">Become A Host</a>
