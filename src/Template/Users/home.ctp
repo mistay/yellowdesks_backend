@@ -258,7 +258,7 @@ $this->layout = false;
                 width: 100%;
             }
 
-            .menu a {
+            .menu a.facebooklogo, .menu a.androidlogo {
                 min-width: auto;
                 padding-left: 10px;
                 padding-right: 10px;
