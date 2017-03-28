@@ -258,12 +258,12 @@ $this->layout = false;
                 width: 100%;
             }
 
-            .menu a:first-child {
+            .menu a {
                 min-width: auto;
                 padding-left: 10px;
                 padding-right: 10px;
             }
-            .androidlogo {
+            .androidlogo img, .facebooklogo img {
                 height: 20px;
             }
         </style>
@@ -311,8 +311,9 @@ $this->layout = false;
             }
             ?>
 
-            <a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img class="androidlogo" src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
-
+            <a class="androidlogo" href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
+            <a class="facebooklogo" href="https://www.facebook.com/yellowdesks/"><img src="<?= $urlroot ?>img/facebook_transparent.png" /></a>
+            
             <?php if ($loggedinuser == null) { ?>
                 <a href="<?= $urlbecomeahost ?>">Become A Host</a>
                 <a href="<?= $urlregister ?>">Sign Up</a>
