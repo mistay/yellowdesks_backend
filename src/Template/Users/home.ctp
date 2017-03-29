@@ -205,6 +205,12 @@ $this->layout = false;
                     margin-left: 5px;
                 }
             }
+            @media (max-device-width: 600px) {
+                .yellowdesks {
+                    font-size: 100px;
+                    margin-left: 5px;
+                }
+            }
             
             .findandrent {
                 font-size: 20px;
@@ -214,6 +220,12 @@ $this->layout = false;
             @media (max-width: 600px) {
                 .findandrent {
                     font-size: 15px;
+                    margin-left: 5px;
+                }
+            }
+            @media (max-device-width: 600px) {
+                .findandrent {
+                    font-size: 40px;
                     margin-left: 5px;
                 }
             }
@@ -239,6 +251,16 @@ $this->layout = false;
                 .menu {
                     justify-content: flex-start;
                     width: 100%;
+                }
+            }
+            @media (max-device-width: 600px) {
+                .menu {
+                    font-size: 30px;
+                    width: 100%;
+                    padding-right: 0px;
+                }
+                .menu a {
+                    flex-grow: 1;
                 }
             }
             
