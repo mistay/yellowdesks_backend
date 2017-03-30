@@ -71,6 +71,7 @@
                 <?php if ($loggedinuser -> role == "HOST") { ?>
                     <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "cru"]); ?>"><li>My Profile</li></a>
                     <a href="<?= $this->Url->build(["controller" => "pictures", "action" => "index"]); ?>"><li>My Pictures</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "videos", "action" => "index"]); ?>"><li>My Videos</li></a>
                     <a href="<?= $this->Url->build(["controller" => "bookings", "action" => "host"]); ?>"><li>My Bookings</li></a>
                     <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "map"]); ?>"><li>Map</li></a>
                 <?php } ?>
