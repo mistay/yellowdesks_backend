@@ -21,10 +21,16 @@ class VideosController extends AppController {
     ];
     
     public function index() {
-        if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::HOST, Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         $model = TableRegistry::get('Videos');
         
-        $where = isset($_REQUEST["host_id"]) ? ['Hosts.id' => $_REQUEST["host_id"]] : [];  
+        $user = $this->getloggedInUser();
+        if ($user->role == Roles::HOST)
+            $host_id = $user -> id;
+        if ($user->role == Roles::ADMIN)
+            $host_id = null;
+
+        $where = $host_id == null ? [] : ['host_id' => $host_id]; 
 
         $query = $model->find('all')->where($where)->contain(['Hosts']);
         $this->set("rows", $this->paginate($query));
