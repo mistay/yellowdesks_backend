@@ -36,11 +36,12 @@
                         <td><input type="text" name="email" placeholder="E-Mail" value="<?= @$data['email'] ?>" /></td>
                     </tr>
                     <tr class="space">
-                        <td><label for="address">Address</label></td>
+                        <td><label for="address"><?= __("Billing Address") ?></label></td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><input type="text" name="address" id="address" placeholder="Address" value="<?= @$data['address'] ?>" /></td>
+                        <td colspan="2"><input type="text" name="address" id="address" placeholder="Billing Address" value="<?= @$data['address'] ?>" /></td>
                     </tr>
+                    
                     <tr class="space">
                         <td><label for="postal_code">Postal Code</label></td>
                         <td><label for="city">City</label></td>
@@ -61,22 +62,12 @@
                             <span class="check password"><?= __("Please make sure your password is at least 8 characters long") ?></span></td>
                         </td>
                     </tr>
-                    <tr class="space">
-                        <td><input type="checkbox" value="yes" name="termsandconditions" /><label for="termsandconditions"><?= __("I aggree to <a target='_blank' href={0}>Terms & Conditions</a>", $this->Url->build(["controller" => "termsandconditions", "action" => "index"])); ?></label></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td class="right"><button id="next" ><?= __("Next") ?></button></td>
-                    </tr>
-                </table>
-            </div>
 
-            <div id="step2">
-                <h3>Your Yellow Desks</h3>
-                <table id="table2">
-                    <tr>
-                        <td><label for="desks">Number of Desks</label></td>
+                    
+
+                    <tr class="inputs">
+                        
+                        <td><h3>Your Yellowdesk(s)</h3><br /><label for="desks">Number of Desks</label></td>
                         <td></td>
                     </tr>
                     <tr>
@@ -95,21 +86,33 @@
                     <tr class="inputs">
                         <td colspan="2"><input type="text" name="details" id="details" placeholder="Included: Coffee, B/W A4 Printer, WiFi, Telephone Room." value="<?= @$data['details'] ?>" /></td>
                     </tr>
-                    <tr class="space">
+                    <tr class="inputs">
                         <td colspan="2"><label for="extras">Excluded</label></td>
                     </tr>
                     <tr class="inputs">
                         <td colspan="2"><input type="text" name="extras" id="extras" placeholder="Excluded: Parking lot, High-Speed Wifi, Conference Room." value="<?= @$data['extras'] ?>" /></td>
                     </tr>
+                    <tr class="space">
+                        <td><label for="ydaddress"><?= __("Please drag the marker to the excact location of your Yellowdesk(s)") ?></label></td>
+                    </tr>
+                    <tr class="inputs">
+                        <td colspan="2"><input type="text" id="pac-input" /></td>
+                    </tr>
                     <tr>
                         <td colspan="2">
-                            <div class="maptarget">.</div>
+                            <div class="maptarget"></div>
                             <div id="map" style="width: 100%; height: 250px;"></div>
                         </td>
                     </tr>
+                    
+                    
+                    <tr class="space">
+                        <td><input type="checkbox" value="yes" name="termsandconditions" /><label for="termsandconditions"><?= __("I aggree to <a target='_blank' href={0}>Terms & Conditions</a>", $this->Url->build(["controller" => "termsandconditions", "action" => "index"])); ?></label></td>
+                        <td></td>
+                    </tr>
                     <tr>
                         <td></td>
-                        <td class="right"><button id="previous" ><?= __("Previous") ?></button>
+                        <td class="right">
                         <input readonly="readonly" type="hidden" name="lat" id="lat" placeholder="Lat" value="<?= @$data['lat'] ?>" />
                         <input readonly="readonly" type="hidden" name="lng" id="lng" placeholder="Lng" value="<?= @$data['lng'] ?>" />
                         <input type="submit" id="finish" value="<?= __("Finish") ?>" /></td>
@@ -124,10 +127,8 @@
 
 <script>
     $(window).on('positionchanged', function (e) {
-        console.log("event" + e.state.lat);
+        console.log("event " + e.state.lat + "/" + e.state.lng);
         $("#lat").val(e.state.lat);
         $("#lng").val(e.state.lng);
     });
-
-    
 </script>
