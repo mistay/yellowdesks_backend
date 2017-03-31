@@ -57,14 +57,12 @@ $this->layout = false;
                 }
             ?>
             var hosts = <?= json_encode($rets); ?>;
-            console.log(hosts[0]);
         </script>
 
         <script>
             var map;
 
             function getinfoboxcontent(host) {
-
                 var str  = '<div class="infobox">'+
                     '</div>'+
                     '<h1 id="firstHeading" class="firstHeading">host.nickname</h1>'+
@@ -137,7 +135,6 @@ $this->layout = false;
 
                 for (i=0; i<hosts.length; i++) {
                     
-
                     marker = new google.maps.Marker({
                         position: {lat: hosts[i].lat_loose, lng: hosts[i].lng_loose},
                         map: map,
@@ -145,9 +142,6 @@ $this->layout = false;
                         host: hosts[i],
                         });
                     marker.addListener('click', markerclick);
-                    
-                    
-
                 }
             }
         </script>
