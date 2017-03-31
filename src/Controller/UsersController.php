@@ -88,9 +88,21 @@ class UsersController extends AppController
 
             $model = TableRegistry::get('Hosts');
             $row = $model -> newEntity();
-            $data["username"] = $data["email"];
-            $data["nickname"] = $data["firstname"];
+
+            // security: prevent tags like <script> to be inserted into db, so strip all tags
+            $data["username"] = strip_tags($data["email"]);
+            $data["nickname"] = strip_tags($data["firstname"]);
             $data["password"] = password_hash($data["password"], PASSWORD_BCRYPT);
+            $data["name"] = strip_tags($data["name"]);
+            $data["lastname"] = strip_tags($data["lastname"]);
+            $data["email"] = strip_tags($data["email"]);
+            $data["address"] = strip_tags($data["address"]);
+            $data["postal_code"] = strip_tags($data["postal_code"]);
+            $data["city"] = strip_tags($data["city"]);
+            $data["desks"] = (int)($data["desks"]);
+            $data["title"] = strip_tags($data["title"]);
+            $data["details"] = strip_tags($data["details"]);
+            $data["extras"] = strip_tags($data["extras"]);
             $model->patchEntity($row, $data);
             $model->save($row);
 
@@ -151,6 +163,17 @@ class UsersController extends AppController
             $row = $model -> newEntity();
             $data["username"] = $data["email"];
             $data["password"] = password_hash($data["password"], PASSWORD_BCRYPT);
+
+            // security: prevent tags like <script> to be inserted into db, so strip all tags
+            $data["companyname"] = strip_tags($data["companyname"]);
+            $data["firstname"] = strip_tags($data["firstname"]);
+            $data["lastname"] = strip_tags($data["lastname"]);
+            $data["email"] = strip_tags($data["email"]);
+            $model->patchEntity($row, $data);
+            $model->save($row);
+
+
+
             $model->patchEntity($row, $data);
             $model->save($row);
 
