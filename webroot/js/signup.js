@@ -24,20 +24,15 @@ $( document ).ready(function() {
 
     $("#step2").hide();
 
-    loaded=false;
+    loaded=true;
+    $.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");
 
     $("#next").click(function() {
         revalidate=true;
         if (!formvalidataion()) {
             revalidate = false;
             $("#step1").fadeOut();
-            $("#step2").delay(500).fadeIn(400, function() {
-                    // load google map only if #map is visible
-                    //<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&callback=initMap"></script>
-                    if(!loaded)
-                        $.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&callback=initMap");
-                    loaded=true;
-                });
+            $("#step2").delay(500).fadeIn(400);
         }
         // switch to next but do _not_ submit form
         return false;
@@ -63,6 +58,14 @@ var revalidate=false;
 function formvalidataion() {
     errors = false;
     $("input:visible").each(function() {
+
+        console.log(this.id);
+
+        if (this.id == "pac-input") {
+            console.log("foo");
+            return;
+        }
+
         if ($(this).val() == "") {
             $(this).addClass("error");
             errors = true;
@@ -81,6 +84,6 @@ function formvalidataion() {
             $(this).removeClass("error");
         }
     });
-
+    console.log(errors);
     return errors;
 }
