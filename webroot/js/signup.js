@@ -1,15 +1,17 @@
+function hideplaceholdershowlabels(elem) {
+    $(elem).val() == "" ? $("label[for='" + elem.name + "']").fadeOut() : $("label[for='" + elem.name + "']").fadeIn();
+}
 $( document ).ready(function() {
-
     // show labels as soon user provided values
     $("input[type=text], input[type=password], input[type=checkbox]").bind("input change", function() {
         if (revalidate)
             formvalidataion();
-        $(this).val() == "" ? $("label[for='" + this.name + "']").fadeOut() : $("label[for='" + this.name + "']").fadeIn();
+        hideplaceholdershowlabels(this);
     });
 
     // hide labels after startup
     $("input[type=text], input[type=password]").each(function() {
-        $("label[for='" + this.name + "']").hide();
+        hideplaceholdershowlabels(this);
     });
 
     $("#companyname").bind("input", function(){
