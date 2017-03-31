@@ -24,7 +24,6 @@ $( document ).ready(function() {
 
     $("#step2").hide();
 
-    loaded=true;
     $.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");
 
     $("#next").click(function() {
