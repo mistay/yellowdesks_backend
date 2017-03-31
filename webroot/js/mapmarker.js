@@ -58,10 +58,9 @@ function initMap() {
             bounds.extend(place.geometry.location);
         }
 
-        // just display the first of all found places
-        console.log("returning");
-
         map.fitBounds(bounds);
+
+        setPosition(place.geometry.location.lat, place.geometry.location.lng);
     });
 
 

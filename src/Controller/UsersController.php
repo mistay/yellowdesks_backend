@@ -103,6 +103,10 @@ class UsersController extends AppController
             $data["title"] = strip_tags($data["title"]);
             $data["details"] = strip_tags($data["details"]);
             $data["extras"] = strip_tags($data["extras"]);
+
+            $data["lat"] = floatval($data["lat"]);
+            $data["lng"] = floatval($data["lng"]);
+            
             $model->patchEntity($row, $data);
             $model->save($row);
 
