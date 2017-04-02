@@ -62,7 +62,7 @@
                     <a href="<?= $this->Url->build(["controller" => "bookings"]); ?>"><li>Bookings</li></a>
                     <a href="<?= $this->Url->build(["controller" => "configs"]); ?>"><li>Configs</li></a>
                     <a href="<?= $this->Url->build(["controller" => "pictures"]); ?>"><li>Pictures</li></a>
-                    <a href="<?= $this->Url->build(["controller" => "videos"]); ?>"><li>Videos</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "videos", "action" => "index", " " /* enforce index */]); ?>"><li>Videos</li></a>
                     <a href="<?= $this->Url->build(["controller" => "termsandconditions"]); ?>"><li>TaC</li></a>
                     <a href="<?= $this->Url->build(["controller" => "logs"]); ?>"><li>Logs</li></a>
                     <a href="<?= $this->Url->build(["controller" => "emails"]); ?>"><li>Emails</li></a>
@@ -71,7 +71,7 @@
                 <?php if ($loggedinuser -> role == "HOST") { ?>
                     <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "cru"]); ?>"><li>My Profile</li></a>
                     <a href="<?= $this->Url->build(["controller" => "pictures", "action" => "index"]); ?>"><li>My Pictures</li></a>
-                    <a href="<?= $this->Url->build(["controller" => "videos", "action" => "index"]); ?>"><li>My Videos</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "videos", "action" => "index", " " /* enforce index */]); ?>"><li>My Videos</li></a>
                     <a href="<?= $this->Url->build(["controller" => "bookings", "action" => "host"]); ?>"><li>My Bookings</li></a>
                     <a href="<?= $this->Url->build(["controller" => "hosts", "action" => "map"]); ?>"><li>Map</li></a>
                 <?php } ?>
