@@ -20,21 +20,42 @@ class PicturesController extends AppController {
     }
     
     public function delete($unsafe_id) {
-        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         
         $model = TableRegistry::get('Pictures');
         $row = $model->get($unsafe_id);
-        $result = $model->delete($row);
+
+        $user = $this->getloggedInUser();
+        if ($user -> role == Roles::ADMIN)
+            $result = $model->delete($row);
+        if ($user -> role == Roles::HOST) {
+            if ( $row -> host_id == $user -> id ) {
+                $result = $model->delete($row);
+            }
+        }
+        if ($user -> role == Roles::COWORKER) {
+            if ( $row -> coworker_id == $user -> id ) {
+                $result = $model->delete($row);
+            }
+        }
         
         return $this->redirect(['action' => 'index']);
     }
 
     public function cru() {
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        
+        $user = $this->getloggedInUser();
+
         $model = TableRegistry::get('Hosts');
         $hosts = $model->find('all');
         $this->set("hosts", $hosts);
+
+        $model = TableRegistry::get('Coworkers');
+        $coworkers = $model->find('all');
+        $this->set("coworkers", $coworkers);
+
         
-        $user = $this->getloggedInUser();
         $data = $this->request->getData();
 
         $uploads = 0;
@@ -42,16 +63,22 @@ class PicturesController extends AppController {
             foreach ($data["files"] as $file) {
                 $model2 = TableRegistry::get('Pictures');
                 $row = $model2->newEntity();
-                $rows = $model->find('all');
-                $this->set("rows", $rows);
         
                 $row->mime=$file["type"];
                 $row->name="";
                 
-                if ($user -> role == Roles::ADMIN)
-                    $row -> host_id = $data["host_id"];
-                if ($user -> role == Roles::HOST)
+                if ($user -> role == Roles::ADMIN) {
+                    if ( $data["host_id"] > 0)
+                        // user will für host bilder raufladen
+                        $row -> host_id = $data["host_id"];
+                    if ( $data["coworker_id"] > 0)
+                        // user will für coworker bilder raufladen
+                        $row -> coworker_id = $data["coworker_id"];
+                }
+                elseif ($user -> role == Roles::HOST)
                     $row -> host_id = $user -> id;
+                elseif ($user -> role == Roles::COWORKER)
+                    $row -> coworker_id = $user -> id;
 
                 if (!isset($file["tmp_name"]) || $file["tmp_name"] == "" ) {
                     $this -> Flash -> success (__("No file specified. Please choose at least one file to upload."));
@@ -62,18 +89,34 @@ class PicturesController extends AppController {
                     $succ = $model2->save($row);
 
                     // assign host this picture if not done yet.
-                    foreach ($hosts as $rowhost) {
-                        if ($rowhost -> id == $row -> host_id) {
-                            // found
-                            if ($rowhost -> picture_id == null) {
-                                $data = [];
-                                $data["picture_id"] = $row -> id;
-                                $model -> patchEntity($rowhost, $data);
-                                $model -> save($rowhost);
+                    if ($user -> role == Roles::HOST) {
+                        foreach ($hosts as $host) {
+                            if ($host -> id == $row -> host_id) {
+                                // found
+                                if ($host -> picture_id == null) {
+                                    $data = [];
+                                    $data["picture_id"] = $row -> id;
+                                    $model -> patchEntity($host, $data);
+                                    $model -> save($host);
+                                }
+                                break;
                             }
-                            break;
                         }
                     }
+                    if ($user -> role == Roles::COWORKER) {
+                        foreach ($coworkers as $coworker) {
+                            if ($coworker -> id == $row -> coworker_id) {
+                                // found
+                                if ($coworker -> picture_id == null) {
+                                    $data = [];
+                                    $data["picture_id"] = $row -> id;
+                                    $model -> patchEntity($coworker, $data);
+                                    $model -> save($coworker);
+                                }
+                                break;
+                            }
+                        }
+                    }   
                 }
                 $uploads++;
             }
@@ -86,28 +129,34 @@ class PicturesController extends AppController {
 
         }
     }
-    
+
     public function index() {
-        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
-        $model = TableRegistry::get('Pictures');
+        if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST, Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        $modelPictures = TableRegistry::get('Pictures');
         
         $user = $this->getloggedInUser();
-        if ($user->role == Roles::HOST)
-            $host_id = $user -> id;
-        if ($user->role == Roles::ADMIN)
-            $host_id = null;
-
-        $where = $host_id == null ? [] : ['host_id' => $host_id]; 
-
-        //$query = $model->find('all')->where($where)->contain(['Hosts']);
-        $rows = $model->find('all', ['fields' => ["id", "name"]])->where($where);
-        $this->set("rows", $rows);
-
         if ($user->role == Roles::HOST) {
-            $modelhost = TableRegistry::get('Hosts');
-            $host = $modelhost->get($host_id);
+            $host_id = $user -> id;
+            $where = ['host_id' => $host_id]; 
+            $model = TableRegistry::get('Hosts');
+            $host = $model->get($host_id);
             $this->set("host", $host);
         }
+        elseif ($user->role == Roles::COWORKER) {
+            $coworker_id = $user -> id;
+            $where = ['coworker_id' => $coworker_id]; 
+            $model = TableRegistry::get('Coworkers');
+            $coworker = $model->get($coworker_id);
+            $this->set("coworker", $coworker);
+        }
+        elseif ($user->role == Roles::ADMIN) {
+            $host_id = null;
+            $where = [];
+        }
+
+        $rows = $modelPictures->find('all', ['fields' => ["id", "name"]])->where($where);
+        $this->set("rows", $rows);
+
         
         // e.g. http://localhost:8888/yellowdesks/pictures?host_id=5&format=jsonbrowser
         /*

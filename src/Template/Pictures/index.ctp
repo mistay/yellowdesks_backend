@@ -29,6 +29,7 @@
     ?>
 
     <?php $profilepictureclass = (isset($host) && $host->picture_id == $row->id) ? "profilepicture" : "" ?>
+    <?php $profilepictureclass = $profilepictureclass || (isset($coworker) && $coworker->picture_id == $row->id) ? "profilepicture" : "" ?>
 
     <div class="deletewrapper">
         <?php if ($profilepictureclass == "") { ?>

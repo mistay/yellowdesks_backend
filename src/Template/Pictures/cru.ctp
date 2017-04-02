@@ -4,9 +4,18 @@
     <?php $loggedinuser = $this->request->session()->read('User'); ?>
          
     <?php if ($loggedinuser -> role == "ADMIN") { ?>
+        <h3>Host</h3>
         <select name="host_id">
+            <option></option>
             <?php foreach ($hosts as $row): ?>
                 <option value="<?= $row->id ?>"><?= $row->name . " (id: " . $row->id . ")" ?></option>
+            <?php endforeach ?>
+        </select>
+        <h3>Coworker</h3>
+        <select name="coworker_id">
+            <option></option>
+            <?php foreach ($coworkers as $row): ?>
+                <option value="<?= $row->id ?>"><?= $row->lastname . " " . $row->firstname . " (id: " . $row->id . ")" ?></option>
             <?php endforeach ?>
         </select>
     <?php } ?>

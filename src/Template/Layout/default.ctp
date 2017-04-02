@@ -78,8 +78,10 @@
                 
                 <?php if ($loggedinuser -> role == "COWORKER") { ?>
                     <a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "cru"]); ?>"><li>My Profile</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "pictures", "action" => "index"]); ?>"><li>My Profile Picture</li></a>
                     <a href="<?= $this->Url->build(["controller" => "bookings", "action" => "mybookings"]); ?>"><li>My Bookings</li></a>
                     <a href="<?= $this->Url->build("/"); ?>"><li>Map</li></a>
+                    
                 <?php } ?>
             </ul>
             
