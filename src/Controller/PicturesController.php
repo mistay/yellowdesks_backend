@@ -89,7 +89,7 @@ class PicturesController extends AppController {
                     $succ = $model2->save($row);
 
                     // assign host this picture if not done yet.
-                    if ($user -> role == Roles::HOST) {
+                    if ($row -> host_id > 0) {
                         foreach ($hosts as $host) {
                             if ($host -> id == $row -> host_id) {
                                 // found
@@ -103,7 +103,7 @@ class PicturesController extends AppController {
                             }
                         }
                     }
-                    if ($user -> role == Roles::COWORKER) {
+                    if ($row -> coworker_id > 0) {
                         foreach ($coworkers as $coworker) {
                             if ($coworker -> id == $row -> coworker_id) {
                                 // found

@@ -4,6 +4,7 @@
 
 <table>
     <tr>
+        <th></th>
         <th>Firstname</th>
         <th>Lastname</th>
         <th>Username</th>
@@ -16,6 +17,11 @@
     </tr>
     <?php foreach ($rows as $row): ?>
     <tr>
+        <td>
+            <?php if ($row -> picture_id > 0) { ?>
+                <img style="border-radius: 100px" src="/yellowdesks/pictures/get/<?= $row-> picture_id ?>?resolution=50x50" />
+            <?php } ?>
+        </td>
         <td><?php echo $row->firstname ?></td>
         <td><?php echo $row->lastname ?></td>
         <td><?php echo $row->username ?></td>
