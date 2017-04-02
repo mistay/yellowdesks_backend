@@ -421,7 +421,6 @@ class UsersController extends AppController
                 if ($redirect_ttl > 10) {
                     $this -> request -> session() -> write ("redirec_ttl", 0);
                     $this -> Flash -> success (__("Too many redirects: Tried to redirect to {0} but ended up here.", $_REQUEST["redirect_url"]));
-
                 } else  {
                     header("Location: " . $_REQUEST["redirect_url"]);
                     exit(0);
