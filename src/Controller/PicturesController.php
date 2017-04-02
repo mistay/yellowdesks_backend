@@ -36,6 +36,8 @@ class PicturesController extends AppController {
         
         $user = $this->getloggedInUser();
         $data = $this->request->getData();
+
+        $uploads = 0;
         if (!empty($data)) {
             foreach ($data["files"] as $file) {
                 $model2 = TableRegistry::get('Pictures');
@@ -51,26 +53,37 @@ class PicturesController extends AppController {
                 if ($user -> role == Roles::HOST)
                     $row -> host_id = $user -> id;
 
-                $row->data = file_get_contents($file["tmp_name"]);
-                $succ = $model2->save($row);
+                if (!isset($file["tmp_name"]) || $file["tmp_name"] == "" ) {
+                    $this -> Flash -> success (__("No file specified. Please choose at least one file to upload."));
+                    continue;
+                } else {
 
-                // assign host this picture if not done yet.
-                foreach ($hosts as $rowhost) {
-                    if ($rowhost -> id == $row -> host_id) {
-                        // found
-                        if ($rowhost -> picture_id == null) {
-                            $data = [];
-                            $data["picture_id"] = $row -> id;
-                            $model -> patchEntity($rowhost, $data);
-                            $model -> save($rowhost);
+                    $row->data = file_get_contents($file["tmp_name"]);
+                    $succ = $model2->save($row);
+
+                    // assign host this picture if not done yet.
+                    foreach ($hosts as $rowhost) {
+                        if ($rowhost -> id == $row -> host_id) {
+                            // found
+                            if ($rowhost -> picture_id == null) {
+                                $data = [];
+                                $data["picture_id"] = $row -> id;
+                                $model -> patchEntity($rowhost, $data);
+                                $model -> save($rowhost);
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
-                
+                $uploads++;
+            }
+            if ($uploads>0) {
+                $this -> Flash -> success (__("Successfully uploaded {0} picture(s).", $uploads));
+    
                 // prevent DUPes by browser reload
                 $this->redirect(["action" => "cru"]);
             }
+
         }
     }
     
