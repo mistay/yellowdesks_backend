@@ -223,7 +223,7 @@ $this->layout = false;
             }
             .yellowlinks span {
             padding: 6px;
-                display: block;
+                display: inline-block;
             }
             
             @media (max-width: 600px) {
