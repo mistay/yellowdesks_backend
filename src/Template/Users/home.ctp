@@ -213,16 +213,17 @@ $this->layout = false;
                 font-size: 55px;
                 margin-left: 50px;
                 font-family: eraserregular;
-                display: inline-block;
+                display: block;
                 margin-bottom: 12px;
                 padding: 6px;
             }
             .yellowlinks { 
-            display: inline-block;
+            display: block;
                 margin-bottom: 6px;
             }
             .yellowlinks span {
             padding: 6px;
+                display: block;
             }
             
             @media (max-width: 600px) {
