@@ -246,9 +246,13 @@ $this->layout = false;
             }
 
             .content {
-                padding-top: 25%;
+              /*  padding-top: 25%;
+                z-index: 100;
+                position: absolute;*/
                 z-index: 100;
                 position: absolute;
+                bottom: 30px;
+                left: 0px;
                 
             }
             
