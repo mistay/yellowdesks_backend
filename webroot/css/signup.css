@@ -29,7 +29,7 @@ margin-top: 40px;
 
 .signup input[type=text], .signup input[type=password] {
     border: 0px;
-    border-bottom: 3px dotted black;
+    border-bottom: 0px dotted black;
 }
 
 .signup input[type=submit], button {
@@ -45,7 +45,9 @@ label {
 }
 
 input, button {
-    font-size: 15px;
+    font-size: 18px;
+    padding: 8px 10px;
+    margin-bottom: 4px;
 }
 
 tr.space {
