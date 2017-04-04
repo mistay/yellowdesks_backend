@@ -145,6 +145,7 @@ $this->layout = false;
                     content: getinfoboxcontent(this.host),
                 });
                 /*gerd infowindow.close();*/
+                $("#home-logo").addClass("smalllogo");
                 infowindow.open(map, this);
             }
 
@@ -380,7 +381,7 @@ $this->layout = false;
         </div>
         
         
-        <div class="content">
+        <div class="content home-content" id="home-logo">
             <span class="yellowdesks">yellow desks</span>
             <div class="yellowlinks">
                 <span class="findandrent"><strong>Find</strong> work space near you</span>
