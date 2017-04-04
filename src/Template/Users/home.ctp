@@ -323,7 +323,7 @@ $this->layout = false;
                 padding-left: 10px;
                 padding-right: 10px;
             }
-            .androidlogo img, .facebooklogo img {
+            .androidlogo img, .facebooklogo img, .questionmark img {
                 height: 20px;
             }
         </style>
