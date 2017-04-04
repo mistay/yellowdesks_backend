@@ -49,12 +49,13 @@
     <div class="header"><a href="<?= $this->Url->build("/"); ?>">YELLOW DESKS</a></div>
     <div class="content">
         <table  width="100%" cellpadding="0" cellspacing="0" style="" >
+            <tr><td>&nbsp;<br></td><td></td><td></td></tr>
     <tr>
-        <td style="width:12px;" >&nbsp;</td>
+        <td style="width:20px;" >&nbsp;</td>
         <td valign="middle" style="padding-top:6px;padding-bottom:6px;padding-right:0;padding-left:0;" >
             <?= $this->fetch('content') ?>
         </td>
-        <td style="width:12px;" >&nbsp;</td>
+        <td style="width:20px;" >&nbsp;</td>
     </tr>
 </table>
     </div>
