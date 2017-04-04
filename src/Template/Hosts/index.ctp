@@ -18,7 +18,7 @@
     </tr>
     <?php foreach ($rows as $row): ?>
     <tr>
-        <td><?php echo $row->name; ?></td>
+        <td><?= $row->name ?><br /><?= $row->firstname ?> <?= $row->lastname ?></td>
         <td>
             <?php 
                 $total = 0;
