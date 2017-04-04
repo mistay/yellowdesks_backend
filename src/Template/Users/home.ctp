@@ -251,7 +251,7 @@ $this->layout = false;
                 position: absolute;*/
                 z-index: 100;
                 position: absolute;
-                bottom: 30px;
+                bottom: 40px;
                 left: 0px;
                 
             }
