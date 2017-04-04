@@ -27,16 +27,22 @@ Das Ziel: Die Buchungsplattform von Yellowdesks soll zum Standardrepertoire der 
 „Wir finden Yellowdesks ist eine großartige Idee, weil wir uns durch Coworker, die zu uns kommen, einen frischen Wind in unserem Büro erhoffen“ So und ähnliche Aussagen stammen von den ersten mutigen Hosts, die über die Plattform ihre Arbeitsstätten anbieten. 
 </p>
 
-
-Von Anfang an auf Yellowdesks dabei sind unter anderem: 
+<p>
+<strong>Von Anfang an auf Yellowdesks dabei sind unter anderem: </strong>
 das Team von Fokus Visuelle Kommunikation, Tomasini Design, Fotostudio Flausen, das Technologieunternehmen Semonit, Werbeagentur Academy, das Hotel der Salzburger Hof mit seiner auf Neues Arbeiten ausgelegten Hotellobby, Coworking Hallein, aber auch Startup Unternehmen Authentic Vision und Sport Star Günther Matzinger freuen sich zukünftig innovative Coworker in ihren Büros zu begrüßen. In wenigen Tagen hat sich die Coworking App auch außerhalb Salzburgs herumgesprochen und so haben sich Tedx Wien Veranstalter Niki Ernst, Dream Academia Gründer Harald Katzenschläger sowie Startup Pionier Alexander Mann aus Klagenfurt kurzerhand selbst zu neuen Coworking Hosts gemacht. Die iRomm GmbH in Oberndorf nahm die App sogar als Anlass, mit Coworking Oberndorf zu starten. Das Interesse ist groß, täglich kommen neue Standorte dazu.
+</p>
 
-Große Pläne für 2017: Launch & Fokus auf internationale Expansion
+<p>
+<strong>Große Pläne für 2017: Launch & Fokus auf internationale Expansion</strong>
 Die nächsten Wochen und Monate geht es bei Yellowdesks Schlag auf Schlag. Neben dem Launch der Android (online) und IOS App (coming soon) ist die Akquise von Hosts in allen europäischen Städten geplant. Zum Start bringt das Gründerteam außerdem ein Anleitungsbuch heraus, das als Bildungslektüre für noch unbedarfte Bürogastgeber (zB wie empfängt man als guter Host seine Coworking Kunden), zum Einsatz kommt. Das 4-köpfige Team mit Sitz in Salzburg wird mehr als verdoppelt, Bewerbungen sind willkommen.
+</p>
 
-Die Vision von Yellowdesks: Coworking für alle – wo uns das hinbringen könnte
+<p>
+<strong>Die Vision von Yellowdesks: Coworking für alle – wo uns das hinbringen könnte</strong>
 Wo der Weg auf längere Sicht hinführen soll, darin sind sich die beiden Gründer Romy Sigl und Armin Langhofer einig: „Mit unserem Coworking Konzept samt App wollen wir möglichst vielen Menschen eine Kultur des sich gegenseitigen Unterstützens näherbringen“. Sodass alle früher oder später das machen können, was sie wirklich gerne machen (do what you love). „Imagine a society living it’s full potential, where people can do what they love to do.“ (Romy Sigl Vortrag Tedx Bangalore 2016)
+</p>
 
+<p>
 www.yellowdesks.com
 Android App: download
 Informiert bleiben: FB
@@ -46,3 +52,4 @@ Pressekontakt:
 Mag. FH Romy Sigl
 E-Mail: romysigl@coworkingsalzburg.com
 Tel.: +43 (0)664 4130361
+</p>
