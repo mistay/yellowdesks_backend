@@ -41,10 +41,12 @@ margin-top: 40px;
 }
 
 .signup #finish {
-    background-color: #f3ed3d;
+   background-color: #000;
+    color: #f3ed3d;
 }
 .signup #finish:hover {
-    background-color: #ffffff;
+   background-color: #f3ed3d;
+    color: #000;
 }
 
 label {
