@@ -6,6 +6,10 @@ body {
     font-weight: 100;
 }
 
+.din {font-family: din;}
+
+.eraser {font-family: eraserregular;}
+
 a {
     color: darkgrey;
     text-decoration: none;
