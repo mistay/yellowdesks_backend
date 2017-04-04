@@ -142,7 +142,7 @@ $this->layout = false;
                 var infowindow = new google.maps.InfoWindow({
                     content: getinfoboxcontent(this.host),
                 });
-                infowindow.close();
+                /*gerd infowindow.close();*/
                 infowindow.open(map, this);
             }
 
