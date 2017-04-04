@@ -83,8 +83,8 @@ $this->layout = false;
             function getinfoboxcontent(host) {
                 var str  = '<div class="infobox">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">host.nickname</h1>'+
-                    '<div id="bodyContent">'+
+                    '<h1 class="firstHeading">host.nickname</h1>'+
+                    '<div class="bodyContent">'+
                     '<p><a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android">Book on Android App</a></p>' +
                     '<p><b>host.title</b><br />' +
                     '<b>Included: </b>host.details<br />'+
