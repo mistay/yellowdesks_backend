@@ -42,6 +42,17 @@ color: #333333;
     margin-left: 0;
 }
 
+.menu a {
+    background-color: white;
+    color: black;
+    display: inline-block;
+    font-size: 1.4em;
+    margin: 5px;
+    min-width: 140px;
+    padding: 5px 5px 5px 20px;
+    text-decoration: none;
+}
+
 /*
  * Remove text-shadow in selection highlight: h5bp.com/i
  * These selection rule sets have to be separate.
