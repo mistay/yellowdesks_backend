@@ -14,6 +14,9 @@ body a:hover {
 color: #333333; 
 }
 
+.mb-40 {
+margin-bottom: 40px;}
+
 .din {font-family: din;}
 
 .eraser {font-family: eraserregular;}
