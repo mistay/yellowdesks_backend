@@ -40,6 +40,13 @@ margin-top: 40px;
     padding-right: 30px;
 }
 
+.signup #finish {
+    background-color: #f3ed3d;
+}
+.signup #finish:hover {
+    background-color: #ffffff;
+}
+
 label {
     font-size: 12px;
 }
