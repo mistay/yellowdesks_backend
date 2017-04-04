@@ -75,13 +75,13 @@
                         <td></td>
                     </tr>
                     <tr class="space">
-                        <td colspan="2"><label for="included">Title</label></td>
+                        <td colspan="2"><label for="title">Title</label></td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><input type="text" name="title" id="title" placeholder="Beatuiful office space downtown" value="<?= @$data['title'] ?>" /></td>
+                        <td colspan="2"><input type="text" name="title" id="title" placeholder="Beautiful office space downtown" value="<?= @$data['title'] ?>" /></td>
                     </tr>
                     <tr class="space">
-                        <td colspan="2"><label for="included">Included  (for office space minimum requirements are: WiFi, desk and chair)</label></td>
+                        <td colspan="2"><label for="details">Included  (for office space minimum requirements are: WiFi, desk and chair)</label></td>
                     </tr>
                     <tr class="inputs">
                         <td colspan="2"><input type="text" name="details" id="details" placeholder="Included: Coffee, B/W A4 Printer, WiFi, Telephone Room." value="<?= @$data['details'] ?>" /></td>
@@ -107,7 +107,8 @@
                     
                     
                     <tr class="space">
-                        <td><input type="checkbox" value="yes" name="termsandconditions" /><label for="termsandconditions"><?= __("I aggree to <a target='_blank' href={0}>Terms & Conditions</a>", $this->Url->build(["controller" => "termsandconditions", "action" => "index"])); ?></label></td>
+                        <td><input type="checkbox" value="yes" name="termsandconditions" />
+                            <label for="termsandconditions"><?= __("I agree to <a target='_blank' href={0}>Terms & Conditions</a>", $this->Url->build(["controller" => "termsandconditions", "action" => "index"])); ?></label></td>
                         <td></td>
                     </tr>
                     <tr>
