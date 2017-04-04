@@ -5,6 +5,10 @@
     -webkit-flex-wrap: wrap;
 }
 
+.signup.flexbox {
+ margin-top: 30px;
+}
+
 .description {
     flex: 1;
     padding-right: 100px;
