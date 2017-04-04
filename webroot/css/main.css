@@ -33,6 +33,13 @@ color: #333333;
 
 .smalllogo .yellowdesks {
     font-size: 25px;
+   margin-left: 0px;
+}
+
+.smalllogo .findandrent {
+    background-color: #f3ed3d;
+    font-size: 14px;
+    margin-left: 0;
 }
 
 /*
