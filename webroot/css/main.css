@@ -24,11 +24,11 @@ body {
 }
 
 body a {
-color: #000000; 
+color: #333333; 
 }
 body a:focus,
 body a:hover {
-color: #000000; 
+color: #333333; 
 }
 
 /*
