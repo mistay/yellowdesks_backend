@@ -32,6 +32,8 @@ $this->layout = false;
         <meta charset="utf-8">
         <title>yellowdesks</title>
         <meta name="description" content="">
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/jquery.steps.css">
         <link rel="stylesheet" href="fonts/eraser/stylesheet.css">
@@ -83,8 +85,8 @@ $this->layout = false;
             function getinfoboxcontent(host) {
                 var str  = '<div class="infobox">'+
                     '</div>'+
-                    '<h1 id="firstHeading" class="firstHeading">host.nickname</h1>'+
-                    '<div id="bodyContent">'+
+                    '<h1 class="firstHeading">host.nickname</h1>'+
+                    '<div class="bodyContent">'+
                     '<p><a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android">Book on Android App</a></p>' +
                     '<p><b>host.title</b><br />' +
                     '<b>Included: </b>host.details<br />'+
