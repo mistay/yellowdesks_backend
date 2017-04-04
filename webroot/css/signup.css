@@ -28,8 +28,8 @@ margin-top: 40px;
 }
 
 .signup input[type=text], .signup input[type=password] {
-    border: 0px;
-    border-bottom: 0px dotted black;
+   /* border: 0px;
+    border-bottom: 0px dotted black;*/
 }
 
 .signup input[type=submit], button {
