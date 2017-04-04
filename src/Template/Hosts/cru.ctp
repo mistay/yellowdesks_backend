@@ -15,10 +15,6 @@
             <td><input type="text" name="lastname" placeholder="Sigl" value='<?php echo @$row["lastname"] ?>' /></td>
         </tr>
         <tr>
-            <th>Name</th>
-            <td><input type="text" name="name" placeholder="My Company Ltd" value='<?php echo @$row["name"] ?>' /></td>
-        </tr>
-        <tr>
             <th>Nickname</th>
             <td><input type="text" name="nickname" placeholder="John" value='<?php echo @$row["nickname"] ?>' /></td>
         </tr>
@@ -38,15 +34,11 @@
             <th>Excluded</th>
             <td><input type="text" name="extras" placeholder="parking lot, photo studio equipment, plotter" value='<?php echo @$row["extras"] ?>' /></td>
         </tr>
-        
         <tr>
             <th>Opening Instructions</th>
             <td><input type="text" name="openinginstructions" placeholder="You'll receive an e-mail with a PIN code that you can use to access the building." value='<?php echo @$row["openinginstructions"] ?>' /></td>
         </tr>
-        <tr>
-            <th>Address</th>
-            <td><input type="text" name="address" placeholder="Jakob-Haringer-Str. 3" value='<?php echo @$row["address"] ?>' /></td>
-        </tr>
+        
         <tr>
             <th>E-Mail</th>
             <td><input type="text" name="email" placeholder="johndoe@example.com" value='<?php echo @$row["email"] ?>' /></td>
@@ -62,6 +54,10 @@
         <tr>
             <th>Phone</th>
             <td><input type="text" name="phone" placeholder="+43 664 123456789" value='<?php echo @$row["phone"] ?>' /></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td><input type="text" name="address" placeholder="Jakob-Haringer-Str. 3" value='<?php echo @$row["address"] ?>' /></td>
         </tr>
         <tr>
             <th>Postal Code</th>
