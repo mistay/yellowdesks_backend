@@ -15,6 +15,7 @@ $this->layout = false;
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.yellowdesks.com" />
         <meta property="og:image" content="https://www.yellowdesks.com/img/opengraph_image_yellowdesks.jpg" />
+        <meta property="og:app_id" content="349857342038820" />
 
         <!-- Piwik -->
         <script type="text/javascript">
