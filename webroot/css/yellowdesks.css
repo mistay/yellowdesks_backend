@@ -59,7 +59,8 @@ button {
 }
 
 .users.form input {
-    font-size: 40px;
+       font-size: 30px;
+    padding: 5px;
 }
 
 .users.form .input.password {
