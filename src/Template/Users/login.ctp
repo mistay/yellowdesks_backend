@@ -1,6 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            <h1>Login</h1>
 <div class="users form">
 <?= $this->Flash->render('errors') ?>
     
