@@ -3,7 +3,7 @@
 <h2>"Sie haben einen leerstehenden Arbeitsplatz im Büro, vermieten sie ihn doch."</h2>
 
 <p>
-Neuartige Plattform Yellowdesks, für Menschen die ihr Büro gerne mit anderen teilen. Österreichisches Startup macht im ersten Schritt Salzburg zur Coworking Hauptstadt und legt das Konzept von AirBnB auf Schreibtische um. Coworking Salzburg hat 5 Jahre an seinem Prototyp entwickelt und sich mit Sharing Economy Pionieren aus der ganzen Welt vernetzt. Eine globale Expansion der Coworking Buchungsplattform steht bevor.
+Neuartige Plattform <a href="https://www.yellowdesks.com/">Yellowdesks</a>, für Menschen die ihr Büro gerne mit anderen teilen. Österreichisches Startup macht im ersten Schritt Salzburg zur Coworking Hauptstadt und legt das Konzept von AirBnB auf Schreibtische um. Coworking Salzburg hat 5 Jahre an seinem Prototyp entwickelt und sich mit Sharing Economy Pionieren aus der ganzen Welt vernetzt. Eine globale Expansion der Coworking Buchungsplattform steht bevor.
 </p>
 
 <p>
@@ -11,7 +11,7 @@ Neuartige Plattform Yellowdesks, für Menschen die ihr Büro gerne mit anderen t
 </p>
 
 <p>
-Coworking ist in der neuen Welt des Arbeitens nicht mehr weg zu denken, befindet sich mit seinen Nutzern, meist selbstständigen IT-lern und Kreativen aber oft noch in einer “Lead User” Nische. Mit dem „Coworking für alle“ Ansatz geht das Salzburger Startup einen revolutionären Schritt. Ein Schritt, der für viele Firmen eine offenere Unternehmenskultur und neue Chancen im Bereich offener Innovation in sich birgt.
+Coworking ist in der neuen Welt des Arbeitens nicht mehr weg zu denken, befindet sich mit seinen Nutzern, meist selbstständigen IT-lern und Kreativen aber oft noch in einer “<a href="https://de.wikipedia.org/wiki/Lead_User">Lead User</a>” Nische. Mit dem „Coworking für alle“ Ansatz geht das Salzburger Startup einen revolutionären Schritt. Ein Schritt, der für viele Firmen eine offenere Unternehmenskultur und neue Chancen im Bereich offener Innovation in sich birgt.
 </p>
 
 <p>
@@ -34,22 +34,22 @@ das Team von Fokus Visuelle Kommunikation, Tomasini Design, Fotostudio Flausen, 
 
 <p>
 <strong>Große Pläne für 2017: Launch & Fokus auf internationale Expansion</strong>
-Die nächsten Wochen und Monate geht es bei Yellowdesks Schlag auf Schlag. Neben dem Launch der Android (online) und IOS App (coming soon) ist die Akquise von Hosts in allen europäischen Städten geplant. Zum Start bringt das Gründerteam außerdem ein Anleitungsbuch heraus, das als Bildungslektüre für noch unbedarfte Bürogastgeber (zB wie empfängt man als guter Host seine Coworking Kunden), zum Einsatz kommt. Das 4-köpfige Team mit Sitz in Salzburg wird mehr als verdoppelt, Bewerbungen sind willkommen.
+Die nächsten Wochen und Monate geht es bei Yellowdesks Schlag auf Schlag. Neben dem Launch der Android (online) und IOS App (coming soon) ist die Akquise von Hosts in allen europäischen Städten geplant. Zum Start bringt das Gründerteam außerdem ein <a href="https://vimeo.com/199582271">Anleitungsbuch</a> heraus, das als Bildungslektüre für noch unbedarfte Bürogastgeber (zB wie empfängt man als guter Host seine Coworking Kunden), zum Einsatz kommt. Das 4-köpfige Team mit Sitz in Salzburg wird mehr als verdoppelt, Bewerbungen sind willkommen.
 </p>
 
 <p>
 <strong>Die Vision von Yellowdesks: Coworking für alle – wo uns das hinbringen könnte</strong>
-Wo der Weg auf längere Sicht hinführen soll, darin sind sich die beiden Gründer Romy Sigl und Armin Langhofer einig: „Mit unserem Coworking Konzept samt App wollen wir möglichst vielen Menschen eine Kultur des sich gegenseitigen Unterstützens näherbringen“. Sodass alle früher oder später das machen können, was sie wirklich gerne machen (do what you love). „Imagine a society living it’s full potential, where people can do what they love to do.“ (Romy Sigl Vortrag Tedx Bangalore 2016)
+Wo der Weg auf längere Sicht hinführen soll, darin sind sich die beiden Gründer Romy Sigl und Armin Langhofer einig: „Mit unserem Coworking Konzept samt App wollen wir möglichst vielen Menschen eine Kultur des sich gegenseitigen Unterstützens näherbringen“. Sodass alle früher oder später das machen können, was sie wirklich gerne machen (do what you love). „Imagine a society living it’s full potential, where people can do what they love to do.“ (Romy Sigl <a href="https://www.youtube.com/watch?v=WnsZiJdkGR4">Vortrag</a> Tedx Bangalore 2016)
 </p>
 
 <p>
-www.yellowdesks.com
-Android App: download
-Informiert bleiben: FB
-Bilder zum Download
+<a href=https://www.yellowdesks.com/>www.yellowdesks.com</a><br/>
+Android App: <a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android">download</a><br/>
+Informiert bleiben: <a href="https://www.facebook.com/yellowdesks/">FB</a><br/>
+Bilder zum <a href="https://drive.google.com/drive/folders/0B0ueaEe-qHGbSV9JbEI2TXZ6TG8">Download</a><br/>
 
-Pressekontakt:
-Mag. FH Romy Sigl
-E-Mail: romysigl@coworkingsalzburg.com
-Tel.: +43 (0)664 4130361
+Pressekontakt:<br/>
+Mag. FH Romy Sigl<br/>
+E-Mail: <a href="mailto:romysigl@coworkingsalzburg.com">romysigl@coworkingsalzburg.com</a><br/>
+Tel.: +43 (0)664 4130361<br/>
 </p>
