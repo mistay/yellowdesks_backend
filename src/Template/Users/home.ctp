@@ -381,10 +381,10 @@ $this->layout = false;
         <div class="content">
             <span class="yellowdesks">yellow desks</span>
             <div class="yellowlinks">
-                <span class="findandrent">&gt; &gt; <strong>Find</strong> work space near you</span>
+                <span class="findandrent"><strong>Find</strong> work space near you</span>
             </div>
             <div class="yellowlinks">
-                <span class="findandrent">&gt; &gt; <strong>Rent out</strong> work space</span>
+                <span class="findandrent"><a href="https://www.yellowdesks.com/users/becomeahost" title="become a host" alt="become a host">&gt; &gt; <strong>Rent out</strong> work space</a></span>
             </div>
         </div>
         
