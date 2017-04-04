@@ -1,5 +1,5 @@
-<h2>Press</h2>
-
+<h2>Yellow Desks</h2>
+<pre>
 "Sie haben einen leerstehenden Arbeitsplatz 
 im Büro, vermieten sie ihn doch." 
 Neuartige Plattform 
