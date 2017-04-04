@@ -53,8 +53,8 @@
         <div class="devheader" >this is the development system!!</div>
     <?php } ?>
     <div class="burger"><img src="<?= $this->Url->build("/img/burger.png"); ?>" /></div>
-    <div class="header"><a href="<?= $this->Url->build("/"); ?>">Yellowdesks</a></div>
-    <div class="subheader"><a href="<?= $this->Url->build("/"); ?>">find workspace near you</a></div>
+    <div class="header eraser"><a href="<?= $this->Url->build("/"); ?>">Yellowdesks</a></div>
+    <div class="subheader din"><a href="<?= $this->Url->build("/"); ?>">find workspace near you</a></div>
     <div class="subsubheader">a <a href="http://coworkingsalzburg.com">coworkingsalzburg.com</a> startup</div>
     <div class="mobilemenu"></div>
     <div style="float:right; padding-right: 15px"><?= $loggedInAs; ?></div>
