@@ -1,3 +1,6 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
 <div class="users form">
 <?= $this->Flash->render('errors') ?>
     
@@ -24,4 +27,4 @@
     <?= $this->Form->end() ?>
     
     <?php } ?>
-</div>
+            </div></div></div></div>
