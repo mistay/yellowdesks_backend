@@ -42,7 +42,7 @@
         }
 
         .subheader {
-            font-family: 'eraser';
+           /* font-family: 'eraser';*/
             background-color: #f3ed3d;
             padding-bottom: 5px;
         }
