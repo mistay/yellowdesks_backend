@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="row mb-40">
+    <div class="row mb">
         <div class="col-md-12">
             <h1>Login</h1>
 <div class="users form">
