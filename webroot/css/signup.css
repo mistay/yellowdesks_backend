@@ -10,6 +10,10 @@
     margin-bottom: 50px;
 }
 
+.inputs h3 {
+margin-top: 40px;
+}
+
 .description {
     flex: 1;
     padding-right: 100px;
