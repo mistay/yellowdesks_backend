@@ -213,7 +213,18 @@ $this->layout = false;
                 font-size: 55px;
                 margin-left: 50px;
                 font-family: eraserregular;
+                display: inline-block;
+                margin-bottom: 12px;
+                padding: 6px;
             }
+            .yellowlinks { 
+            display: inline-block;
+                margin-bottom: 6px;
+            }
+            .yellowlinks span {
+            padding: 6px;
+            }
+            
             @media (max-width: 600px) {
                 .yellowdesks {
                     font-size: 30px;
@@ -368,10 +379,10 @@ $this->layout = false;
         
         <div class="content">
             <span class="yellowdesks">yellow desks</span>
-            <div>
+            <div class="yellowlinks">
                 <span class="findandrent">&gt; &gt; <strong>Find</strong> work space near you</span>
             </div>
-            <div>
+            <div class="yellowlinks">
                 <span class="findandrent">&gt; &gt; <strong>Rent out</strong> work space</span>
             </div>
         </div>
