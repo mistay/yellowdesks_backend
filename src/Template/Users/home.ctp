@@ -13,8 +13,8 @@ $this->layout = false;
     <head>
         <meta property="og:title" content="Yellowdesks" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="http://www.yellowdesks.com" />
-        <meta property="og:image" content="http://www.yellowdesks.com/opengraph_image_yellowdesks.jpg" />
+        <meta property="og:url" content="https://www.yellowdesks.com" />
+        <meta property="og:image" content="https://www.yellowdesks.com/img/opengraph_image_yellowdesks.jpg" />
 
         <!-- Piwik -->
         <script type="text/javascript">
