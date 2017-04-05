@@ -17,6 +17,8 @@ $this->layout = false;
         <meta property="og:image" content="https://www.yellowdesks.com/img/opengraph_image_yellowdesks.jpg" />
         <meta property="og:app_id" content="349857342038820" />
 
+	<link rel="alternate" href="https://www.yellowdesks.com/" hreflang="en" />
+
         <!-- Piwik -->
         <script type="text/javascript">
         var _paq = _paq || [];
