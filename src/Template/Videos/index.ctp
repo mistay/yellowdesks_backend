@@ -12,7 +12,7 @@
         <td><?php echo $row->host->name . "<br />" . $row->host->address . "<br />" . $row->host->postal_code . $row->host->city; ?></td>
         <?php
             //$url = $row->url;
-            $url =$this->Url->build() . $row->url;
+            $url = $this->Url->build("/") . "videos/" . $row->url;
         ?>
         <td>
             <video width="320" controls>
