@@ -97,9 +97,16 @@ $this->layout = false;
 
                     $ret-> pictureids = [];
 
+                    if ($row -> picture_id != null)
+                        array_push($ret-> pictureids, $row -> picture_id);
+
                     foreach ($row -> pictures as $picture) {
                         array_push($ret-> pictureids, $picture -> id);
                     }
+
+                    if (isset ($row -> videos[0]))
+                        $ret-> videourl = $row -> videos[0] -> url;
+
 
                     array_push($rets, $ret);
                 }
@@ -113,6 +120,11 @@ $this->layout = false;
             function getinfoboxcontent(host) {
 
                 var imagelist = "";
+                if (typeof(host.videourl) !== "undefined") {
+                    src = "/yellowdesks/videos/" + host.videourl;
+                    imagelist += '<li><video autoplay width="200" controls=""><source src="' + src + '" type="video/mp4"></video></li>';
+                }
+
                 for (i=0; i< host.pictureids.length; i++) {
                     imagelist += '<li><img src="<?= $this->Url->build(["controller" => "pictures", "action" => "get"]) ?>/' + host.pictureids[i] + '?resolution=250x" /></li>';
                 }
@@ -188,11 +200,11 @@ $this->layout = false;
                     $(".lightSlider").lightSlider({
                         gallery: false,
                         item: 1,
-                        loop: true,
                         auto: true,
                         pause: 5000,
                         verticalHeight: 100,
                         keyPress: true,
+                        /* loop: true, prevents video from beeing played properly */
                     });
                 });
             }
