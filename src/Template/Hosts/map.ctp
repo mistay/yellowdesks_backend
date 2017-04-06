@@ -36,8 +36,6 @@
         });
     });
 </script>
-<?= __("Please specify your accurate position by moving the marker above. You wonder why it does not appear like that in the overview map? No drama - we did it on purpose. Your coworker will receive the exact location just after booking."); ?>
-<br />
 
 <?= $this->Html->script('mapmarker.js') ?>
 <script>
