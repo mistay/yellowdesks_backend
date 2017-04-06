@@ -5,6 +5,8 @@ var yellowicon = '../img/yellowdot.png';
 // salzburg, default
 var position = {lat: 47.80097678080353, lng: 13.044660806655884 };
 
+$.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,

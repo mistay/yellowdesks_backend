@@ -1,28 +1,24 @@
+<?= $this->Html->css('mapmarker.css') ?>
+
 <script>
-    // todo: security: remove hosts.name!!! sonst kann coworker dien firmennamen schon vorab lesen
-    // todo: auch felder wie webseite, e-mail, ... entfernen
     var host = <?= json_encode([
         "lat" => $row["lat"],
         "lng" => $row["lng"],
         ]); 
     ?>;
-    //console.log(host);
 </script>
 
 <div class="ajaxresponse"></div>
 
 <p>
-<?= __("Use this Address text field to search for your location"); ?>
-
-<input type="text" id="address"></input>
+<?= __("Please specify your accurate position by moving the marker below (your Pin will be blurry on the Yellowdesks start page). Then, use the 'Save Position' button.") ?>
 </p>
-<input type="button" value="save position" id="save" />
+<input type="button" value="<?= __('Save Position') ?>" id="save" />
 <br />
 <br />
+<input type="text" id="pac-input" />
 <div id="map" width="100%" style="height: 500px;"></div>
 
-
-<?= $this->Html->script('mapmarker.js') ?>
 <script type="text/javascript">
     $(".ajaxresponse").html();
     $(window).on('positionchanged', function (e) {
@@ -36,25 +32,10 @@
 
         
     });
-    if (host.lat != null && host.lng != null) {
-        setPosition(host.lat, host.lng);
-    }
-
-    $( document ).ready(function() {
-        $("#address").bind("input", function() {
-        // todo: escape properly
-        $.ajax({
-            url: "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&address=" + $(this).val(),
-            }).done(function(result) {
-                console.log(result.results[0].geometry.location.lat + "/" + result.results[0].geometry.location.lng);
-                setPosition (result.results[0].geometry.location.lat, result.results[0].geometry.location.lng);
-            });
-        });
-    });
-
 
     $( document ).ready(function() {
         $("#save").click(function() {
+            console.log("saving...");
             $.ajax({
                     url: "setposition",
                     data: position,
@@ -72,5 +53,8 @@
 <?= __("Please specify your accurate position by moving the marker above. You wonder why it does not appear like that in the overview map? No drama - we did it on purpose. Your coworker will receive the exact location just after booking."); ?>
 <br />
 
+<?= $this->Html->script('mapmarker.js') ?>
+<script>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&callback=initMap"></script>
+    setPosition(host.lat, host.lng);
+</script>

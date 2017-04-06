@@ -1,4 +1,6 @@
 <?= $this->Html->css('signup.css') ?>
+<?= $this->Html->css('mapmarker.css') ?>
+
 <?= $this->Html->script('signup.js') ?>
     
 <h2><?= __("Hello - glad you're here! You'd like to rent your desk? Great! Let's do it!") ?></h2>

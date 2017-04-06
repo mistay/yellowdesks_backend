@@ -95,10 +95,3 @@ button:focus {
 .error, input[type="text"].error, input[type="password"].error  {
     border: 1px dotted red;
 }
-
-
-#pac-input {
-    border: 1px solid black;
-    width: 25%;
-    margin-top: 12px;
-}
