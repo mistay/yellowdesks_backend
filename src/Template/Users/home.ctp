@@ -169,10 +169,10 @@ $this->layout = false;
                 str = str.replace("open_saturday", host.open_saturday_from == null ? "" : '<b>Open saturday</b> ' + host.open_saturday_from + '-' + host.open_saturday_till + '<br />');
                 str = str.replace("open_sunday", host.open_sunday_from == null ? "" : '<b>Open sunday</b> ' + host.open_sunday_from + '-' + host.open_sunday_till + '<br />');
 
-                str = str.replace("price_1day", host.price_1day == null ? "" : '<b>Price 1 Day</b> ' + host.price_1day + '<br />');
-                str = str.replace("price_10days", host.price_10days == null ? "" : '<b>Price 10 Days</b> ' + host.price_10days + '<br />');
-                str = str.replace("price_1month", host.price_1month == null ? "" : '<b>Price 1 Month</b> ' + host.price_1month + '<br />');
-                str = str.replace("price_6months", host.price_6months == null ? "" : '<b>Price 6 Months</b> ' + host.price_6months + '<br />');
+                str = str.replace("price_1day", host.price_1day == null ? "" : '<b>Price 1 Day</b> ' + host.price_1day + 'EUR<br />');
+                str = str.replace("price_10days", host.price_10days == null ? "" : '<b>Price 10 Days</b> ' + host.price_10days + 'EUR<br />');
+                str = str.replace("price_1month", host.price_1month == null ? "" : '<b>Price 1 Month</b> ' + host.price_1month + 'EUR<br />');
+                str = str.replace("price_6months", host.price_6months == null ? "" : '<b>Price 6 Months</b> ' + host.price_6months + 'EUR<br />');
 
                 return str;
             }
