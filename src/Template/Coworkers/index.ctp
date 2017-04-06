@@ -19,7 +19,7 @@
     <tr>
         <td>
             <?php if ($row -> picture_id > 0) { ?>
-                <img style="border-radius: 100px" src="/yellowdesks/pictures/get/<?= $row-> picture_id ?>?resolution=50x50" />
+                <img style="border-radius: 100px" src="<?php echo $this->Url->build(["controller" => "pictures", "action" => "get", $row->picture_id]); ?>?resolution=50x50" />
             <?php } ?>
         </td>
         <td><?php echo $row->firstname ?></td>
