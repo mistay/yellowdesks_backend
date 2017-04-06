@@ -114,7 +114,7 @@ $this->layout = false;
 
                 var imagelist = "";
                 for (i=0; i< host.pictureids.length; i++) {
-                    imagelist += '<li><img src="/yellowdesks/pictures/get/' + host.pictureids[i] + '?resolution=250x" /></li>';
+                    imagelist += '<li><img src="<?= $this->Url->build(["controller" => "pictures", "action" => "get"]) ?>/' + host.pictureids[i] + '?resolution=250x" /></li>';
                 }
 
                 var str  = '<div class="infobox">'+
