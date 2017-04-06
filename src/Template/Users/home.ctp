@@ -17,7 +17,7 @@ $this->layout = false;
         <meta property="og:image" content="https://www.yellowdesks.com/img/opengraph_image_yellowdesks.jpg" />
         <meta property="og:app_id" content="349857342038820" />
 
-	<link rel="alternate" href="https://www.yellowdesks.com/" hreflang="en" />
+	    <link rel="alternate" href="https://www.yellowdesks.com/" hreflang="en" />
 
         <!-- Piwik -->
         <script type="text/javascript">
@@ -35,6 +35,19 @@ $this->layout = false;
         </script>
         <!-- End Piwik Code -->
 
+        <script src="js/jquery-1.9.1.min.js"></script>
+        
+        <?= $this->Html->css('../3rdparty/lightslider/css/lightslider.css') ?>
+        <style>
+            .demo {
+                width: 250px;
+            }
+        </style>
+
+        <?= $this->Html->script('../3rdparty/lightslider/js/lightslider.js'); ?>
+        
+
+        
         <meta charset="utf-8">
         <title>yellowdesks</title>
         <meta name="description" content="">
@@ -81,6 +94,13 @@ $this->layout = false;
                     $ret-> price_10days = $row -> price_10days;
                     $ret-> price_1month = $row -> price_1month;
                     $ret-> price_6months = $row -> price_6months;
+
+                    $ret-> pictureids = [];
+
+                    foreach ($row -> pictures as $picture) {
+                        array_push($ret-> pictureids, $picture -> id);
+                    }
+
                     array_push($rets, $ret);
                 }
             ?>
@@ -91,10 +111,20 @@ $this->layout = false;
             var map;
 
             function getinfoboxcontent(host) {
+
+                var imagelist = "";
+                for (i=0; i< host.pictureids.length; i++) {
+                    imagelist += '<li><img src="/yellowdesks/pictures/get/' + host.pictureids[i] + '?resolution=250x" /></li>';
+                }
+
                 var str  = '<div class="infobox">'+
                     '</div>'+
                     '<h1 class="firstHeading">host.nickname</h1>'+
                     '<div class="bodyContent">'+
+
+                    '<div class="demo"><ul class="lightSlider">' +
+                    imagelist +
+                    '</ul></div>' +
                     '<p><a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android">Book on Android App</a></p>' +
                     '<p><b>host.title</b><br />' +
                     '<b>Included: </b>host.details<br />'+
@@ -140,8 +170,8 @@ $this->layout = false;
                 var content = this;
                 for (var i=0; i < arguments.length; i++)
                 {
-                        var replacement = '{' + i + '}';
-                        content = content.replace(replacement, arguments[i]);  
+                    var replacement = '{' + i + '}';
+                    content = content.replace(replacement, arguments[i]);  
                 }
                 return content;
             };
@@ -153,6 +183,18 @@ $this->layout = false;
                 /*gerd infowindow.close();*/
                 $("#home-logo").addClass("smalllogo");
                 infowindow.open(map, this);
+
+                google.maps.event.addListener(infowindow, 'domready', function(){
+                    $(".lightSlider").lightSlider({
+                        gallery: false,
+                        item: 1,
+                        loop: true,
+                        auto: true,
+                        pause: 5000,
+                        verticalHeight: 100,
+                        keyPress: true,
+                    });
+                });
             }
 
             function initMap() {
@@ -181,7 +223,6 @@ $this->layout = false;
         ?>
         
         <link rel="icon" type="image/jpeg" href="<?= $url ?>" />
-        <script src="js/jquery-1.9.1.min.js"></script>
         
         <style>
 
@@ -337,6 +378,8 @@ $this->layout = false;
         </script>
     </head>
     <body>
+
+
 
         <div class="menu">
             <?php

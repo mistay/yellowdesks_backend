@@ -327,7 +327,11 @@ class UsersController extends AppController
     
     public function home() {
         $model = TableRegistry::get('Hosts');
-        $query = $model->find('all');
+        $query = $model->find('all')->contain(['Pictures'=> function ($q) {
+                                                               return $q
+                                                                    ->select(['id', 'host_id']);
+                                                            },
+                                               'Videos']);
 
         $this->set("rows", $query);
 
