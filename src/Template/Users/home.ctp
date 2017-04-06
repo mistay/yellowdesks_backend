@@ -121,7 +121,7 @@ $this->layout = false;
 
                 var imagelist = "";
                 if (typeof(host.videourl) !== "undefined") {
-                    src = "/yellowdesks/videos/" + host.videourl;
+                    src = "<?= $this->Url->build(["controller" => "videos"]) ?>/" + host.videourl;
                     imagelist += '<li><video autoplay width="200" controls=""><source src="' + src + '" type="video/mp4"></video></li>';
                 }
 
