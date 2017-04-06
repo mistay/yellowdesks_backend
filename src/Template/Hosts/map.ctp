@@ -20,22 +20,8 @@
 <div id="map" width="100%" style="height: 500px;"></div>
 
 <script type="text/javascript">
-    $(".ajaxresponse").html();
-    $(window).on('positionchanged', function (e) {
-        console.log('position changed', e.state);
-        // e.state.lat
-        if (marker != null)
-            marker.setPosition(position);
-
-        if (map != null)
-            map.setCenter(position);
-
-        
-    });
-
     $( document ).ready(function() {
         $("#save").click(function() {
-            console.log("saving...");
             $.ajax({
                     url: "setposition",
                     data: position,
@@ -55,6 +41,5 @@
 
 <?= $this->Html->script('mapmarker.js') ?>
 <script>
-
     setPosition(host.lat, host.lng);
 </script>

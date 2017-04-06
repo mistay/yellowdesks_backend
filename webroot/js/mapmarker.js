@@ -5,8 +5,6 @@ var yellowicon = '../img/yellowdot.png';
 // salzburg, default
 var position = {lat: 47.80097678080353, lng: 13.044660806655884 };
 
-$.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");
-
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,
@@ -44,14 +42,8 @@ function initMap() {
             scaledSize: new google.maps.Size(25, 25)
         };
 
-        // Create a marker for each place.
-        marker = (new google.maps.Marker({
-            map: map,
-            icon: yellowicon,
-            title: place.name,
-            position: place.geometry.location,
-            draggable: true,
-        }));
+        setPosition(place.geometry.location.lat, place.geometry.location.lng);
+        moveMarker();
 
         if (place.geometry.viewport) {
             // Only geocodes have viewport.
@@ -64,7 +56,6 @@ function initMap() {
 
         setPosition(place.geometry.location.lat, place.geometry.location.lng);
     });
-
 
     makeMarker();
 }
@@ -84,6 +75,10 @@ function makeMarker() {
     );
 }
 
+function moveMarker() {
+    marker.setPosition(new google.maps.LatLng(position.lat(), position.lng()));
+}
+
 function setPosition(lat, lng) {
     this.position = { lat: lat, lng: lng };
 
@@ -91,3 +86,5 @@ function setPosition(lat, lng) {
     evt.state = position;
     $(window).trigger(evt);
 }
+
+$.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");
