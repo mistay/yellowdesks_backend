@@ -218,7 +218,8 @@ $this->layout = false;
                 var uluru = {lat: 47.806021, lng: 13.050602000000026};
                     map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 8,
-                    center: uluru
+                    center: uluru,
+                    gestureHandling: 'greedy',
                     });
 
                 for (i=0; i<hosts.length; i++) {
