@@ -99,7 +99,53 @@ function initMap() {
         zoom: 8,
         center: uluru,
         gestureHandling: 'greedy',
+        mapTypeControl: false,
+
         });
+
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+        searchBox.setBounds(map.getBounds());
+    });
+
+    searchBox.addListener('places_changed', function() {
+        console.log("places_changed");
+        var places = searchBox.getPlaces();
+
+        if (places.length == 0) {
+            return;
+        }
+
+        // For each place, get the icon, name and location.
+        var bounds = new google.maps.LatLngBounds();
+
+        place = places[0];
+        var icon = {
+            url: place.icon,
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(25, 25)
+        };
+
+        //setPosition(place.geometry.location.lat, place.geometry.location.lng);
+        //moveMarker();
+
+        if (place.geometry.viewport) {
+            // Only geocodes have viewport.
+            bounds.union(place.geometry.viewport);
+        } else {
+            bounds.extend(place.geometry.location);
+        }
+
+        map.fitBounds(bounds);
+
+        //setPosition(place.geometry.location.lat, place.geometry.location.lng);
+    });
 
     for (i=0; i<hosts.length; i++) {
         marker = new google.maps.Marker({
@@ -111,3 +157,6 @@ function initMap() {
         marker.addListener('click', markerclick);
     }
 }
+
+
+$.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");

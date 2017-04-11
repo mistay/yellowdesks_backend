@@ -57,7 +57,9 @@ $this->layout = false;
 
         <?= $this->Html->script('home.js'); ?>
         <?= $this->Html->css('home.css') ?>
-        
+
+        <?= $this->Html->script('menu.js'); ?>
+
         <meta charset="utf-8">
         <title>Yellowdesks: workspace near you</title>
         <meta name="description" content="Yellowdesks - Workspace near you">
@@ -129,55 +131,64 @@ $this->layout = false;
         <link rel="icon" type="image/jpeg" href="<?= $url ?>" />
     </head>
     <body>
-        <div class="menu">
-            <?php
-            
-            $urlroot = $this->Url->build("/");
-
-            $urlprofile = $this->Url->build([
-                    "controller" => "users",
-                    "action" => "welcome",
-                ]);
-
-            $urlbecomeahost = $this->Url->build([
-                    "controller" => "users",
-                    "action" => "becomeahost",
-                ]);
-
-            $urlregister = $this->Url->build([
-                    "controller" => "users",
-                    "action" => "signup",
-                ]);
-            
-            if ($loggedinuser == null) {
-                $url = $this->Url->build([
-                    "controller" => "users",
-                    "action" => "login",
-                ]);
-                $loginlogouttext = __("Login");
-            } else {
-                $url = $this->Url->build([
-                    "controller" => "users",
-                    "action" => "logout",
-                ]);
-                $loginlogouttext = __("Logout");
-            }
-            ?>
-
-            <a class="questionmark" href="/faqs"><img src="<?= $urlroot ?>img/questionmark_bw_transparent.png" /></a>
-            <a class="facebooklogo" target="_blank" href="https://www.facebook.com/yellowdesks/"><img src="<?= $urlroot ?>img/facebook_transparent.png" /></a>
-            <a class="androidlogo" target="_blank" href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
-            
-            <?php if ($loggedinuser == null) { ?>
-                <a href="<?= $urlbecomeahost ?>">Become A Host</a>
-                <a href="<?= $urlregister ?>">Sign Up</a>
-            <?php } else { ?>
-                <a href="<?= $urlprofile ?>"><?= __("Profile") ?></a>
-            <?php } ?>
-
-            <a href="<?= $url ?>"><?= $loginlogouttext ?></a>
+        <div class="menunavdesktopanchor">
         </div>
-        
+        <div class="menunav">
+            <div class="menu">
+                <?php
+                
+                $urlroot = $this->Url->build("/");
+
+                $urlprofile = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "welcome",
+                    ]);
+
+                $urlbecomeahost = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "becomeahost",
+                    ]);
+
+                $urlregister = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "signup",
+                    ]);
+                
+                if ($loggedinuser == null) {
+                    $url = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "login",
+                    ]);
+                    $loginlogouttext = __("Login");
+                } else {
+                    $url = $this->Url->build([
+                        "controller" => "users",
+                        "action" => "logout",
+                    ]);
+                    $loginlogouttext = __("Logout");
+                }
+                ?>
+
+                <a class="questionmark" href="<?= $this->Url->build("/") ?>/faqs"><img src="<?= $urlroot ?>img/questionmark_bw_transparent.png" /></a>
+                <a class="facebooklogo" target="_blank" href="https://www.facebook.com/yellowdesks/"><img src="<?= $urlroot ?>img/facebook_transparent.png" /></a>
+                <a class="androidlogo" target="_blank" href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
+                
+                <?php if ($loggedinuser == null) { ?>
+                    <a href="<?= $urlbecomeahost ?>">Become A Host</a>
+                    <a href="<?= $urlregister ?>">Sign Up</a>
+                <?php } else { ?>
+                    <a href="<?= $urlprofile ?>"><?= __("Profile") ?></a>
+                <?php } ?>
+
+                <a href="<?= $url ?>"><?= $loginlogouttext ?></a>
+            </div>
+        </div>
+        <div class="burger">
+            <a class="androidlogo" target="_blank" href="https://play.google.com/store/apps/details?id=com.yellowdesks.android"><img src="<?= $urlroot ?>img/android_logo_bw_transparent.png" /></a>
+            <img src="<?= $this->Url->build("/img/burger.png"); ?>" />
+        </div>
+
+
         <div class="content home-content" id="home-logo">
             <span class="yellowdesks">yellow desks</span>
             <div class="yellowlinks">
@@ -190,7 +201,9 @@ $this->layout = false;
         
         <div class="footer"><a href="http://coworkingsalzburg.com">by <span class="coworkingsalzburg"><strong>COWORKING</strong>SALZBURG</span></a></div>
     
+        <input type="text" id="pac-input" />
+    
+        <div class="mobilemenu"></div>
         <div id="map"></div>
     </body>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&callback=initMap"></script>
 </html>
