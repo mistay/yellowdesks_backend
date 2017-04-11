@@ -20,7 +20,7 @@ $this->layout = false;
 	    <link rel="alternate" href="https://www.yellowdesks.com/" hreflang="en" />
 
         <?php //google maps renders map objects (streets, markers, ..) much bigger ?>
-        <!-- <meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> -->
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
 
         <!-- Piwik -->
@@ -291,15 +291,9 @@ $this->layout = false;
                 display: inline-block;
             }
             
-            @media (max-width: 600px) {
+            @media (max-width: 500px) {
                 .yellowdesks {
-                    font-size: 30px;
-                    margin-left: 5px;
-                }
-            }
-            @media (max-device-width: 600px) {
-                .yellowdesks {
-                    font-size: 100px;
+                    font-size: 20px;
                     margin-left: 5px;
                 }
             }
@@ -309,15 +303,9 @@ $this->layout = false;
                 background-color: #f3ed3d;
                 margin-left: 50px;
             }
-            @media (max-width: 600px) {
+            @media (max-width: 500px) {
                 .findandrent {
                     font-size: 15px;
-                    margin-left: 5px;
-                }
-            }
-            @media (max-device-width: 600px) {
-                .findandrent {
-                    font-size: 40px;
                     margin-left: 5px;
                 }
             }
@@ -351,9 +339,10 @@ $this->layout = false;
             }
             @media (max-device-width: 600px) {
                 .menu {
-                    font-size: 30px;
+                    font-size: 10px;
                     width: 100%;
                     padding-right: 0px;
+                    padding-top: 50px;
                 }
                 .menu a {
                     flex-grow: 1;
