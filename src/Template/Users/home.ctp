@@ -50,17 +50,17 @@ $this->layout = false;
 
         <?= $this->Html->script('../3rdparty/lightslider/js/lightslider.js'); ?>
         
-
+        <?= $this->Html->css('home.css') ?>
+        <?= $this->Html->css('main.css') ?>
         
         <meta charset="utf-8">
-        <title>yellowdesks</title>
-        <meta name="description" content="">
+        <title>Yellowdesks: workspace near you</title>
+        <meta name="description" content="Yellowdesks - Workspace near you">
+
         <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-     <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-        <link rel="stylesheet" href="css/main.css">
-        <link rel="stylesheet" href="css/jquery.steps.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
         <link rel="stylesheet" href="fonts/eraser/stylesheet.css">
         <link rel="stylesheet" href="fonts/din1451/stylesheet.css">
         
@@ -118,274 +118,12 @@ $this->layout = false;
             var hosts = <?= json_encode($rets); ?>;
         </script>
 
-        <script>
-            var map;
-
-            function getinfoboxcontent(host) {
-
-                var imagelist = "";
-                if (typeof(host.videourl) !== "undefined") {
-                    src = "<?= $this->Url->build(["controller" => "videos"]) ?>/" + host.videourl;
-                    imagelist += '<li><video autoplay width="200" controls=""><source src="' + src + '" type="video/mp4"></video></li>';
-                }
-
-                for (i=0; i< host.pictureids.length; i++) {
-                    imagelist += '<li><img src="<?= $this->Url->build(["controller" => "pictures", "action" => "get"]) ?>/' + host.pictureids[i] + '?resolution=250x" /></li>';
-                }
-
-                var str  = '<div class="infobox">'+
-                    '</div>'+
-                    '<h1 class="firstHeading">host.nickname</h1>'+
-                    '<div class="bodyContent">'+
-
-                    '<div class="demo"><ul class="lightSlider">' +
-                    imagelist +
-                    '</ul></div>' +
-                    '<p><a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android">Book on Android App</a></p>' +
-                    '<p><b>host.title</b><br />' +
-                    '<b>Included: </b>host.details<br />'+
-                    '<b>Extras: </b>host.extras<br />'+
-                    'open_monday'+
-                    'open_tuesday'+
-                    'open_wednesday'+
-                    'open_thursday'+
-                    'open_friday'+
-                    'open_saturday'+
-                    'open_sunday'+
-                    'price_1day'+
-                    'price_10days'+
-                    'price_1month'+
-                    'price_6months'+
-                    '</div>';
-
-                str = str.replace("host.nickname", host.nickname);
-                str = str.replace("host.title", host.title);
-                str = str.replace("host.details", host.details);
-                str = str.replace("host.extras", host.extras);
-                str = str.replace("host.picture_id", host.picture_id);
-                str = str.replace("host.video_id", host.video_id);
-                str = str.replace("host.open_247fixworkers", host.open_247fixworkers);
-                str = str.replace("open_monday", host.open_monday_from == null ? "" : '<b>Open Monday</b> ' + host.open_monday_from + '-' + host.open_monday_till + '<br />');
-                str = str.replace("open_tuesday", host.open_tuesday_from == null ? "" : '<b>Open Tuesday</b> ' + host.open_tuesday_from + '-' + host.open_tuesday_till + '<br />');
-                str = str.replace("open_wednesday", host.open_wednesday_from == null ? "" : '<b>Open Wednesday</b> ' + host.open_wednesday_from + '-' + host.open_wednesday_till + '<br />');
-                str = str.replace("open_thursday", host.open_thursday_from == null ? "" : '<b>Open Thursday</b> ' + host.open_thursday_from + '-' + host.open_thursday_till + '<br />');
-                str = str.replace("open_friday", host.open_friday_from == null ? "" : '<b>Open Friday</b> ' + host.open_friday_from + '-' + host.open_friday_till + '<br />');
-                str = str.replace("open_saturday", host.open_saturday_from == null ? "" : '<b>Open saturday</b> ' + host.open_saturday_from + '-' + host.open_saturday_till + '<br />');
-                str = str.replace("open_sunday", host.open_sunday_from == null ? "" : '<b>Open sunday</b> ' + host.open_sunday_from + '-' + host.open_sunday_till + '<br />');
-
-                str = str.replace("price_1day", host.price_1day == null ? "" : '<b>Price 1 Day</b> ' + host.price_1day + 'EUR<br />');
-                str = str.replace("price_10days", host.price_10days == null ? "" : '<b>Price 10 Days</b> ' + host.price_10days + 'EUR<br />');
-                str = str.replace("price_1month", host.price_1month == null ? "" : '<b>Price 1 Month</b> ' + host.price_1month + 'EUR<br />');
-                str = str.replace("price_6months", host.price_6months == null ? "" : '<b>Price 6 Months</b> ' + host.price_6months + 'EUR<br />');
-
-                return str;
-            }
-
-            String.prototype.format = function()
-            {
-                var content = this;
-                for (var i=0; i < arguments.length; i++)
-                {
-                    var replacement = '{' + i + '}';
-                    content = content.replace(replacement, arguments[i]);  
-                }
-                return content;
-            };
-
-            function markerclick(event) {
-                var infowindow = new google.maps.InfoWindow({
-                    content: getinfoboxcontent(this.host),
-                });
-                /*gerd infowindow.close();*/
-                $("#home-logo").addClass("smalllogo");
-                infowindow.open(map, this);
-
-                google.maps.event.addListener(infowindow, 'domready', function(){
-                    $(".lightSlider").lightSlider({
-                        gallery: false,
-                        item: 1,
-                        auto: true,
-                        pause: 5000,
-                        verticalHeight: 100,
-                        keyPress: true,
-                        /* loop: true, prevents video from beeing played properly */
-                    });
-                });
-            }
-
-            function initMap() {
-                var image = "<?= $this->Url->build('/img/yellowdot.png', true); ?>";
-                var uluru = {lat: 47.806021, lng: 13.050602000000026};
-                    map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 8,
-                    center: uluru,
-                    gestureHandling: 'greedy',
-                    });
-
-                for (i=0; i<hosts.length; i++) {
-                    marker = new google.maps.Marker({
-                        position: {lat: hosts[i].lat_loose, lng: hosts[i].lng_loose},
-                        map: map,
-                        icon: image,
-                        host: hosts[i],
-                        });
-                    marker.addListener('click', markerclick);
-                }
-            }
-        </script>
-
         <?php
             $url = $this->Url->build('/favicon.jpg', true);
         ?>
-        
         <link rel="icon" type="image/jpeg" href="<?= $url ?>" />
-        
-        <style>
-
-            html {
-                height: 100%;
-                width: 100%;
-            }
-            body {
-                /* background: url("img/eva.jpg") no-repeat center center fixed;
-                background-size: cover; */
-                padding: 0px;
-                margin: 0px;
-                bottom: 0px;
-                font-family: din;
-                height: 100%;
-                width: 100%;
-            }
-            
-            .footer {
-                position: absolute;
-                bottom: 10px;
-                width: 100%;
-                text-align: center;
-                color: white;
-                z-index: 100;
-            }
-
-            .footer a {
-                color: black;
-                text-decoration: none;
-            }
-            
-            .coworkingsalzburg {
-            }
-            
-            .yellowdesks {
-                background-color: #f3ed3d;
-                font-size: 55px;
-                margin-left: 50px;
-                font-family: eraserregular;
-                display: block;
-                margin-bottom: 12px;
-                padding: 6px;
-            }
-            .yellowlinks { 
-            display: block;
-                margin-bottom: 6px;
-            }
-            .yellowlinks span {
-            padding: 6px;
-                display: inline-block;
-            }
-            
-            @media (max-width: 500px) {
-                .yellowdesks {
-                    font-size: 20px;
-                    margin-left: 5px;
-                }
-            }
-            
-            .findandrent {
-                font-size: 20px;
-                background-color: #f3ed3d;
-                margin-left: 50px;
-            }
-            @media (max-width: 500px) {
-                .findandrent {
-                    font-size: 15px;
-                    margin-left: 5px;
-                }
-            }
-
-            .content {
-              /*  padding-top: 25%;
-                z-index: 100;
-                position: absolute;*/
-                z-index: 100;
-                position: absolute;
-                bottom: 40px;
-                left: 0px;
-                
-            }
-            
-            .menu {
-                padding-top: 10px;
-                padding-right: 10px;
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-end;
-                position: absolute;
-                right: 0;
-                z-index: 100;
-            }
-            @media (max-width: 600px) {
-                .menu {
-                    justify-content: flex-start;
-                    width: 100%;
-                }
-            }
-            @media (max-device-width: 600px) {
-                .menu {
-                    font-size: 10px;
-                    width: 100%;
-                    padding-right: 0px;
-                    padding-top: 50px;
-                }
-                .menu a {
-                    flex-grow: 1;
-                }
-            }
-            
-            .menu a {
-                background-color: white;
-                min-width: 140px;
-                display: inline-block;
-                margin: 5px;
-                padding: 5px;
-                padding-left: 20px;
-                text-decoration: none;
-                color: black;
-            }
-
-            #map {
-                height: 100%;
-                width: 100%;
-            }
-
-            .menu a.facebooklogo, .menu a.androidlogo, .menu a.questionmark {
-                min-width: auto;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-            .androidlogo img, .facebooklogo img, .questionmark img {
-                height: 20px;
-            }
-        </style>
-        
-        <script>
-            $("#finish").onclick = function() {
-                alert("f90");
-            }
-        </script>
     </head>
     <body>
-
-
-
         <div class="menu">
             <?php
             
@@ -435,7 +173,6 @@ $this->layout = false;
             <a href="<?= $url ?>"><?= $loginlogouttext ?></a>
         </div>
         
-        
         <div class="content home-content" id="home-logo">
             <span class="yellowdesks">yellow desks</span>
             <div class="yellowlinks">
@@ -446,12 +183,9 @@ $this->layout = false;
             </div>
         </div>
         
-        
         <div class="footer"><a href="http://coworkingsalzburg.com">by <span class="coworkingsalzburg"><strong>COWORKING</strong>SALZBURG</span></a></div>
     
         <div id="map"></div>
-        
     </body>
-
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&callback=initMap"></script>
 </html>
