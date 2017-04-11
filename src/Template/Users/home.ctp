@@ -439,7 +439,7 @@ $this->layout = false;
         <div class="content home-content" id="home-logo">
             <span class="yellowdesks">yellow desks</span>
             <div class="yellowlinks">
-                <span class="findandrent"><strong>Find</strong> flexible work space near you</span>
+                <span class="findandrent"><a href="https://www.yellowdesks.com/users/login" title="become a host" alt="become a host">&gt; &gt;  <strong>Find</strong> flexible work space near you</a></span>
             </div>
             <div class="yellowlinks">
                 <span class="findandrent"><a href="https://www.yellowdesks.com/users/becomeahost" title="become a host" alt="become a host">&gt; &gt; <strong>Rent out</strong> work space</a></span>
