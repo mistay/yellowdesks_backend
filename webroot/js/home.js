@@ -4,12 +4,12 @@ function getinfoboxcontent(host) {
 
     var imagelist = "";
     if (typeof(host.videourl) !== "undefined") {
-        src = "<?= $this->Url->build(["controller" => "videos"]) ?>/" + host.videourl;
+        src = baseurl + "/videos/" + host.videourl;
         imagelist += '<li><video autoplay width="200" controls=""><source src="' + src + '" type="video/mp4"></video></li>';
     }
 
     for (i=0; i< host.pictureids.length; i++) {
-        imagelist += '<li><img src="<?= $this->Url->build(["controller" => "pictures", "action" => "get"]) ?>/' + host.pictureids[i] + '?resolution=250x" /></li>';
+        imagelist += '<li><img src="' + baseurl + '/pictures/get/' + host.pictureids[i] + '?resolution=250x" /></li>';
     }
 
     var str  = '<div class="infobox">'+
@@ -93,7 +93,7 @@ function markerclick(event) {
 }
 
 function initMap() {
-    var image = "<?= $this->Url->build('/img/yellowdot.png', true); ?>";
+    var image = baseurl + '/img/yellowdot.png';
     var uluru = {lat: 47.806021, lng: 13.050602000000026};
         map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
