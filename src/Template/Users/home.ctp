@@ -20,7 +20,7 @@ $this->layout = false;
 	    <link rel="alternate" href="https://www.yellowdesks.com/" hreflang="en" />
 
         <?php //google maps renders map objects (streets, markers, ..) much bigger ?>
-        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <!-- <meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> -->
 
 
         <!-- Piwik -->
