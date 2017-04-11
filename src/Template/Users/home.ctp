@@ -23,7 +23,7 @@ $this->layout = false;
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 
         <script type="text/javascript">
-            var baseurl = "<?= $this->Url->build("/") ?>";
+            var baseurl = "<?= $this->Url->build("/", true) ?>";
         </script>
 
         <!-- Piwik -->
