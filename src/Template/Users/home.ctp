@@ -19,6 +19,10 @@ $this->layout = false;
 
 	    <link rel="alternate" href="https://www.yellowdesks.com/" hreflang="en" />
 
+        <?php //google maps renders map objects (streets, markers, ..) much bigger ?>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+
         <!-- Piwik -->
         <script type="text/javascript">
         var _paq = _paq || [];
@@ -213,12 +217,11 @@ $this->layout = false;
                 var image = "<?= $this->Url->build('/img/yellowdot.png', true); ?>";
                 var uluru = {lat: 47.806021, lng: 13.050602000000026};
                     map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 10,
+                    zoom: 8,
                     center: uluru
                     });
 
                 for (i=0; i<hosts.length; i++) {
-                    
                     marker = new google.maps.Marker({
                         position: {lat: hosts[i].lat_loose, lng: hosts[i].lng_loose},
                         map: map,
