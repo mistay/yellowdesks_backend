@@ -94,12 +94,15 @@ padding: 6px;
 .mobilemenu > .menu-mobile > .menu  {
     display: block;
     padding-top: 50px;
+    width: 50%;
+    padding-right: 10px;
 }
 
 @media (max-width: 600px) {
     .menu {
         justify-content: flex-start;
-        width: 100%;
+        width: 50%;
+        text-align: left;
     }
 }
 @media (max-device-width: 600px) {
