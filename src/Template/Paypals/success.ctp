@@ -60,8 +60,3 @@
         </td>
     </tr>
 </table>
-
-<pre>
-<?php
-var_dump($booking);
-?>
