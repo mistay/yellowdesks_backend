@@ -79,7 +79,7 @@
                     <a href="<?= $this->Url->build(["controller" => "coworkers"]); ?>"><li>Coworkers</li></a>
                     <a href="<?= $this->Url->build(["controller" => "holidays"]); ?>"><li>Holidays</li></a>
                     <a href="<?= $this->Url->build(["controller" => "payments"]); ?>"><li>Payments</li></a>
-                    <a href="<?= $this->Url->build(["controller" => "paypalipns"]); ?>"><li>PayPal IPNs</li></a>
+                    <a href="<?= $this->Url->build(["controller" => "paypals"]); ?>"><li>PayPal</li></a>
                     <a href="<?= $this->Url->build(["controller" => "bookings"]); ?>"><li>Bookings</li></a>
                     <a href="<?= $this->Url->build(["controller" => "configs"]); ?>"><li>Configs</li></a>
                     <a href="<?= $this->Url->build(["controller" => "pictures"]); ?>"><li>Pictures</li></a>
