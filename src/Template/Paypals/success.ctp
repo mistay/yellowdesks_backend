@@ -1,5 +1,7 @@
 <h2>Booking Confirmation</h2>
 
+
+<? $rawrequest = json_decode($booking -> paypalipn -> rawrequest); ?>
 <table>
     <tr>
         <th>Host</th>
@@ -65,11 +67,11 @@
     </tr>
     <tr>
         <th>Payment subject</th>
-        <td><?php var_dump($booking -> paypalipn -> rawrequest);  ?></td>
+        <td><?= $rawrequest["item_name"] ?></td>
     </tr>
     <tr>
         <th>Payment amount</th>
-        <td><?= $booking -> paypalipn -> mc_gross ?> <?= $booking -> paypalipn -> rawrequest ["mc_currency"] ?></td>
+        <td><?= $booking -> paypalipn -> mc_gross ?> <?= $rawrequest["mc_currency"] ?></td>
     </tr>
     <tr>
         <th>Payment paypal transaction id</th>
@@ -81,7 +83,7 @@
     </tr>
      <tr>
         <th>Payment payer email</th>
-        <td><?= $booking -> paypalipn -> rawrequest ["payer_email"] ?></td>
+        <td><?= $rawrequest["payer_email"] ?></td>
     </tr>
 </table>
 
