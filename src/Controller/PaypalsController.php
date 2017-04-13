@@ -66,14 +66,13 @@ class PaypalsController extends AppController {
     // https://www.yellowdesks.com/paypals/paypalipn
     public function paypalipn($sandbox = false) {
         $this->autoRender = false;
-        $request = print_r($_REQUEST, true);
         $model = TableRegistry::get('Paypalipns');
         $row = $model -> newEntity();
 
         // this automatically sets fields like mc_gross, tx, .. as soon as they're setup in db table
         $model->patchEntity($row, $this -> request -> getData());
 
-        $row -> rawrequest = $request;
+        $row -> rawrequest = json_encode($_REQUEST);
         $row -> sandbox = $sandbox;
         
         $ipn = new PaypalIPN();
