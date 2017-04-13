@@ -23,10 +23,35 @@ class PaypalsController extends AppController {
     public function success() {
         var_dump($_SERVER['HTTP_REFERER']);
         phpinfo();
+        // returning form paypal ends up with:
+        // https://www.yellowdesks.com/paypals/success?amt=0.06&cc=EUR&cm=%5B1144%5D&item_name=Yellosdesks%20from%202017-04-13%20to%202017-04-13%20at%20host%20test&st=Completed&tx=3Y005173PM3737527
+        
         // $_SERVER['HTTP_REFERER']
-        // https://www.paypal.com/webapps/hermes?token=29V634639S337540H&useraction=commit&mfid=1492092111684_8474068927770
+        // https://www.paypal.com/webapps/hermes?token=8E656568SH4720028&useraction=commit&rm=2&mfid=1492093548158_ef43ebc1210ea 
 
-        echo "hello"; exit(0);
+        // $_SERVER['REDIRECT_QUERY_STRING']
+        // amt=0.06&cc=EUR&cm=%5B1142%5D&item_name=Yellosdesks%20from%202017-04-13%20to%202017-04-13%20at%20host%20test&st=Completed&tx=6NE32361EG7395357
+
+        $model = TableRegistry::get('Paypalipns');
+        $query = $model -> find('all') -> where (["txn_id" => $_REQUEST["tx"]]);
+        $row = $query -> first();
+
+        $json_booking_ids = $row -> custom;
+        $booking_ids = json_decode($json_booking_ids);
+
+        $user = $this -> getloggedinUser();
+
+        // security: check if booking belongs to currently logged in user
+        $model = TableRegistry::get('Bookings');
+        $query = $model -> find('all') -> where (["id in" => $booking_ids]);
+        foreach ($query as $booking) {
+            if ($booking -> coworker_id == $user -> id) {
+                // booking really belongs to user, display confirmation
+
+                $this->set("booking", $booking);
+            }
+            // todo: display other bookings as well but for now we do only support one booking per paypal ipn
+        }
     }
 
     // this url is registered at paypal sandbox https://www.sandbox.paypal.com
@@ -43,7 +68,9 @@ class PaypalsController extends AppController {
         $model = TableRegistry::get('Paypalipns');
         $row = $model -> newEntity();
 
+        // this automatically sets fields like mc_gross, tx, .. as soon as they're setup in db table
         $model->patchEntity($row, $this -> request -> getData());
+
         $row -> rawrequest = $request;
         $row -> sandbox = $sandbox;
         
