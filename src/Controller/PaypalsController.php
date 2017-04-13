@@ -21,7 +21,11 @@ class PaypalsController extends AppController {
     // user wird nach zahlung von paypal hierher umgeleitet:
     // https://www.yellowdesks.com/paypals/success/
     public function success() {
+        var_dump($_SERVER['HTTP_REFERER']);
         phpinfo();
+        // $_SERVER['HTTP_REFERER']
+        // https://www.paypal.com/webapps/hermes?token=29V634639S337540H&useraction=commit&mfid=1492092111684_8474068927770
+
         echo "hello"; exit(0);
     }
 

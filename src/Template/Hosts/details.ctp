@@ -68,8 +68,9 @@
     <input type="hidden" name="button_subtype" value="services">
     <input type="hidden" name="no_note" value="0">
     <input type="hidden" name="no_shipping" value="1">
+    <input type="hidden" value="2" name="rm">
     <input type="hidden" id="tax_rate" name="tax_rate" value="0.000">
-    <input type="hidden" id="returnurl" name="return" value="https://www.yellowdesks.com/paypals/success">
+    <input type="hidden" id="return" name="return" value="https://www.yellowdesks.com/paypals/success">
     <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynow_SM.gif:NonHostedGuest">
     <a class="buynow" id="buynow1" onclick="this.parentElement.submit()">
     buy now 
