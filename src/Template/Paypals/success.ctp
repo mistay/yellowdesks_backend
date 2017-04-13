@@ -1,9 +1,17 @@
-<h2>Success</h2>
+<h2>Booking Confirmation</h2>
 
 <table>
     <tr>
+        <th>Host</th>
+        <td><?= $booking -> begin ?></td>
+    </tr>
+    <tr>
         <th>Start Date</th>
         <td><?= $booking -> begin ?></td>
+    </tr>
+    <tr>
+        <th>End Date</th>
+        <td><?= $booking -> end ?></td>
     </tr>
 </table>
 
