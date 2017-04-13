@@ -65,7 +65,7 @@
     </tr>
     <tr>
         <th>Payment subject</th>
-        <td><?= $booking -> paypalipn -> rawrequest ["item_name"] ?></td>
+        <td><?php var_dump($booking -> paypalipn -> rawrequest);  ?></td>
     </tr>
     <tr>
         <th>Payment amount</th>
