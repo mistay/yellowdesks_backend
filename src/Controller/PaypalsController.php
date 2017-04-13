@@ -21,8 +21,6 @@ class PaypalsController extends AppController {
     // user wird nach zahlung von paypal hierher umgeleitet:
     // https://www.yellowdesks.com/paypals/success/
     public function success() {
-        var_dump($_SERVER['HTTP_REFERER']);
-        phpinfo();
         // returning form paypal ends up with:
         // https://www.yellowdesks.com/paypals/success?amt=0.06&cc=EUR&cm=%5B1144%5D&item_name=Yellosdesks%20from%202017-04-13%20to%202017-04-13%20at%20host%20test&st=Completed&tx=3Y005173PM3737527
         
@@ -43,7 +41,11 @@ class PaypalsController extends AppController {
 
         // security: check if booking belongs to currently logged in user
         $model = TableRegistry::get('Bookings');
-        $query = $model -> find('all') -> where (["id in" => $booking_ids]);
+        $query = $model 
+                    -> find('all') 
+                    -> where (["id IN" => $booking_ids])
+                    -> contain(['Paypalipns', 'Hosts']);
+
         foreach ($query as $booking) {
             if ($booking -> coworker_id == $user -> id) {
                 // booking really belongs to user, display confirmation
