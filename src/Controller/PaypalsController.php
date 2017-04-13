@@ -43,7 +43,7 @@ class PaypalsController extends AppController {
         $model = TableRegistry::get('Bookings');
         $query = $model 
                     -> find('all') 
-                    -> where (["id IN" => $booking_ids])
+                    -> where (["Bookings.id IN" => $booking_ids])
                     -> contain(['Paypalipns', 'Hosts']);
 
         foreach ($query as $booking) {
