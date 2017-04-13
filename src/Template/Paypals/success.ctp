@@ -59,6 +59,30 @@
         <a target="_blank" href="http://www.google.com/maps/place/<?= $booking -> host -> lat ?>,<?= $booking -> host -> lng ?>">Open on Google Maps</a>
         </td>
     </tr>
+    <tr>
+        <th>Payment received</th>
+        <td><?= $booking -> paypalipn -> ts_inserted -> i18nFormat('Y - i - d HH:mm:ss') ?></td>
+    </tr>
+    <tr>
+        <th>Payment subject</th>
+        <td><?= $booking -> paypalipn -> item_name ?></td>
+    </tr>
+    <tr>
+        <th>Payment amount</th>
+        <td><?= $booking -> paypalipn -> mc_gross ?> <?= $booking -> paypalipn -> mc_currency ?></td>
+    </tr>
+    <tr>
+        <th>Payment paypal transaction id</th>
+        <td><?= $booking -> paypalipn -> txn_id ?></td>
+    </tr>
+    <tr>
+        <th>Yellowdesks booking ids</th>
+        <td><?= $booking -> paypalipn -> custom ?></td>
+    </tr>
+     <tr>
+        <th>Payment payer email</th>
+        <td><?= $booking -> paypalipn -> payer_email ?></td>
+    </tr>
 </table>
 
 <pre>
