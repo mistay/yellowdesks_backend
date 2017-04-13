@@ -7,7 +7,7 @@
     </tr>
     <tr>
         <th>Host's email address</th>
-        <td><?= $booking -> host -> email ?></td>
+        <td><a href="mailto:?= $booking -> host -> email ?>">?= $booking -> host -> email ?></a></td>
     </tr>
     <tr>
         <th>Host includes</th>
