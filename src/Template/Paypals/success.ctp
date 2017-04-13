@@ -3,7 +3,39 @@
 <table>
     <tr>
         <th>Host</th>
-        <td><?= $booking -> host -> name ?></td>
+        <td><?= $booking -> host -> nickname ?><br /><?= $booking -> host -> name ?><br /><?= $booking -> host -> firstname ?> <?= $booking -> host -> lastname ?></td>
+    </tr>
+    <tr>
+        <th>Host's email address</th>
+        <td><?= $booking -> host -> email ?></td>
+    </tr>
+    <tr>
+        <th>Host includes</th>
+        <td><?= $booking -> host -> details ?></td>
+    </tr>
+    <tr>
+        <th>Host's opening hours</th>
+        <td>
+            Mon: <?= $booking -> host -> open_monday_from ?> - <?= $booking -> host -> open_monday_till ?><br />
+            Tue: <?= $booking -> host -> open_tuesday_from ?> - <?= $booking -> host -> open_tuesday_till ?><br />
+            Wed: <?= $booking -> host -> open_wednesday_from ?> - <?= $booking -> host -> open_wednesday_till ?><br />
+            Thu: <?= $booking -> host -> open_thursday_from ?> - <?= $booking -> host -> open_thursday_till ?><br />
+            Fri: <?= $booking -> host -> open_friday_from ?> - <?= $booking -> host -> open_friday_till ?><br />
+            Sat: <?= $booking -> host -> open_saturday_from ?> - <?= $booking -> host -> open_saturday_till ?><br />
+            Sun: <?= $booking -> host -> open_sunday_from ?> - <?= $booking -> host -> open_sunday_till ?>
+        </td>
+    </tr>
+    <tr>
+        <th>Host's 24/7 member access</th>
+        <td><?= $booking -> host -> open_sunday_from ? "yes" : "no" ?></td>
+    </tr>
+    <tr>
+        <th>Host's cancellation scheme</th>
+        <td><?= $booking -> host -> cancellation_scheme ?></td>
+    </tr>
+    <tr>
+        <th>Host excludes</th>
+        <td><?= $booking -> host -> extras ?></td>
     </tr>
     <tr>
         <th>Host's phone number</th>
