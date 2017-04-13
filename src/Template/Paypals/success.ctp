@@ -65,11 +65,11 @@
     </tr>
     <tr>
         <th>Payment subject</th>
-        <td><?= $booking -> paypalipn -> item_name ?></td>
+        <td><?= $booking -> paypalipn -> rawrequest ["item_name"] ?></td>
     </tr>
     <tr>
         <th>Payment amount</th>
-        <td><?= $booking -> paypalipn -> mc_gross ?> <?= $booking -> paypalipn -> mc_currency ?></td>
+        <td><?= $booking -> paypalipn -> mc_gross ?> <?= $booking -> paypalipn -> rawrequest ["mc_currency"] ?></td>
     </tr>
     <tr>
         <th>Payment paypal transaction id</th>
@@ -81,7 +81,7 @@
     </tr>
      <tr>
         <th>Payment payer email</th>
-        <td><?= $booking -> paypalipn -> payer_email ?></td>
+        <td><?= $booking -> paypalipn -> rawrequest ["payer_email"] ?></td>
     </tr>
 </table>
 
