@@ -61,7 +61,7 @@
     </tr>
     <tr>
         <th>Payment received</th>
-        <td><?= $booking -> paypalipn -> ts_inserted -> i18nFormat('Y - i - d HH:mm:ss') ?></td>
+        <td><?= $booking -> paypalipn -> ts_inserted -> i18nFormat('yyyy-MM-dd HH:mm:ss') ?></td>
     </tr>
     <tr>
         <th>Payment subject</th>
