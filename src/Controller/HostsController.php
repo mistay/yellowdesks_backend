@@ -138,7 +138,18 @@ class HostsController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
     
-    
+    public function details($host_id = null) {
+        $model = TableRegistry::get('Hosts');
+        $query = $model->find('all')
+                                ->where(["id" => $host_id])
+                                ->contain(['Pictures'=> function ($q) {
+                                                               return $q
+                                                                    ->select(['id', 'host_id']);
+                                                            },
+                                               'Videos']);
+        $row = $query -> first();
+        $this->set("row", $row);
+    }
     
     // todo: request device information (display size) and send imageURL with correct resolution
     // e.g. /pictures/get/311?resolution=100x100&crop=true instead of /pictrues/get/311

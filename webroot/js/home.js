@@ -16,12 +16,12 @@ function getinfoboxcontent(host) {
         '</div>'+
         '<h1 class="firstHeading">host.nickname</h1>'+
         '<div class="bodyContent">'+
-
+        '<p><b>host.title</b><br />' +
         '<div class="demo"><ul class="lightSlider">' +
         imagelist +
         '</ul></div>' +
         '<p><a href="https://play.google.com/store/apps/details?id=com.yellowdesks.android">Book on Android App</a></p>' +
-        '<p><b>host.title</b><br />' +
+        '<p><a href="' + baseurl + '/hosts/details/' + host.id + '">Details</a></p>' +
         '<b>Included: </b>host.details<br />'+
         '<b>Extras: </b>host.extras<br />'+
         'open_monday'+
