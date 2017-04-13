@@ -23,7 +23,7 @@
     </tr>
     <tr>
         <th>Exact GPS Coordinates</th>
-        <td>Lat: <?= $booking -> lat ?>, Lng: <?= $booking -> lng ?></td>
+        <td>Lat: <?= $booking -> host -> lat ?>, Lng: <?= $booking -> host -> lng ?></td>
     </tr>
 </table>
 
