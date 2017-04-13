@@ -55,7 +55,9 @@
     </tr>
     <tr>
         <th>Exact GPS Coordinates</th>
-        <td>Lat: <?= $booking -> host -> lat ?>, Lng: <?= $booking -> host -> lng ?></td>
+        <td>Lat: <?= $booking -> host -> lat ?>, Lng: <?= $booking -> host -> lng ?><br />
+        <a href="http://www.google.com/maps/place/<?= $booking -> host -> lat ?>,<?= $booking -> host -> lng ?>">Open on Google Maps</a>
+        </td>
     </tr>
 </table>
 
