@@ -3,7 +3,7 @@
 <table>
     <tr>
         <th>Host</th>
-        <td><?= $booking -> begin ?></td>
+        <td><?= $booking -> host -> name ?></td>
     </tr>
     <tr>
         <th>Start Date</th>
