@@ -56,7 +56,6 @@
 
 <div class="pricecalculation"></div>
 
-
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="margin-bottom: 0px; height:0px">
     <input type="hidden" name="cmd" value="_xclick">
     <input type="hidden" name="business" value="hello@yellowdesks.com">
@@ -82,40 +81,40 @@
     var $input = $('.datepicker').pickadate();
 
     $(".datepicker").on("change paste keyup", function() {
-        console.log("changed: " + $(this).val()); 
 
         var startdate = $(".startdate").val();
         var enddate = $(".enddate").val();
-
         
         if ($(".startdate").val() != "" && $(".enddate").val() != "") {
-            console.log("both non-empty: " + $(this).val()); 
-
             $.ajax({
                 url: "<?= $this->Url->build(["controller" => "bookings", "action" => "prepare", $row -> id]); ?>/" + startdate + "/" + enddate + "/true",
                 context: document.body,
                 dataType: "json",
             }).done(function(data) {
-                console.log("done: ");
                 var id = 0;
+                var nickname = "";
+                var begin = 0;
+                var end = 0;
+                
                 var i = 0;
                 for (i=0; i<Object.keys(data).length; i++) {
-                    console.log("i: " + i + " " + Object.keys(data));
                     if ($.isNumeric(Object.keys(data)[i])) {
                         // found
                         id = Object.keys(data)[i];
-                        console.log("id:" + id);
+                        nickname = Object.values(data)[i].nickname;
+                        begin = Object.values(data)[i].begin;
+                        end = Object.values(data)[i].end;
                         break;
                     }
-
                 }
 
-                $(".pricecalculation").html(data.num_workingdays + " Workingday(s): " + data.total + "EUR");
-                
-                $("#item_name").val("at host Romy");
-                
-                $("#amount").val(data.total);
-                $("#custom").val("["+id+"]");
+                if (nickname != "" && begin != "" && end != "") {
+                    $(".pricecalculation").html(data.num_workingdays + " Workingday(s): " + data.total + "EUR");
+                    
+                    $("#item_name").val("Yellosdesks from " + begin + " to " + end + " at host " + nickname);
+                    $("#amount").val(data.total);
+                    $("#custom").val("["+id+"]");
+                }
             });
         }
     });
