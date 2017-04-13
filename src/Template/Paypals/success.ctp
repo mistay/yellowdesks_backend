@@ -16,13 +16,13 @@
     <tr>
         <th>Host's opening hours</th>
         <td>
-            Mon: <?= $booking -> host -> open_monday_from ->i18nFormat('HH:mm') ?> - <?= $booking -> host -> open_monday_till ?><br />
-            Tue: <?= $booking -> host -> open_tuesday_from ?> - <?= $booking -> host -> open_tuesday_till ?><br />
-            Wed: <?= $booking -> host -> open_wednesday_from ?> - <?= $booking -> host -> open_wednesday_till ?><br />
-            Thu: <?= $booking -> host -> open_thursday_from ?> - <?= $booking -> host -> open_thursday_till ?><br />
-            Fri: <?= $booking -> host -> open_friday_from ?> - <?= $booking -> host -> open_friday_till ?><br />
-            Sat: <?= $booking -> host -> open_saturday_from ?> - <?= $booking -> host -> open_saturday_till ?><br />
-            Sun: <?= $booking -> host -> open_sunday_from ?> - <?= $booking -> host -> open_sunday_till ?>
+            Mon: <?= $booking -> host -> open_monday_from ->i18nFormat('HH:mm') ?> - <?= $booking -> host -> open_monday_till ->i18nFormat('HH:mm') ?><br />
+            Tue: <?= $booking -> host -> open_tuesday_from ->i18nFormat('HH:mm') ?> - <?= $booking -> host -> open_tuesday_till ->i18nFormat('HH:mm') ?><br />
+            Wed: <?= $booking -> host -> open_wednesday_from ->i18nFormat('HH:mm') ?> - <?= $booking -> host -> open_wednesday_till ->i18nFormat('HH:mm') ?><br />
+            Thu: <?= $booking -> host -> open_thursday_from ->i18nFormat('HH:mm') ?> - <?= $booking -> host -> open_thursday_till ->i18nFormat('HH:mm') ?><br />
+            Fri: <?= $booking -> host -> open_friday_from ->i18nFormat('HH:mm') ?> - <?= $booking -> host -> open_friday_till ->i18nFormat('HH:mm') ?><br />
+            Sat: <?= $booking -> host -> open_saturday_from ->i18nFormat('HH:mm') ?> - <?= $booking -> host -> open_saturday_till ->i18nFormat('HH:mm') ?><br />
+            Sun: <?= $booking -> host -> open_sunday_from ->i18nFormat('HH:mm') ?> - <?= $booking -> host -> open_sunday_till ->i18nFormat('HH:mm') ?>
         </td>
     </tr>
     <tr>
