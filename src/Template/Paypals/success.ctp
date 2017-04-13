@@ -31,7 +31,7 @@
     </tr>
     <tr>
         <th>Host's cancellation scheme</th>
-        <td><?= $booking -> host -> cancellation_scheme ?></td>
+        <td><?= $booking -> host -> cancellationscheme ?></td>
     </tr>
     <tr>
         <th>Host excludes</th>
@@ -42,11 +42,11 @@
         <td><?= $booking -> host -> phone ?></td>
     </tr>
     <tr>
-        <th>Start Date</th>
+        <th>Booking Start Date (including)</th>
         <td><?= $booking -> begin ?></td>
     </tr>
     <tr>
-        <th>End Date</th>
+        <th>Booking End Date (including)</th>
         <td><?= $booking -> end ?></td>
     </tr>
     <tr>
