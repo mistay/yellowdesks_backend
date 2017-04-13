@@ -16,7 +16,7 @@
     <tr>
         <th>Host's opening hours</th>
         <td>
-            Mon: <?= date("H:i", $booking -> host -> open_monday_from) ?> - <?= $booking -> host -> open_monday_till ?><br />
+            Mon: <?= date("H:i", $booking -> host -> open_monday_from -> time) ?> - <?= $booking -> host -> open_monday_till ?><br />
             Tue: <?= $booking -> host -> open_tuesday_from ?> - <?= $booking -> host -> open_tuesday_till ?><br />
             Wed: <?= $booking -> host -> open_wednesday_from ?> - <?= $booking -> host -> open_wednesday_till ?><br />
             Thu: <?= $booking -> host -> open_thursday_from ?> - <?= $booking -> host -> open_thursday_till ?><br />
