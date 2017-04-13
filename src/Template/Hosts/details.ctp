@@ -92,10 +92,9 @@
             console.log("both non-empty: " + $(this).val()); 
 
             $.ajax({
-                url: "/yellowdesks/bookings/prepare/<?= $row -> id ?>/" + startdate + "/" + enddate + "/true",
+                url: "<?= $this->Url->build(["controller" => "bookings", "action" => "prepare", $row -> id]); ?>/" + startdate + "/" + enddate + "/true",
                 context: document.body,
                 dataType: "json",
-
             }).done(function(data) {
                 console.log("done: ");
                 var id = 0;
