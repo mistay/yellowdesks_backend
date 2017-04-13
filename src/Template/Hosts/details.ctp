@@ -13,7 +13,7 @@
 <?= $this->Html->css('../3rdparty/pickadate/themes/default.css') ?>
 <?= $this->Html->css('../3rdparty/pickadate/themes/default.date.css') ?>
 
-<h2>Details</h2>
+<h2>Details (please login as coworker)</h2>
 
 <div class="demo">
     <ul class="lightSlider">
@@ -112,7 +112,7 @@
                 if (nickname != "" && begin != "" && end != "") {
                     $(".pricecalculation").html(data.num_workingdays + " Workingday(s): " + data.total + "EUR");
                     
-                    $("#item_name").val("Yellosdesks from " + begin + " to " + end + " at host " + nickname);
+                    $("#item_name").val("Yellowsdesks from " + begin + " to " + end + " at host " + nickname);
                     $("#amount").val(data.total);
                     $("#custom").val("["+id+"]");
                 }
