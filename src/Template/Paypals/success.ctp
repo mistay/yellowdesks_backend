@@ -1,7 +1,7 @@
 <h2>Booking Confirmation</h2>
 
 
-<? $rawrequest = json_decode($booking -> paypalipn -> rawrequest); ?>
+<?php $rawrequest = json_decode($booking -> paypalipn -> rawrequest); ?>
 <table>
     <tr>
         <th>Host</th>
