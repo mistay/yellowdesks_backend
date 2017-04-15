@@ -142,7 +142,7 @@ if ($row -> open_monday_from == null
     <input type="hidden" id="return" name="return" value="https://www.yellowdesks.com/paypals/success">
     <input type="hidden" name="bn" value="PP-BuyNowBF:btn_paynow_SM.gif:NonHostedGuest">
     <a class="buynow" id="buynow1" onclick="this.parentElement.submit()">
-    buy now 
+    <?= __("Pay Now with Paypal") ?>
     </a>
     <img alt="" border="0" src="https://www.paypal.com/de_DE/i/scr/pixel.gif" width="1" height="1">
 </form>
