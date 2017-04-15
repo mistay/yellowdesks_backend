@@ -139,6 +139,8 @@ class HostsController extends AppController {
     }
     
     public function details($host_id = null) {
+        $this->viewBuilder()->layout('lightbox');
+
         $model = TableRegistry::get('Hosts');
         $query = $model->find('all')
                                 ->where(["id" => $host_id])
@@ -149,6 +151,9 @@ class HostsController extends AppController {
                                                'Videos']);
         $row = $query -> first();
         $this->set("row", $row);
+
+        $this->set("user", $this->getloggedinUser());
+
     }
     
     // todo: request device information (display size) and send imageURL with correct resolution

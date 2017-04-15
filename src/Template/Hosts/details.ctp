@@ -3,6 +3,35 @@
     .demo {
         width: 100%;
     }
+
+    .buynow {
+        background: black;
+        color: yellow;
+        padding: 7px;
+        display: none;
+        cursor: pointer;
+    }
+    .buynow:hover {
+        color: white;
+    }
+
+    input[type="text"].datepicker {
+        width: 25%;
+        font-size: 24px;
+        min-width: 300px;
+    }
+    label {
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 0px;
+    }
+
+    .dateboxes {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        flex-wrap: wrap;
+    }
 </style>
 <?= $this->Html->script('../3rdparty/lightslider/js/lightslider.js'); ?>
 
@@ -13,7 +42,8 @@
 <?= $this->Html->css('../3rdparty/pickadate/themes/default.css') ?>
 <?= $this->Html->css('../3rdparty/pickadate/themes/default.date.css') ?>
 
-<h2>Details (please login as coworker)</h2>
+<h3><?= __("Host") . ": " . $row -> nickname ?></h3>
+<h3><?= $row -> title ?></h3>
 
 <div class="demo">
     <ul class="lightSlider">
@@ -22,40 +52,79 @@
         <?php } ?>
     </ul>
 </div>
-<script> $(".lightSlider").lightSlider({
-            gallery: false,
-            item: 1,
-            auto: true,
-            pause: 5000,
-            verticalHeight: 100,
-            keyPress: true,
-            /* loop: true, prevents video from beeing played properly */
-        }); 
+<script> 
+    $(".lightSlider").lightSlider({
+        gallery: false,
+        item: 1,
+        auto: true,
+        pause: 5000,
+        verticalHeight: 100,
+        keyPress: true,
+        /* loop: true, prevents video from beeing played properly */
+    }); 
 </script>
 
-<?= $row -> nickname ?>
-<?= $row -> details ?>
+<strong><?= __("Included") ?></strong> <?= $row -> details ?><br />
+<strong><?= __("Excluded") ?></strong> <?= $row -> extras ?><br />
+<br />
+    
+<strong><?= __("Opening hours") ?></strong> 
+<?php
+if ($row -> open_monday_from == null
+    &&
+    $row -> open_tuesday_from == null
+    &&
+    $row -> open_wednesday_from == null
+    &&
+    $row -> open_thursday_from == null
+    &&
+    $row -> open_friday_from == null
+    &&
+    $row -> open_saturday_from == null
+    &&
+    $row -> open_sunday_from == null
+    )
+        echo "n/a";
+?>
+<br />
 
-<?= $row -> extras ?>
+<?php if ($row -> open_monday_from != null) { ?>
+    <?= __("Monday") . ": " . $row -> open_monday_from -> i18nFormat('HH:mm') . " - " . $row -> open_monday_till -> i18nFormat('HH:mm') ?><br />
+<?php } elseif ($row -> open_tuesday_from != null) { ?>
+    <?= __("Tuesday") . ": " . $row -> open_tuesday_from -> i18nFormat('HH:mm') . " - " . $row -> open_tuesday_till -> i18nFormat('HH:mm') ?><br />
+<?php } elseif ($row -> open_wednesday_from != null) { ?>
+    <?= __("Wednesday") . ": " . $row -> open_wednesday_from -> i18nFormat('HH:mm') . " - " . $row -> open_wednesday_till -> i18nFormat('HH:mm') ?><br />
+<?php } elseif ($row -> open_thursday_from != null) { ?>
+    <?= __("Thursday") . ": " . $row -> open_thursday_from -> i18nFormat('HH:mm') . " - " . $row -> open_thursday_till -> i18nFormat('HH:mm') ?><br />
+<?php } elseif ($row -> open_friday_from != null) { ?>
+    <?= __("Friday") . ": " . $row -> open_friday_from -> i18nFormat('HH:mm') . " - " . $row -> open_friday_till -> i18nFormat('HH:mm') ?><br />
+<?php } elseif ($row -> open_saturday_from != null) { ?>
+    <?= __("Saturday") . ": " . $row -> open_saturday_from -> i18nFormat('HH:mm') . " - " . $row -> open_saturday_till -> i18nFormat('HH:mm') ?><br />
+<?php } elseif ($row -> open_sunday_from != null) { ?>
+    <?= __("Sunday") . ": " . $row -> open_sunday_from -> i18nFormat('HH:mm') . " - " . $row -> open_sunday_till -> i18nFormat('HH:mm') ?><br />
+<?php } ?>
 
-<?= $row -> open_monday ?>
-<?= $row -> open_tuesday ?>
-<?= $row -> open_wednesday ?>
-<?= $row -> open_thursday ?>
-<?= $row -> open_friday ?>
-<?= $row -> open_saturday ?>
-<?= $row -> open_sunday ?>
+<? $row -> price_1day > 0 ? $row -> price_1day. " EUR" : "" ?>
+<? $row -> price_10days > 0 ? $row -> price_10days. " EUR" : "" ?>
+<? $row -> price_1month > 0 ? $row -> price_1month. " EUR" : "" ?>
+<? $row -> price_6months > 0 ? $row -> price_6months . " EUR" : "" ?>
+<br />
 
-<?= $row -> price_1day ?>
-<?= $row -> price_10days ?>
-<?= $row -> price_1month ?>
-<?= $row -> price_6months ?>
+<div class="dateboxes">
+    <div>
+        <label for="startdate"><?= __("Start Date") ?></label>
+        <input type="text" id="startdate" class="datepicker startdate" placeholder="<?= __("Start Date") ?>" value="<?= date("Y-m-d"); ?>" />
+    </div>
 
-<input type="text" class="datepicker startdate" />
-<input type="text" class="datepicker enddate" />
+    <div>
+        <label for="enddate"><?= __("End Date") ?></label>
+        <input type="text" id="enddate" class="datepicker enddate" placeholder="<?= __("End Date") ?>" value="<?= date("Y-m-d"); ?>" />
+    </div>
+</div>
+<br />
 
 <div class="pricecalculation"></div>
-
+<br />
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="margin-bottom: 0px; height:0px">
     <input type="hidden" name="cmd" value="_xclick">
     <input type="hidden" name="business" value="hello@yellowdesks.com">
@@ -82,13 +151,23 @@
     var $input = $('.datepicker').pickadate();
 
     $(".datepicker").on("change paste keyup", function() {
+        pricecalc();
+    });
 
+    $( document ).ready(function() {
+        pricecalc();
+    });
+
+    function pricecalc() {
         var startdate = $(".startdate").val();
         var enddate = $(".enddate").val();
+
+        var loggedinuser = <?php echo $user == null ? "false" : "true" ?>;
         
+
         if ($(".startdate").val() != "" && $(".enddate").val() != "") {
             $.ajax({
-                url: "<?= $this->Url->build(["controller" => "bookings", "action" => "prepare", $row -> id]); ?>/" + startdate + "/" + enddate + "/true",
+                url: "<?= $this->Url->build(["controller" => "bookings", "action" => "prepare", $row -> id]); ?>/" + startdate + "/" + enddate + "/" + (loggedinuser ? "true" : ""),
                 context: document.body,
                 dataType: "json",
             }).done(function(data) {
@@ -97,26 +176,38 @@
                 var begin = 0;
                 var end = 0;
                 
-                var i = 0;
-                for (i=0; i<Object.keys(data).length; i++) {
-                    if ($.isNumeric(Object.keys(data)[i])) {
-                        // found
-                        id = Object.keys(data)[i];
-                        nickname = Object.values(data)[i].nickname;
-                        begin = Object.values(data)[i].begin;
-                        end = Object.values(data)[i].end;
-                        break;
+                if (loggedinuser) {
+                    var i = 0;
+                    for (i=0; i<Object.keys(data).length; i++) {
+                        if ($.isNumeric(Object.keys(data)[i])) {
+                            // found
+                            id = Object.keys(data)[i];
+                            nickname = Object.values(data)[i].nickname;
+                            begin = Object.values(data)[i].begin;
+                            end = Object.values(data)[i].end;
+                            break;
+                        }
                     }
-                }
 
-                if (nickname != "" && begin != "" && end != "") {
-                    $(".pricecalculation").html(data.num_workingdays + " Workingday(s): " + data.total + "EUR");
-                    
-                    $("#item_name").val("Yellowsdesks from " + begin + " to " + end + " at host " + nickname);
-                    $("#amount").val(data.total);
-                    $("#custom").val("["+id+"]");
+                    if (nickname != "" && begin != "" && end != "") {
+                        $(".pricecalculation").html(data.num_workingdays + " Workingday(s): " + data.total + "EUR");
+                        $(".buynow").show();
+
+                        $("#item_name").val("Yellowsdesks from " + begin + " to " + end + " at host " + nickname);
+                        $("#amount").val(data.total);
+                        $("#custom").val("["+id+"]");
+                    }
+                } else {
+                    // not logged in
+
+                    var text = data.num_workingdays + " Workingday(s): " + data.total + "EUR";
+                    text += ". please login to book."
+                    $(".pricecalculation").html(text);
                 }
             });
+        } else {
+            $(".pricecalculation").html( "Please specify start- and end date to request quote." );
+            $(".buynow").hide();
         }
-    });
+    }
 </script>

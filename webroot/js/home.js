@@ -72,6 +72,19 @@ String.prototype.format = function()
 };
 
 function markerclick(event) {
+    var url = "hosts/details/" + this.host.id;
+    $(".iframelightbox iframe").attr("src", url);
+    $(".iframelightbox").show();
+}
+
+$( document ).ready(function() {
+    $( ".iframeclose" ).click(function() {
+        console.log( "Handler for .click() called." );
+        $(".iframelightbox").hide();
+    });
+});
+
+function markerclick2(event) {
     var infowindow = new google.maps.InfoWindow({
         content: getinfoboxcontent(this.host),
     });
@@ -157,6 +170,4 @@ function initMap() {
         marker.addListener('click', markerclick);
     }
 }
-
-
 $.getScript( "https://maps.googleapis.com/maps/api/js?key=AIzaSyD4HecLgzMZ6sK8fYSracEULluXdujR8BU&libraries=places&callback=initMap");

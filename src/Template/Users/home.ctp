@@ -130,7 +130,44 @@ $this->layout = false;
         ?>
         <link rel="icon" type="image/jpeg" href="<?= $url ?>" />
     </head>
+    <style>
+        .iframelightbox {
+            width: 80%;
+            height: 80%;
+            left: 10%;
+            top: 10%;
+            z-index: 1000;
+            position: absolute;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            .iframelightbox {
+                left: 1%;
+                top: 1%;
+                width: 98%;
+                height: 98%;
+                padding-top: 55px;
+            }
+        }
+        .iframelightbox iframe{
+            width: 100%;
+            height: 100%;
+        }
+        .iframeclose {
+            right: 0px;
+            padding: 7px;
+            margin: 2px;
+            position: absolute;
+            background-color: #ececec;
+            cursor: pointer;
+        }
+    </style>
+    
     <body>
+        <div class="iframelightbox">
+            <a class="iframeclose">CLOSE</a>
+            <iframe src=""></iframe>
+        </div>
         <div class="menunavdesktopanchor">
         </div>
         <div class="menunav">
