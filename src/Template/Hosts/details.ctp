@@ -84,7 +84,7 @@ if ($row -> open_monday_from == null
     &&
     $row -> open_sunday_from == null
     )
-        echo "n/a";
+        echo __("n/a");
 ?>
 <br />
 
@@ -104,10 +104,24 @@ if ($row -> open_monday_from == null
     <?= __("Sunday") . ": " . $row -> open_sunday_from -> i18nFormat('HH:mm') . " - " . $row -> open_sunday_till -> i18nFormat('HH:mm') ?><br />
 <?php } ?>
 
-<?= $row -> price_1day > 0 ? $row -> price_1day. " EUR" : "" ?>
-<?= $row -> price_10days > 0 ? $row -> price_10days. " EUR" : "" ?>
-<?= $row -> price_1month > 0 ? $row -> price_1month. " EUR" : "" ?>
-<?= $row -> price_6months > 0 ? $row -> price_6months . " EUR" : "" ?>
+
+<strong><?= __("Prices") ?></strong> 
+<?php
+if ($row -> price_1day == null
+    &&
+    $row -> price_10days == null
+    &&
+    $row -> price_1month == null
+    &&
+    $row -> price_6months == null
+    )
+        echo __("n/a");
+?>
+<br />
+<?= $row -> price_1day > 0 ? __("1 Day Ticket") . ": " . $row -> price_1day . " EUR" : "" ?><br />
+<?= $row -> price_10days > 0 ? __("10 Days Ticket") . ": " . $row -> price_10days . " EUR" : "" ?><br />
+<?= $row -> price_1month > 0 ? __("1 Month Ticket") . ": " .  $row -> price_1month . " EUR" : "" ?><br />
+<?= $row -> price_6months > 0 ? __("6 Months Ticket") . ": " .  $row -> price_6months . " EUR" : "" ?><br />
 <br />
 
 <div class="dateboxes">
