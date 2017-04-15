@@ -104,10 +104,10 @@ if ($row -> open_monday_from == null
     <?= __("Sunday") . ": " . $row -> open_sunday_from -> i18nFormat('HH:mm') . " - " . $row -> open_sunday_till -> i18nFormat('HH:mm') ?><br />
 <?php } ?>
 
-<? $row -> price_1day > 0 ? $row -> price_1day. " EUR" : "" ?>
-<? $row -> price_10days > 0 ? $row -> price_10days. " EUR" : "" ?>
-<? $row -> price_1month > 0 ? $row -> price_1month. " EUR" : "" ?>
-<? $row -> price_6months > 0 ? $row -> price_6months . " EUR" : "" ?>
+<?= $row -> price_1day > 0 ? $row -> price_1day. " EUR" : "" ?>
+<?= $row -> price_10days > 0 ? $row -> price_10days. " EUR" : "" ?>
+<?= $row -> price_1month > 0 ? $row -> price_1month. " EUR" : "" ?>
+<?= $row -> price_6months > 0 ? $row -> price_6months . " EUR" : "" ?>
 <br />
 
 <div class="dateboxes">
