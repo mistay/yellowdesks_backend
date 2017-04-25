@@ -47,6 +47,7 @@
 
 <div class="demo">
     <ul class="lightSlider">
+        <li><video width="320"><source src="<?= $this->Url->build(["controller" => "videos", "action" => "",  $row -> videos [0] -> url]); ?>" type="video/mp4"></video></li>
         <?php foreach ($row -> pictures as $picture) { ?>
             <li><img src="<?= $this->Url->build(["controller" => "pictures", "action" => "get", $picture->id, "resolution" => "800x300", "crop" => true]); ?>"/></li>
         <?php } ?>
