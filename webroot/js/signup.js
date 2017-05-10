@@ -57,10 +57,7 @@ function formvalidataion() {
     errors = false;
     $("input:visible").each(function() {
 
-        console.log(this.id);
-
         if (this.id == "pac-input") {
-            console.log("foo");
             return;
         }
 
@@ -82,6 +79,6 @@ function formvalidataion() {
             $(this).removeClass("error");
         }
     });
-    console.log(errors);
+    console.log("errors: " + errors);
     return errors;
 }

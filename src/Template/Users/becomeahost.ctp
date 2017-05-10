@@ -38,10 +38,10 @@
                         <td><input type="text" name="email" placeholder="E-Mail" value="<?= @$data['email'] ?>" /></td>
                     </tr>
                     <tr class="space">
-                        <td><label for="address"><?= __("Billing Address") ?></label></td>
+                        <td><label for="address"><?= __("Billing Address (will be put on your invoice)") ?></label></td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><input type="text" name="address" id="address" placeholder="Billing Address" value="<?= @$data['address'] ?>" /></td>
+                        <td colspan="2"><input type="text" name="address" id="address" placeholder="Billing Address (will be put on your invoice)" value="<?= @$data['address'] ?>" /></td>
                     </tr>
                     
                     <tr class="space">
@@ -69,33 +69,55 @@
 
                     <tr class="inputs">
                         
-                        <td><h3>Your Yellowdesk(s)</h3><br /><label for="desks">Number of Desks</label></td>
+                        <td><h3>Your Yellowdesk(s)</h3><br /><label for="desks">Number of Desks, e.g. 2</label></td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td><input type="text" name="desks" id="desks" placeholder="Number of Desks: 2" value="<?= @$data['desks'] ?>"  />
+                        <td><input type="text" name="desks" id="desks" placeholder="Number of Desks, e.g. 2" value="<?= @$data['desks'] ?>"  />
                         <td></td>
                     </tr>
                     <tr class="space">
-                        <td colspan="2"><label for="title">Title</label></td>
+                        <td colspan="2"><label for="title">Title, e.g. Beautiful office space downtown</label></td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><input type="text" name="title" id="title" placeholder="Beautiful office space downtown" value="<?= @$data['title'] ?>" /></td>
+                        <td colspan="2"><input type="text" name="title" id="title" placeholder="Title, e.g. Beautiful office space downtown" value="<?= @$data['title'] ?>" /></td>
                     </tr>
                     <tr class="space">
-                        <td colspan="2"><label for="details">Included  (for office space minimum requirements are: WiFi, desk and chair)</label></td>
+                        <td colspan="2"><label for="details">Included, e.g. Coffee, B/W A4 Printer, WiFi, Telephone Room</label></td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><input type="text" name="details" id="details" placeholder="Included: Coffee, B/W A4 Printer, WiFi, Telephone Room." value="<?= @$data['details'] ?>" /></td>
+                        <td colspan="2"><input type="text" name="details" id="details" placeholder="Included, e.g. Coffee, B/W A4 Printer, WiFi, Telephone Room." value="<?= @$data['details'] ?>" /></td>
+                    </tr>
+                    <tr class="errorline">
+                        <td>
+                            <span class="check name"><?= __("Please note: for office space minimum requirements are: connectivity (i.e. WIFI, LAN, ..), desk and chair.") ?></span></td>
+                        </td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><label for="extras">Excluded</label></td>
+                        <td colspan="2"><label for="extras">Excluded, e.g. Parking lot, High-Speed Wifi, Conference Room</label></td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><input type="text" name="extras" id="extras" placeholder="Excluded: Parking lot, High-Speed Wifi, Conference Room." value="<?= @$data['extras'] ?>" /></td>
+                        <td colspan="2"><input type="text" name="extras" id="extras" placeholder="Excluded, e.g. Parking lot, High-Speed Wifi, Conference Room" value="<?= @$data['extras'] ?>" /></td>
+                    </tr>
+                    <tr class="inputs">
+                        <td colspan="2"><label for="addressyellowdesk">Yellowdesks Address (will be shown to your coworkers after booking), e.g. Jakob-Haringer-Str. 3, 5020 Salzburg</label></td>
+                    </tr>
+                    <tr class="inputs">
+                        <td colspan="2"><input type="text" name="addressyellowdesk" id="addressyellowdesk" 
+                            placeholder="Yellowdesks Address (will be shown to your coworkers after booking), e.g. Jakob-Haringer-Str. 3, 5020 Salzburg" value="<?= @$data['addressyellowdesk'] ?>" />
+                            <input type="button" id="lookup" value="<?= __("Move yellow pin in map to this location") ?>" />
+                        </td>
+                    </tr>
+                    <tr class="inputs">
+                        <td colspan="2"><label for="addressadditional">Additional information about how to find the entrance of the Yellowdesk(s), e.g. North from the old building</label></td>
+                    </tr>
+                    <tr class="inputs">
+                        <td colspan="2"><input type="text" name="addressadditional" id="addressadditional" 
+                            placeholder="Additional information about how to find the entrance of the Yellowdesk(s), e.g. North from the old building" value="<?= @$data['addressadditional'] ?>" />
+                    </td>
                     </tr>
                     <tr class="space">
-                        <td><label for="ydaddress"><?= __("Please drag the marker to the excact location of your Yellowdesk(s)") ?></label></td>
+                        <td><label for="ydaddress"><?= __("Please drag the marker to the excact entrance of your worspace where you have your Yellowdesk(s)") ?></label></td>
                     </tr>
                     <tr class="inputs">
                         <td colspan="2"><input type="text" id="pac-input" /></td>
@@ -130,8 +152,24 @@
 
 <script>
     $(window).on('positionchanged', function (e) {
-        console.log("event " + e.state.lat + "/" + e.state.lng);
+        // console.log("event " + e.state.lat + "/" + e.state.lng);
         $("#lat").val(e.state.lat);
         $("#lng").val(e.state.lng);
     });
 </script>
+
+<script type="text/javascript">
+    $("#lookup").on('click', function() {
+        console.log($('#addressyellowdesk').val());
+        
+        var geocoder =  new google.maps.Geocoder();
+    
+        geocoder.geocode( { 'address': $('#addressyellowdesk').val()}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            setPosition(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+            moveMarker();
+            console.log("bla" + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng());
+        }
+        });
+    });
+ </script>

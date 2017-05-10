@@ -7,11 +7,11 @@ body {
 }
 
 body a {
-color: #333333; 
+    color: #333333; 
 }
 body a:focus,
 body a:hover {
-color: #333333; 
+    color: #333333; 
 }
 
 .mb {
@@ -40,8 +40,9 @@ th {
     white-space:nowrap;
 }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], textarea {
     width: 100%;
+    border: 1px solid #dadada;
     
 }
 

@@ -76,7 +76,7 @@ function makeMarker() {
 }
 
 function moveMarker() {
-    marker.setPosition(new google.maps.LatLng(position.lat(), position.lng()));
+    marker.setPosition(new google.maps.LatLng(position.lat, position.lng));
 }
 
 function setPosition(lat, lng) {
