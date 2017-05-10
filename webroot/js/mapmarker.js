@@ -79,6 +79,10 @@ function moveMarker() {
     marker.setPosition(new google.maps.LatLng(position.lat, position.lng));
 }
 
+function setCenter() {
+    map.setCenter({lat: position.lat, lng: position.lng});
+}
+
 function setPosition(lat, lng) {
     this.position = { lat: lat, lng: lng };
 

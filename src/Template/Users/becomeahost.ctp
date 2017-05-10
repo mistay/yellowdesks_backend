@@ -168,6 +168,7 @@
         if (status == google.maps.GeocoderStatus.OK) {
             setPosition(results[0].geometry.location.lat(), results[0].geometry.location.lng());
             moveMarker();
+            setCenter();
             console.log("bla" + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng());
         }
         });
