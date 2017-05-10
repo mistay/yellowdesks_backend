@@ -109,11 +109,11 @@
                         </td>
                     </tr>
                     <tr class="inputs">
-                        <td colspan="2"><label for="addressadditional">Additional information about how to find the entrance of the Yellowdesk(s), e.g. North from the old building</label></td>
+                        <td colspan="2"><label for="addressadditional">Additional information about how to find the entrance of the Yellowdesk(s), e.g. Please go to the glass door as the main entrance door of building No. 2, then follow yellow arrows on the floor.</label></td>
                     </tr>
                     <tr class="inputs">
                         <td colspan="2"><input type="text" name="addressadditional" id="addressadditional" 
-                            placeholder="Additional information about how to find the entrance of the Yellowdesk(s), e.g. North from the old building" value="<?= @$data['addressadditional'] ?>" />
+                            placeholder="Additional information about how to find the entrance of the Yellowdesk(s), e.g. Please go to the glass door as the main entrance door of building No. 2, then follow yellow arrows on the floor." value="<?= @$data['addressadditional'] ?>" />
                     </td>
                     </tr>
                     <tr class="space">
