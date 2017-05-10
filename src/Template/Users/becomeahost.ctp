@@ -140,7 +140,9 @@
                         <td class="right">
                         <input readonly="readonly" type="hidden" name="lat" id="lat" placeholder="Lat" value="<?= @$data['lat'] ?>" />
                         <input readonly="readonly" type="hidden" name="lng" id="lng" placeholder="Lng" value="<?= @$data['lng'] ?>" />
-                        <input type="submit" id="finish" value="<?= __("Finish") ?>" /></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit" id="finish" value="<?= __("Finish") ?>" /></td>
                     </tr>
                 </table>
             </div>
