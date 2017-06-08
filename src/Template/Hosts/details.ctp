@@ -207,7 +207,43 @@ if ($row -> price_1day == null
                     }
 
                     if (nickname != "" && begin != "" && end != "") {
-                        $(".pricecalculation").html(data.num_workingdays + " Workingday(s): " + data.total + "EUR");
+                        var tmp="";
+                        var daysarray = [];
+                        if (typeof(data.num_months) !== "undefined" && data.num_months > 0) {
+                            tmp = "Month";
+                            if (data.num_months > 1)
+                                tmp = "Months";
+
+                            daysarray.push(data.num_months + " " + tmp);
+                        }
+
+                        if (typeof(data.num_days) !== "undefined" && data.num_days > 0) {
+                            tmp = "Day Ticket";
+                            if (data.num_days > 1)
+                                tmp = "Day Tickets";
+
+                            var tmp2="";
+                            if (typeof(data.num_workingdays) !== "undefined") {
+                                var tmp2 = "Workingday";
+                                if (data.num_days > 1)
+                                    tmp2 = "Workingdays";
+
+                                tmp2 = " (" + data.num_workingdays + " " + tmp2 + ")";
+                            }
+
+
+                            daysarray.push(data.num_days + " " + tmp + tmp2);
+                        }
+
+                        
+
+                        if (typeof(data.vat) !== "undefined") {
+                            daysarray.push(data.vat + " EUR VAT");
+                        }
+                        
+                        var daysstring = daysarray.join(" + ");
+                        
+                        $(".pricecalculation").html( daysstring + " = " + data.total + " EUR");
                         $(".buynow").show();
 
                         $("#item_name").val("Yellowsdesks from " + begin + " to " + end + " at host " + nickname);
