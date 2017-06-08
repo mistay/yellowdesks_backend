@@ -243,8 +243,10 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
             // 1st rule
             $rets["debug_rule"] = 1;
             $total = ($timespan["months"] + ($timespan["days"] / 30)) * $host -> price_6months / 6;
-        } elseif ($timespan["months"] >= 1) {
+        } elseif ($timespan["months"] >= 1 && $host -> price_1month > 0) {
             // 2nd rule
+            // zieht nur wenn host einen monats-satz hinterlegt hat
+
             $rets["debug_rule"] = 2;
             $total = ($timespan["months"] + ($timespan["days"] / 30)) * $host -> price_1month;
         } else {
@@ -252,7 +254,7 @@ example: coworker books from 31.10.2017 to 7.11.2017 at host "coworkingsalzburg"
             $rets["workingdays"] = $workingdays;
             $rets["num_workingdays"] = sizeof($workingdays);
 
-            if (sizeof($workingdays) >= 10)  {
+            if (sizeof($workingdays) >= 10 && $host -> price_10days > 0)  {
                 // 3rd rule
                 $rets["debug_rule"] = 3;
                 $total = sizeof($workingdays) * $host -> price_10days / 10;
