@@ -21,7 +21,7 @@
     <?php } ?>
 
     <br /><br />
-    <?= __("You can choose one or more pictures for upload. Resolution: the more, the better."); ?>
+    <?= __("You can choose one or more pictures for upload. Resolution: the more, the better (max: {0}).", min(ini_get("upload_max_filesize"), ini_get("post_max_size"))); ?>
     <input type="file" name="files[]" multiple>
     <br /><br />
     
