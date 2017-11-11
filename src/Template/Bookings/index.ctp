@@ -23,8 +23,12 @@
         <td><?= money_format('%i', $row->price) ?> + <?= money_format('%i', $row->vat) ?></td>
         <td><?= money_format('%i', $row->servicefee_host) ?></td>
         <td><?= money_format('%i', $row->amount_host) ?> + <?= money_format('%i', $row->vat_host) ?></td>
-        <td><?php echo $row->host->name . " (" . $row->host->nickname . ")"; ?></td>
-        <td><?php echo $row->coworker->companyname . "<br />" . $row->coworker->firstname . $row->coworker->lastname; ?><br /><a href="<?= $url; ?>">Invoice</a></td>
+        <td><?php echo $row->host->name . " (" . $row->host->nickname . ")"; ?><br /><a href="<?= $this->Url->build(["controller" => "hosts", "action" => "cru", $row->host->id]); ?>">Edit</a></td>
+        <td><?php echo $row->coworker->companyname . "<br />" . $row->coworker->firstname . $row->coworker->lastname; ?>
+		<br />
+		<a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "cru", $row->coworker->id]); ?>">Edit</a>
+		<a href="<?= $url; ?>">Invoice</a>
+	</td>
     </tr>
     <?php endforeach; ?>
 </table>
