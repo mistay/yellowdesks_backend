@@ -31,6 +31,10 @@
             <td><input type="text" name="city" placeholder="Salzburg" value='<?php echo @$row["city"] ?>' /></td>
         </tr>
         <tr>
+            <th>Phone</th>
+            <td><input type="text" name="phone" placeholder="+43 662 890000" value='<?php echo @$row["phone"] ?>' /></td>
+        </tr>
+        <tr>
             <th>VAT ID</th>
             <td><input type="text" name="vatid" placeholder="ATU123456" value='<?php echo @$row["vatid"] ?>' /></td>
         </tr>
