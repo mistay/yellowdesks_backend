@@ -39,6 +39,10 @@
             <td><input type="text" name="vatid" placeholder="ATU123456" value='<?php echo @$row["vatid"] ?>' /></td>
         </tr>
         <tr>
+            <th>VAT ID successfully checked</th>
+            <td><input type="text" name="vatid_successfully_checked" placeholder="2017-01-01" value='<?php echo @$row["vatid_successfully_checked"] ?>' /></td>
+        </tr>
+        <tr>
             <th>E-Mail</th>
             <td><input type="text" name="email" placeholder="john@example.com" value='<?php echo @$row["email"] ?>' /></td>
         </tr>
