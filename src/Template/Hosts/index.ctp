@@ -8,8 +8,8 @@
         <th>Sales (calc'ed)</th>
         <th>Title</th>
         <th>Included<br />Excluded<br />Opening instructions</th>
-        <th>Address</th>
-        <th>GPS</th>
+        <th>Billing Address</th>
+        <th>Yellowdesk Address</th>
         <th>Price</th>
         <th>Open</th>
         <th>Pictures</th>
@@ -31,7 +31,7 @@
         <?php echo substr($row->extras, 0, 30) . (strlen($row->extras) > 30 ? "..." : ""); ?><br />
         <?php echo substr($row->openinginstructions, 0, 30) . (strlen($row->openinginstructions) > 30 ? "..." : ""); ?></td>
         <td><?php echo nl2br($row->address); ?><br /><?php echo $row->postal_code; ?><br /><?php echo $row->city; ?></td>
-        <td><?php echo $row->lat; ?> <?php echo $row->lng; ?></td>
+        <td><?= nl2br($row->addressyellowdesk) ?><br /><?= $row->lat ?>,<?=  $row->lng ?> <a href="http://www.google.com/maps/place/<?= @$row["lat"] ?>,<?= @$row["lng"]?>" target="_blank">map</a></td>
         <td><?php echo money_format("%i", $row->price_2hours); ?>
         <?php echo money_format("%i", $row->price_1day); ?>
         <?php echo money_format("%i", $row->price_10days); ?>
