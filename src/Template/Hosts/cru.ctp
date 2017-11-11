@@ -71,6 +71,7 @@
             <th>Address of Yellowdesk</th>
             <td>
 		<input type="text" name="addressyellowdesk" placeholder="Street name and postal code where my Yellowdesk is located" value='<?php echo @$row["addressyellowdesk"] ?>' /><br />
+		Additional: <?= @$row["addressadditional"] ?><br />
 		GPS: <?php echo @$row["lat"] . " " . @$row["lng"]; ?> <a href="http://www.google.com/maps/place/<?= @$row["lat"] ?>,<?= @$row["lng"]?>" target="_blank">lookup GPS coords</a>
             </td>
         </tr>
