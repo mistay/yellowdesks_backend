@@ -35,7 +35,7 @@ class BookingsController extends AppController {
     }
     
     public function invoice($id) {
-        if (!$this -> hasAccess([Roles::COWORKER])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
+        if (!$this -> hasAccess([Roles::COWORKER, Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
 
         $model = TableRegistry::get('Bookings');
         $query = $model->get($id, [
