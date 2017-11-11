@@ -121,10 +121,11 @@ if ($row -> price_1day == null
         echo __("n/a");
 ?>
 <br />
-<?= $row -> price_1day > 0 ? __("1 Day Ticket") . ": " . $row -> price_1day . " EUR" : "" ?><br />
-<?= $row -> price_10days > 0 ? __("10 Days Ticket") . ": " . $row -> price_10days . " EUR" : "" ?><br />
-<?= $row -> price_1month > 0 ? __("1 Month Ticket") . ": " .  $row -> price_1month . " EUR" : "" ?><br />
-<?= $row -> price_6months > 0 ? __("6 Months Ticket") . ": " .  $row -> price_6months . " EUR" : "" ?><br />
+<? // todo: round new prices ?>
+<?= $row -> price_1day > 0 ? __("1 Day Ticket") . ": " . $row -> price_1day * (1 + $row -> servicefee) . " EUR" : "" ?><br />
+<?= $row -> price_10days > 0 ? __("10 Days Ticket") . ": " . $row -> price_10days * (1 + $row -> servicefee) . " EUR" : "" ?><br />
+<?= $row -> price_1month > 0 ? __("1 Month Ticket") . ": " .  $row -> price_1month * (1 + $row -> servicefee) . " EUR" : "" ?><br />
+<?= $row -> price_6months > 0 ? __("6 Months Ticket") . ": " .  $row -> price_6months * (1 + $row -> servicefee) . " EUR" : "" ?><br />
 <br />
 
 <div class="dateboxes">
