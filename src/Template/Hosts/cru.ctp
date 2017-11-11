@@ -48,6 +48,10 @@
             <td><input type="text" name="vatid" placeholder="ATU123456789" value='<?php echo @$row["vatid"] ?>' /></td>
         </tr>
         <tr>
+            <th>VAT ID successfully checked</th>
+            <td><input type="text" name="vatid_successfully_checked" placeholder="2017-01-01" value='<?php echo @$row["vatid_successfully_checked"] ?>' /></td>
+        </tr>
+        <tr>
             <th>Paypal E-Mail (for sending the money)</th>
             <td><input type="text" name="paypal_email" placeholder="my_paypal_email@example.com" value='<?php echo @$row["paypal_email"] ?>' /></td>
         </tr>
