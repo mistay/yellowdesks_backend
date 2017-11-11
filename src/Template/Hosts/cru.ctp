@@ -68,6 +68,10 @@
             <td><input type="text" name="city" placeholder="Salzburg" value='<?php echo @$row["city"] ?>' /></td>
         </tr>
         <tr>
+            <th>Address of Yellowdesk</th>
+            <td><input type="text" name="addressyellowdesk" placeholder="Street name and postal code where my Yellowdesk is located" value='<?php echo @$row["addressyellowdesk"] ?>' /></td>
+        </tr>
+        <tr>
             <th>Price for 2 Hours</th>
             <td><input type="text" name="price_2hours" placeholder="120.50" value='<?php echo @$row["price_2hours"] ?>' /></td>
         </tr>
