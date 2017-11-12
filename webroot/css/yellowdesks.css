@@ -7,7 +7,7 @@ body {
 }
 
 body a {
-    color: #333333; 
+    color: #c4c900; 
 }
 body a:focus,
 body a:hover {
@@ -22,14 +22,21 @@ margin-bottom: 50px;}
 .eraser {font-family: eraserregular;}
 
 a {
-    color: darkgrey;
+    color: yellow;
+    background-color: black;
     text-decoration: none;
 }
 
-a:hover {
-    color: black;
+a:hover, body a:hover {
+    color: yellow;
 }
 
+.header a, .subheader a, .subsubheader a {
+    background-color:transparent;
+}
+.header a:hover, .subheader a:hover, .subsubheader a:hover {
+    color: black;
+}
 table {
     width: 100%;
 }
