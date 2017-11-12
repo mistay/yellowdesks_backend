@@ -86,8 +86,8 @@ class HostsController extends AppController {
             $model->patchEntity($row, $this->request->getData());
             
             $row->open_247fixworkers = $this->request->getData("open_247fixworkers") == "on";
-            $row->lat_loose = null;
-            $row->lng_loose = null;
+            //$row->lat_loose = null;
+            //$row->lng_loose = null;
             
             $model->save($row);
             $this -> Flash -> success (__("Successfully saved."));
@@ -224,9 +224,8 @@ class HostsController extends AppController {
                             "title" => $row->title,
                             "videoURL" => (sizeof($row->videos) > 0 ? Router::url(['controller' => 'videos', 'action' => '', $row->videos[0]->url], true) : null),
                             
-                            // todo: in db schreiben damit nicht immer frische werte kommen (sonst könnte man lat & lng reversen)
-                            "lat" => $row->lat_loose,
-                            "lng" => $row->lng_loose,
+                            "lat" => $row->lat,
+                            "lng" => $row->lng,
                         ]);
             }
             
