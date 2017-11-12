@@ -51,7 +51,7 @@ $total=0;
         <td><?php echo date("d.m.Y", strtotime($row->dt_inserted)); ?></td>
         <td><?php echo date("d.m.Y", strtotime($row->begin)); ?></td>
         <td><?php echo date("d.m.Y", strtotime($row->end)); ?></td>
-        <td><?php echo $row->coworker->companyname . " " . $row->coworker->firstname . " " . $row->coworker->lastname; ?></td>
+        <td><?php echo $row->coworker->companyname . " " . $row->coworker->firstname . " " . $row->coworker->lastname; ?><br /><a href="<?= $this->Url->build(["controller" => "coworkers", "action" => "profile",  $row->coworker->id]); ?>">View Profile</a></td>
         <td><?php echo money_format('%i', $row->amount_host); ?></td>
         <td><?php echo money_format('%i', $row->vat_host); ?></td>
         <?php $subtotal = $row->amount_host + $row->vat_host; // todo: sum??? sum financially, not mathematically ?>

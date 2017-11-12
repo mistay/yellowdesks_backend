@@ -6,6 +6,39 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 
 class CoworkersController extends AppController {
+    public function profile($unsafe_id) {
+	if (!$this -> hasAccess([Roles::ADMIN, Roles::COWORKER, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]);
+
+        $user = $this->getloggedInUser();
+
+	$this->set("isAdmin", $user->role==Roles::ADMIN);
+	$this->set("isCoworker", $user->role==Roles::COWORKER);
+	$this->set("isHost", $user->role==Roles::HOST);
+
+	$id = 0;
+        if ($user->role==Roles::ADMIN)
+            $id=(int)$unsafe_id;
+
+        if ($user->role==Roles::COWORKER)
+            $id = $user -> id;
+
+	if ($user->role==Roles::HOST) {
+		// todo: check if host has permissions to see coworker's profile
+	    $id=(int)$unsafe_id;
+	}
+        if ($id>0) {
+		$model = TableRegistry::get('Coworkers');
+
+            $row = $model->get($id);
+	    $this->set("row", $row);
+	}
+
+
+
+	
+	
+    }
+
     public function index() {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
 
