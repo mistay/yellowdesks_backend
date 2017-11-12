@@ -48,10 +48,12 @@
             <th>VAT ID</th>
             <td><input type="text" name="vatid" placeholder="ATU123456789" value='<?php echo @$row["vatid"] ?>' /></td>
         </tr>
+<?php if ($isAdmin) { ?>
         <tr>
-            <th>VAT ID successfully checked</th>
-            <td><input type="text" name="vatid_successfully_checked" placeholder="2017-01-01" value='<?php echo @$row["vatid_successfully_checked"] ?>' /></td>
+            <th>VAT ID successfully checked (ADMIN)</th>
+            <td><input type="text" name="vatid_successfully_checked" placeholder="2017-01-01" value='<?= isset($row["vatid_successfully_checked"])? date("Y-m-d", strtotime($row["vatid_successfully_checked"])) : "" ?>' /></td>
         </tr>
+<?php } ?>
         <tr>
             <th>Paypal E-Mail (for sending the money)</th>
             <td><input type="text" name="paypal_email" placeholder="my_paypal_email@example.com" value='<?php echo @$row["paypal_email"] ?>' /></td>

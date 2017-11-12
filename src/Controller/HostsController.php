@@ -57,6 +57,9 @@ class HostsController extends AppController {
         $this->set("pictures", $pictures);
     }
 
+    public function cruyd($unsafe_id=null) {
+	return $this->cru($unsafe_id);
+    }
     public function cru($unsafe_id=null) {
         if (!$this -> hasAccess([Roles::ADMIN, Roles::HOST])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
         
@@ -64,6 +67,7 @@ class HostsController extends AppController {
         
         $user = $this->getloggedInUser();
         $this->set("isHost", $user["role"] == Roles::HOST);
+        $this->set("isAdmin", $user["role"] == Roles::ADMIN);
 
         if ($user->role==Roles::ADMIN)
             $id=(int)$unsafe_id;
@@ -86,8 +90,7 @@ class HostsController extends AppController {
             $row->lng_loose = null;
             
             $model->save($row);
-            
-            return $this->redirect(['action' => 'index']);
+            $this -> Flash -> success (__("Successfully saved."));
         }
     }
     
