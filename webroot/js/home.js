@@ -162,7 +162,7 @@ function initMap() {
 
     for (i=0; i<hosts.length; i++) {
         marker = new google.maps.Marker({
-            position: {lat: hosts[i].lat_loose, lng: hosts[i].lng_loose},
+            position: {lat: hosts[i].lat, lng: hosts[i].lng},
             map: map,
             icon: image,
             host: hosts[i],
