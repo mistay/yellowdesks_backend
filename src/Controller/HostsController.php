@@ -165,7 +165,8 @@ class HostsController extends AppController {
     public function index() {
         
         $model = TableRegistry::get('Hosts');
-        $query = $model->find('all')->contain(['Pictures'=> function ($q) {
+        $query = $model->find('all')	->where(['enableyd' => 1])
+					->contain(['Pictures'=> function ($q) {
                                                                return $q
                                                                     ->select(['id', 'host_id']);
                                                             },

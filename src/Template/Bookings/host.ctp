@@ -37,7 +37,9 @@ $total=0;
 <table>
     <tr>
         <th>id</th>
-        <th>Date</th>
+        <th>Booking Date</th>
+        <th>Begin</th>
+        <th>End</th>
         <th>Coworker</th>
         <th>Price excl. VAT</th>
         <th>VAT</th>
@@ -47,6 +49,8 @@ $total=0;
     <tr>
         <td><?= $row -> id ?></td>
         <td><?php echo date("d.m.Y", strtotime($row->dt_inserted)); ?></td>
+        <td><?php echo date("d.m.Y", strtotime($row->begin)); ?></td>
+        <td><?php echo date("d.m.Y", strtotime($row->end)); ?></td>
         <td><?php echo $row->coworker->companyname . " " . $row->coworker->firstname . " " . $row->coworker->lastname; ?></td>
         <td><?php echo money_format('%i', $row->amount_host); ?></td>
         <td><?php echo money_format('%i', $row->vat_host); ?></td>
@@ -55,7 +59,7 @@ $total=0;
     </tr>
     <?php endforeach; ?>
     <tr>
-        <td colspan="5">
+        <td colspan="7">
             
         </td>
         <td><h2>
