@@ -3,6 +3,10 @@
 
 <form name="form1" method="post">
     <table>
+	<tr>
+            <th>Enable<input type="hidden" name="enableyd" value="0" /></th>
+            <td><input type="checkbox" name="enableyd" <?= (isset($row["enableyd"]) && $row["enableyd"]) ? "checked='checked'" : "" ?> />When checked, your Yellowdesk will be advertised.</td>
+        </tr>
         <tr>
             <th>Title</th>
             <td><input type="text" name="title" placeholder="Creative agency downtown Salzburg" value='<?php echo @$row["title"] ?>' /></td>

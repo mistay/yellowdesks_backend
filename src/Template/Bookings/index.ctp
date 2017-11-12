@@ -1,5 +1,10 @@
 <h2>Bookings</h2>
 
+<form name="form" method="post">
+	<input type="text" name="Host[nickname]"></input>
+	<input type="submit">
+</form>
+
 <table>
     <tr>
         <th>Paid</th>
