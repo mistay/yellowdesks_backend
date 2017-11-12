@@ -6,7 +6,101 @@ use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Event\Event;
 
+require_once('tcpdf/tcpdf.php');
+
+class MYPDF extends \TCPDF {
+    public function Footer() {
+        // Position at 15 mm from bottom
+        $this->SetY(-15);
+        // Set font
+        $this->SetFont('helvetica', 'I', 8);
+	$tmp ="Yellowdesks GmbH :: Jakob-Haringer-Str. 3 c/o COWORKINGSALZBURG :: 5020 Salzburg :: Fax: +43 662 890000-9 :: E-Mail: hello@yellowdesks.com";
+
+        $this->Cell(0, 10, $tmp, 0, false, 'C', 0, '', 0, false, 'T', 'M');
+    }
+}
+
 class BookingsController extends AppController {
+
+	public function pdfinvoice($id) {
+		if (!$this -> hasAccess([Roles::COWORKER, Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]);
+
+		$model = TableRegistry::get('Bookings');
+		$query = $model->get($id, [
+			'contain' => ['Hosts', 'Coworkers']
+		]);
+
+		$row = $query -> toArray();
+
+		$this -> autoRender = false;
+
+		$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+		$pdf->SetCreator(PDF_CREATOR);
+		$pdf->SetAuthor('Yellowdesks GmbH');
+		$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+		$pdf->AddPage();
+
+
+		$pdf->SetXY(130, 10);
+		$pdf->SetFont('helvetica', 'I', 20);
+		$pdf->Cell(0, 0, 'Yellowdesks GmbH', 0, 1, 'L', 0, '', 0);
+		$pdf->SetFont('helvetica', 'I', 7);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, 'Jakob-Haringer-Str. 3', 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, 'c/o COWORKINGSALZBURG', 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, '5020 Salzburg', 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, 'Austria', 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, 'billing@yellowdesks.com', 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, 'Our VATID: ATU1234567890', 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, 'Your VATID: ' . $row["coworker"]["vatid"], 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, 'Invoice No: ' . $row["id"], 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 0, 'Invoice Date: ' . date("Y-m-d", strtotime($row["dt_inserted"])), 0, 1, 'L', 0, '', 0);
+		$pdf->setX(130);
+		$pdf->Cell(0, 10, 'Page '.$pdf->getAliasNumPage().' of '.$pdf->getAliasNbPages(), 0, 1, 'L', 0, '', 0, false, 'T', 'M');
+
+		$pdf->SetXY(10,45);
+		$pdf->SetFont('helvetica', 'I', 6);
+		$pdf->Cell(0, 0, 'Yellowdesks GmbH :: Jakob-Haringer-Str. 3 c/o coworkingsalzburg :: 5020 Salzburg :: Austria', 0, 1, 'L', 0, '', 0);
+		$pdf->Ln(3);
+		$pdf->SetFont('helvetica', 'I', 10);
+		$pdf->Cell(0, 0, $row["coworker"]["companyname"], 0, 1, 'L', 0, '', 0);
+		$pdf->Cell(0, 0, $row["coworker"]["firstname"] . " " .$row["coworker"]["lastname"], 0, 1, 'L', 0, '', 0);
+		$pdf->Cell(0, 0, $row["coworker"]["address"], 0, 1, 'L', 0, '', 0);
+		$pdf->Cell(0, 0, $row["coworker"]["postal_code"] . " " . $row["coworker"]["city"], 0, 1, 'L', 0, '', 0);
+
+		$pdf->SetXY(10,90);
+		$pdf->SetFont('helvetica', 'I', 20);
+		$pdf->Cell(0, 0, "Invoice", 0, 1, 'L', 0, '', 0);
+
+		$pdf->SetFont('helvetica', 'I', 10);
+
+		$pdf->Cell(0, 0, $row["description"] . ': ' . $row["price"] . 'EUR + ' . $row["vat"] . ' EUR VAT' , 0, 1, 'L', 0, '', 0);
+
+		$pdf->SetFont('helvetica', 'I', 8);
+		$pdf->Cell(0, 0, "Sale was exempted from VAT", 0, 1, 'L', 0, '', 0);
+
+		$pdf->Ln(3);
+		$legal = "Place of jurisdiction: Salzburg. 8% default interest. Please have a look at our Terms & Conditions";
+		$pdf->Cell(0, 0, $legal, 0, 1, 'L', 0, '', 0);
+
+
+
+
+		$pdf->Output('example_001.pdf', 'I');
+
+
+
+
+	
+	}
     
     public function index() {
         if (!$this -> hasAccess([Roles::ADMIN])) return $this->redirect(["controller" => "users", "action" => "login", "redirect_url" =>  $_SERVER["REQUEST_URI"]]); 
@@ -16,6 +110,10 @@ class BookingsController extends AppController {
         $model = TableRegistry::get('Bookings');
 
         $user = $this -> getLoggedinUser();
+
+echo "nick: ".  $nickname = $this->request->getData('Host.nickname');
+
+
 
         $query = $model->find('all')->order(["dt_inserted DESC"])->where()->contain(['Hosts', 'Coworkers']);
         $this->set("rows", $query);
