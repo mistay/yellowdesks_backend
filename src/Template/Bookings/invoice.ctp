@@ -5,7 +5,9 @@
 <?php echo $row->coworker->address; ?><br />
 <?php echo $row->coworker->email; ?>
 
-<h2>Invoice</h2>
+<h2>Invoice</h2><a href="<?= $this->Url->build(["controller" => "bookings", "action" => "pdfinvoice", $row->id]); ?>">Download PDF</a>
+<br />
+<br />
 <table>
     <tr>
         <th>Date</th>
