@@ -1,4 +1,5 @@
-<h2><?php echo $row->isNew() ? "Add" : "Edit" ?> Host</h2>
+<h2><?= $row->isNew() ? "Add Host" : $isHost ? "My Profile" : "Edit Host" ?></h2>
+
 
 <form name="form1" method="post">
     <table>

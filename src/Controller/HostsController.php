@@ -63,7 +63,8 @@ class HostsController extends AppController {
         $model = TableRegistry::get('Hosts');
         
         $user = $this->getloggedInUser();
-        
+        $this->set("isHost", $user["role"] == Roles::HOST);
+
         if ($user->role==Roles::ADMIN)
             $id=(int)$unsafe_id;
         
