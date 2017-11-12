@@ -23,8 +23,14 @@ class CoworkersController extends AppController {
             $id = $user -> id;
 
 	if ($user->role==Roles::HOST) {
-		// todo: check if host has permissions to see coworker's profile
-	    $id=(int)$unsafe_id;
+		// check if host is allowed to see coworker's profile
+		$modelbookings = TableRegistry::get('Bookings');
+		$query = $modelbookings->find('all')->where(["paypalipn_id >" => "0", "host_id" => $user->id, "coworker_id" => (int)$unsafe_id])->contain(['Hosts', 'Coworkers']);
+		if ($query->count() > 0)
+			$id=(int)$unsafe_id;
+		else
+			return;
+			
 	}
         if ($id>0) {
 		$model = TableRegistry::get('Coworkers');
