@@ -31,7 +31,7 @@ a:hover, body a:hover {
     color: yellow;
 }
 
-.header a, .subheader a, .subsubheader a {
+.header a, .subheader a, .subsubheader a, .delete a {
     background-color:transparent;
 }
 .header a:hover, .subheader a:hover, .subsubheader a:hover {
