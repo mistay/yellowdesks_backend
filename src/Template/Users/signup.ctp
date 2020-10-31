@@ -39,6 +39,12 @@
                 <tr class="inputs">
                     <td colspan="2"><input type="password" name="password" id="password" placeholder="Password" value="<?= @$data['password'] ?>" /></td>
                 </tr>
+                <tr class="space">
+                    <td colspan="2"><label for="spamprotect">Spam protect: 2+2 = Please enter 'four'</label></td>
+                </tr>
+                <tr class="inputs">
+                    <td colspan="2"><input type="text" name="spamprotect" id="spamprotect" placeholder="2+2=f..." value="<?= @$data['spamprotect'] ?>" /></td>
+                </tr>
                 <tr class="errorline">
                     <td colspan="2">
                         <span class="check password"><?= __("Please make sure your password is at least 8 characters long") ?></span></td>

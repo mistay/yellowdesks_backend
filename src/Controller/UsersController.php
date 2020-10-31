@@ -162,6 +162,11 @@ class UsersController extends AppController
                 $this -> Flash -> success (__("Please aggree to our terms and conditions."));
                 return;
             }
+            
+            if (!isset($data["spamprotect"]) || trim($data["spamprotect"]) != 'four') {
+                $this -> Flash -> success (__("Please enter 'four' in spamprotect field"));
+                return;
+            }
 
             $model = TableRegistry::get('Coworkers');
             $row = $model -> newEntity();
