@@ -1,0 +1,16 @@
+#!/bin/bash
+
+mysqldump="/Applications/MAMP/Library/bin/mysqldump --max_allowed_packet=500M" 
+mysql="/Applications/MAMP/Library/bin/mysql"
+
+REMOTE_MACHINES="83.65.62.165 88.99.86.63"
+REMOTE_BASE_DIR="/var/www/yellowdesks.at"
+
+LOCAL_DB_NAME=yellowdesks
+LOCAL_DB_USER=yellowdesks
+LOCAL_DB_PASS=secretpassword
+
+REMOTE_HOST=83.65.62.165
+REMOTE_DB_PASS=verysecretpassword
+REMOTE_DB_NAME=yellowdesks
+REMOTE_DB_USER=yellowdesks
